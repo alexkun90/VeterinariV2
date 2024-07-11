@@ -1,0 +1,113 @@
+﻿@model IEnumerable<FrontEnd.Models.MascotaViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MascotaId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreMascota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoMascotaId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RazaId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Edad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Peso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagenMascota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DueñoId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoUsuarioCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoUsuarioModificacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaModificacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MascotaId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreMascota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoMascotaId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RazaId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Edad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Peso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImagenMascota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DueñoId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoUsuarioCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoUsuarioModificacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaModificacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.MascotaId }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.MascotaId }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.MascotaId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
