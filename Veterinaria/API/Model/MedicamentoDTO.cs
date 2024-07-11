@@ -1,7 +1,4 @@
-﻿using Entities.Entities;
-using Microsoft.AspNetCore.Mvc;
-
-namespace API.Model
+﻿namespace API.Model
 {
     public class MedicamentoDTO
     {
@@ -13,6 +10,6 @@ namespace API.Model
 
         public int? CitaId { get; set; }
 
-        public virtual Cita? Cita { get; set; }
+        
     }
 }

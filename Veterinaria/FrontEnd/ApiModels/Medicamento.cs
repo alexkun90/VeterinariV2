@@ -1,6 +1,4 @@
-﻿
-
-namespace FrontEnd.ApiMoldels
+﻿namespace FrontEnd.ApiMoldels
 {
     public class Medicamento
     {
@@ -12,6 +10,6 @@ namespace FrontEnd.ApiMoldels
 
         public int? CitaId { get; set; }
 
-        public virtual Cita? Cita { get; set; }
+        
     }
 }

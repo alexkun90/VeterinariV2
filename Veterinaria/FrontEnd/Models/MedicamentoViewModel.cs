@@ -1,7 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
-
-namespace FrontEnd.Models
+﻿namespace FrontEnd.Models
 {
     public class MedicamentoViewModel 
     {

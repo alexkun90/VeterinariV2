@@ -1,4 +1,5 @@
-﻿using FrontEnd.Helpers.Interfaces;
+﻿using FrontEnd.Helpers.Implementations;
+using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,7 @@ namespace FrontEnd.Controllers
         // GET: MascotaController
         public ActionResult Index()
         {
+            List<MedicamentoViewModel> lista = MedicamentoHelper.GetMedicamentos();
             return View(MedicamentoHelper.GetMedicamentos());
         }
 

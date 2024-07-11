@@ -1,5 +1,4 @@
-﻿
-using FrontEnd.ApiMoldels;
+﻿using FrontEnd.ApiMoldels;
 using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
 using Newtonsoft.Json;
