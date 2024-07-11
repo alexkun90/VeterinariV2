@@ -1,0 +1,65 @@
+﻿@model FrontEnd.Models.CitaViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>CitaViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @Html.HiddenFor(Model => Model.CitaId)
+            </div>
+            <div class="form-group">
+                <label asp-for="MascotaId" class="control-label"></label>
+                @Html.DropDownListFor(model => model.MascotaId, new SelectList(Model.Mascotas, "MascotaId", "NombreMascota"), "--Select Category--")
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaHora" class="control-label"></label>
+                <input asp-for="FechaHora" class="form-control" />
+                <span asp-validation-for="FechaHora" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VeterinarioPrincipalId" class="control-label"></label>
+                <input asp-for="VeterinarioPrincipalId" class="form-control" />
+                <span asp-validation-for="VeterinarioPrincipalId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VeterinarioSecundarioId" class="control-label"></label>
+                <input asp-for="VeterinarioSecundarioId" class="form-control" />
+                <span asp-validation-for="VeterinarioSecundarioId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DescripcionCita" class="control-label"></label>
+                <input asp-for="DescripcionCita" class="form-control" />
+                <span asp-validation-for="DescripcionCita" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Diagnostico" class="control-label"></label>
+                <input asp-for="Diagnostico" class="form-control" />
+                <span asp-validation-for="Diagnostico" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Estado" class="control-label"></label>
+                <input asp-for="Estado" class="form-control" />
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

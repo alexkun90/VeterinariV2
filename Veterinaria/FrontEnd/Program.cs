@@ -18,9 +18,11 @@ builder.Services.AddScoped<IMascotaHelper, MascotaHelper>();
 builder.Services.AddScoped<ICitaHelper, CitaHelper>();
 //DesparasitacionesVacunas
 builder.Services.AddScoped<IDesparasitacionesVacunaHelper, DesparasitacionesVacunaHelper>();
+//Medicamentos
+builder.Services.AddScoped<IMedicamentoHelper, MedicamentoHelper>();
+//
 
-
-
+//
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

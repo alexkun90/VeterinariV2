@@ -12,7 +12,7 @@ namespace DAL.Implementations
     {
         public IMascotaDAL MascotaDAL { get; set; }
         public ICitasDAL CitasDAL { get; set; }
-
+        public IMedicamentoDAL MedicamentoDAL { get; set; }
         public IDesparasitacionesVacunaDAL DesparasitacionesVacunaDAL { get; set; } 
       
 
@@ -20,6 +20,7 @@ namespace DAL.Implementations
 
         public UnidadDeTrabajo(VeteProV2Context veteProV2Context,
                         IMascotaDAL mascotaDAL,
+                        IMedicamentoDAL medicamentoDAL,
                         ICitasDAL citasDAL,
                         IDesparasitacionesVacunaDAL desparasitacionesVacunaDAL
             ) 
@@ -27,7 +28,8 @@ namespace DAL.Implementations
                 this._veteProV2Context = veteProV2Context;
                 this.MascotaDAL = mascotaDAL;
                 this.CitasDAL = citasDAL;
-            this.DesparasitacionesVacunaDAL = desparasitacionesVacunaDAL;
+                this.DesparasitacionesVacunaDAL = desparasitacionesVacunaDAL;
+                this.MedicamentoDAL = medicamentoDAL;
         }
        
 
