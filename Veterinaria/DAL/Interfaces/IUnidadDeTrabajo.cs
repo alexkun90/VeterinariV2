@@ -12,6 +12,10 @@ namespace DAL.Interfaces
         ICitasDAL CitasDAL { get; }
         IDesparasitacionesVacunaDAL DesparasitacionesVacunaDAL { get; }
         IMedicamentoDAL MedicamentoDAL { get; }
+        IPadecimientosDAL PadecimientosDAL { get; }
+        IRazasDAL RazasDAL { get; }
+        ITiposMascotasDAL TiposMascotasDAL { get; }
+
         bool Complete();
     }
 }

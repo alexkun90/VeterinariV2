@@ -1,0 +1,40 @@
+﻿@model FrontEnd.Models.PadecimientosViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>PadecimientosViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.HiddenFor(model => model.CodigoPadecimiento)
+            <div class="form-group">
+                <label asp-for="CodigoPadecimiento" class="control-label"></label>
+                <input asp-for="CodigoPadecimiento" class="form-control" />
+                <span asp-validation-for="CodigoPadecimiento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NombrePadecimiento" class="control-label"></label>
+                <input asp-for="NombrePadecimiento" class="form-control" />
+                <span asp-validation-for="NombrePadecimiento" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -20,9 +20,12 @@ builder.Services.AddScoped<ICitaHelper, CitaHelper>();
 builder.Services.AddScoped<IDesparasitacionesVacunaHelper, DesparasitacionesVacunaHelper>();
 //Medicamentos
 builder.Services.AddScoped<IMedicamentoHelper, MedicamentoHelper>();
-//
-
-//
+//Razas
+builder.Services.AddScoped<IRazasHelper, RazasHelper>();
+// Padecimientos
+builder.Services.AddScoped<IPadecimientosHelper, PadecimientosHelper>();
+// tipos mascotas
+builder.Services.AddScoped<ITiposMascotasHelper, TiposMascotasHelper>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

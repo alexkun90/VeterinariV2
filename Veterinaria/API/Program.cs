@@ -1,5 +1,7 @@
 using API.Services.Implementations;
 using API.Services.Interfaces;
+using BackEnd.Services.Implementations;
+using BackEnd.Services.Interfaces;
 using DAL.Implementations;
 using DAL.Interfaces;
 using Entities.Entities;
@@ -36,6 +38,22 @@ builder.Services.AddScoped<IMedicamentoDAL, MedicamentoDALImpl>();
 builder.Services.AddScoped<IMedicamentoService, MedicamentoService>();
 
 //
+
+
+//Razas
+builder.Services.AddScoped<IRazasDAL, RazasDALImpl>();
+builder.Services.AddScoped<IRazasService, RazasService>();
+
+
+// tipos mascotas
+
+builder.Services.AddScoped<ITiposMascotasDAL, TiposMascotasDALImpl>();
+builder.Services.AddScoped<ITiposMascotasService, TiposMascotasService>();
+
+//Padecimientos 
+
+builder.Services.AddScoped<IPadecimientosDAL, PadecimientosDALImpl>();
+builder.Services.AddScoped<IPadecimientosService, PadecimientosService>();
 
 var app = builder.Build();
 

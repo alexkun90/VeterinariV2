@@ -1,0 +1,47 @@
+﻿@model IEnumerable<FrontEnd.Models.RazasViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoRaza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreRaza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoMascotaID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoRaza)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreRaza)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoMascotaID)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.CodigoRaza  }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.CodigoRaza }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CodigoRaza })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
