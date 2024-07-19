@@ -1,8 +1,122 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
+
+    <link rel="stylesheet" href="~/css/HomeSections/SectionHome1.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/HomeSections/SectionHome2.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/HomeSections/SectionHome3.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/HomeSections/SectionHome4.css" asp-append-version="true" />
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Inicia section-1 -->
+<section class="section-1">
+    <div class="section-contenido">
+        <h2 class="texto-section texto-titulo">
+            Bienvenido a la MEJOR veterinaria!
+        </h2>
+        <h3 class="texto-section texto-parrafo">
+           Nuestra pasion por los animales es mas grande que nada
+        </h3>
+        <div class="button-section1">
+            <a href="" class="button-1">Contactanos</a>
+        </div>
+    </div>
+    <img class="imagen-section-1"
+         src="https://ep01.epimg.net/estaticos/2020/06/yoigo-perros/images/apertura/apertura-perro.png"
+         alt="perro" />
+</section>
+<!-- termina section-1 -->
+<!-- inicia section 2  -->
+<section class="section-tres">
+    <h2 class="section-tres-titulo">Servicios</h2>
+    <p class="section-tres-parrafo">
+    </p>
+    <div class="section-tres-cajas">
+        <div class="section-tres-caja1">
+            <img src="https://colegioveterinarios.net/wp-content/uploads/2020/01/Veterinarios-1.png"
+                 alt=""
+                 class="caja1-img" />
+            <h3 class="caja-titulo">Veterinario</h3>
+            <p class="caja-parrafo">
+                Ofrecemos servicios con expertos en veterinaria
+            </p>
+        </div>
+        <div class="section-tres-caja2">
+            <img src="https://www.kivet.com/wp-content/uploads/2022/07/vacunacion-veterinaria-.webp"
+                 alt=""
+                 class="caja2-img" style="height: 350px"/>
+            <h3 class="caja-titulo">Vacunacion</h3>
+            <p class="caja-parrafo">
+                Servicios de todo tipo de vacunación
+            </p>
+        </div>
+        <div class="section-tres-caja3">
+            <img src="https://broomfieldvet.com/wp-content/uploads/2020/08/dental_pet_care.png"
+                 alt=""
+                 class="caja3-img" style="padding-top: 100px; margin-top: 50px"/>
+            <h3 class="caja-titulo">Dental Care</h3>
+            <p class="caja-parrafo">
+                Servicios de cuidado dental para tus mascotas
+            </p>
+        </div>
+    </div>
+</section>
+<!-- termina section 2  -->
+<!-- inicia section 3  -->
+<section class="section-cinco">
+    <h2 class="section-cinco-titulo">¿Necesitas ayuda?</h2>
+    <p class="section-cinco-parrafo">
+        Necesitas ayuda con tu mascota, empezá por registrarla en nuestro sistema para poder conversar con vos!
+    </p>
+    <div class="section-cinco-cajas">
+        
+        <div class="section-cinco-caja2">
+            <img src="https://q5dcn6ppfh42-u1253.pressidiumcdn.com/wp-content/uploads/2022/12/faq-min-1024x701.png"
+                 alt=""
+                 class="caja2-img"  />
+            
+            <a class="button-caja" asp-area="" asp-controller="Mascotas" asp-action="Index">Ingresar a mi mascota</a>
+        </div>
+        
+    </div>
+</section>
+<!-- termina section 3  -->
+<!-- inicia section 4  -->
+<section class="section-siete">
+
+
+    <div class="section-siete-cajas">
+        <div class="section-siete-caja1">
+            <img src="https://cdn-icons-png.flaticon.com/512/2138/2138516.png"
+                 alt="icono corazon"
+                 class="caja-img" style="width: 40%"/>
+            <h3 class="caja-cifra uno">+34793</h3>
+            <p class="caja-parrafo uno">
+                Clientes Satisfechos
+            </p>
+        </div>
+
+        <div class="section-siete-caja2">
+            <img src="https://cdn-icons-png.flaticon.com/512/88/88115.png"
+                 alt="icono medico"
+                 class="caja-img" style="width: 40%" />
+            <h3 class="caja-cifra dos">+20</h3>
+            <p class="caja-parrafo dos">
+                Departamentos
+            </p>
+        </div>
+
+        <div class="section-siete-caja3">
+            <img src="https://static.vecteezy.com/system/resources/previews/017/196/551/original/veterinary-icon-on-transparent-background-free-png.png"
+                 alt=""
+                 class="caja-img" style="width: 50%" />
+            <h3 class="caja-cifra tres">
+                +54762
+            </h3>
+            <p class="caja-parrafo tres">
+                Vacunas Puestas
+            </p>
+        </div>
+
+    </div>
+</section>
+<!-- termina section 4  -->
