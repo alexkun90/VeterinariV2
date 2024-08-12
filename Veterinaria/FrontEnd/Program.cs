@@ -26,6 +26,11 @@ builder.Services.AddScoped<IRazasHelper, RazasHelper>();
 builder.Services.AddScoped<IPadecimientosHelper, PadecimientosHelper>();
 // tipos mascotas
 builder.Services.AddScoped<ITiposMascotasHelper, TiposMascotasHelper>();
+
+//Soporte Paginas Razor
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
