@@ -81,5 +81,14 @@ namespace FrontEnd.Controllers
             }
 
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Remove("token"); 
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

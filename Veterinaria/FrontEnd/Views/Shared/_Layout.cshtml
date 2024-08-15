@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@600&display=swaprel=" stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!--Links hacia las hojas de estilo css-->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -22,15 +23,29 @@
 <body>
     <header>
         <nav>
-
             <div class="menu">
-                <a class="menu-item" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="menu-item" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                 <a class="menu-item" asp-area="" asp-controller="Mascota" asp-action="Index">Mascotas</a>
                 <a class="menu-item" asp-area="" asp-controller="Cita" asp-action="Index">Citas</a>
                 <a class="menu-item" asp-area="" asp-controller="Citas" asp-action="IndexVeterinario">Veterinario</a>                            
-                <a class="menu-item" asp-area="" asp-controller="Home" asp-action="Index">Admin</a>
-
+                <a class="menu-item" asp-area="" asp-controller="Home" asp-action="Index">Administración</a>
             </div>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <a class="login-item" asp-controller="Account" asp-action="Login">Inicio Sesión</a>
+            }
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                
+                <div class="logout">
+                    <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+                        <button type="submit" class="logout-item" style="border: none; background: transparent; cursor: pointer;">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </form>
+                </div>
+            }
         </nav>
     </header>
     <main>
