@@ -43,9 +43,6 @@ namespace API.Controllers
             }
 
             return Unauthorized();
-
-
-
         }
 
         [HttpPost]
@@ -73,14 +70,13 @@ namespace API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "INternal server Error" });
 
             }
-
-            /*var roles = await roleManager.RoleExistsAsync("User");
+            var roles = await roleManager.RoleExistsAsync("User");
             if (!roles)
             {
                 await roleManager.CreateAsync(new IdentityRole("User"));
             }
 
-            await userManager.AddToRoleAsync(user, "User");*/
+            await userManager.AddToRoleAsync(user, "User");
 
             return Ok(new Response { Status = "Success", Message = "Usuario Creado Exitosamente" });
 

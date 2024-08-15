@@ -1,11 +1,11 @@
 nav {
     background-color: #eaae00;
     display: flex;
-    justify-content: space-between; /* Distribuye los elementos a los lados y centro */
+    justify-content: space-between; 
     align-items: center;
     height: 90px;
     width: 100%;
-    padding: 0 20px; /* Espaciado lateral para la barra de navegación */
+    padding: 0 20px; 
 }
 
 .logo-company {
@@ -16,8 +16,8 @@ nav {
 .menu {
     display: flex;
     align-items: center;
-    flex-grow: 1; /* Permite que el menú ocupe el espacio disponible */
-    justify-content: center; /* Centra los items dentro del menú */
+    flex-grow: 1; 
+    justify-content: center; 
 }
 
 .menu-item {
@@ -54,13 +54,20 @@ nav {
 
 .logout-item {
     color: #fff;
+    font-size: 20px;
     text-decoration: none;
     display: flex;
     align-items: center;
 }
 
+    .logout-item:hover {
+        color: #0d6efd;
+        font-size: 25px;
+        transition: 0.5s;
+    }
+
 .logout-item i {
-    margin-right: 8px; /* Espacio entre el ícono y el texto */
+    margin-right: 8px;
 }
 
 .lupa-button {

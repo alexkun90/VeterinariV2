@@ -8,5 +8,7 @@ namespace FrontEnd.Helpers.Interfaces
         LoginAPI GetUser(UserViewModel user);
 
         LoginAPI Login(UserViewModel user);
+
+        ResponseApi Register(RegisterViewModel user);
     }
 }
