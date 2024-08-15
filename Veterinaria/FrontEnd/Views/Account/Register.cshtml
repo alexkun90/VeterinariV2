@@ -2,9 +2,41 @@
 
 @{
     ViewData["Title"] = "Register";
+    Layout = "_LayoutExterno";
 }
 
-<h1>Register</h1>
+<div class="register-Body">
+    <div class="register-container">
+        <div class="form-container">
+            <div style="margin-bottom:40px;">
+                <h1 class="register-title">¡Regístrate!</h1>
+            </div>
+            <form asp-action="Register" method="post" style="margin-right:30px;">
+                <div class="inputR-group">
+                    <label for="username">
+                        <input type="text" id="username" name="username" asp-for="UserName" placeholder="Ingrese su nombre de usuario" required>
+                    </label>
+                </div>
+                <div class="inputR-group">
+                    <label for="email">
+                        <input type="email" id="email" name="email" asp-for="Email" placeholder="Ingrese su correo electrónico" required>
+                    </label>
+                </div>
+                <div class="inputR-group">
+                    <label for="password">
+                        <input type="password" id="password" name="password" asp-for="Password" placeholder="Ingrese su contraseña" required>
+                    </label>
+                </div>
+                <button type="submit" class="register-btn">Registrarse</button>
+                <div class="link" style="margin-left:35px;">
+                    <a asp-area="" asp-controller="Account" asp-action="Login">¿Ya tienes usuario?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* <h1>Register</h1>
 
 <h4>UserViewModel</h4>
 <hr />
@@ -33,11 +65,9 @@
             </div>
         </form>
     </div>
-</div>
+</div> *@
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

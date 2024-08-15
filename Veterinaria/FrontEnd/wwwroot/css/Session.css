@@ -78,7 +78,7 @@
 
 .link {
     margin-top: 20px;
-    margin-left: 20px;
+    margin-left: 28px;
     text-align: center;
     width: 90%;
 }
@@ -97,7 +97,7 @@
 
 .login-btn {
     width: 90%;
-    margin-left: 20px;
+    margin-left: 28px;
     padding: 15px;
     background-color: #eaae00;
     border: none;
@@ -110,5 +110,75 @@
 }
 
     .login-btn:hover {
+        background-color: #d59f00;
+    }
+
+.register-Body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: #f4f6f9;
+}
+
+.register-container {
+    width: 100%;
+    max-width: 50%;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+.form-container {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.register-title {
+    font-size: 2.5em;
+    color: #444;
+    text-align: center;
+}
+
+.inputR-group {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+    .inputR-group input {
+        width: 100%;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 25px;
+        font-size: 16px;
+        text-align: center;
+        background-color: #f7f7f7;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        margin-right: 100px;
+    }
+
+        .inputR-group input:focus {
+            border-color: #eaae00;
+            outline: none;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+.register-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #eaae00;
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    margin-left:15px
+}
+
+    .register-btn:hover {
         background-color: #d59f00;
     }

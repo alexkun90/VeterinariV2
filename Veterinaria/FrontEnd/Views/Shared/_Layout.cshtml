@@ -32,7 +32,9 @@
             </div>
             @if (!User.Identity.IsAuthenticated)
             {
-                <a class="login-item" asp-controller="Account" asp-action="Login">Inicio Sesión</a>
+                <a class="login-item" asp-controller="Account" asp-action="Login">Inicio Sesión</a> 
+                <span style="color:#fff; margin-right:5px; font-size:30px">|</span>
+                <a class="login-item" asp-controller="Account" asp-action="Register">Registrarse</a>
             }
 
             @if (User.Identity.IsAuthenticated)
