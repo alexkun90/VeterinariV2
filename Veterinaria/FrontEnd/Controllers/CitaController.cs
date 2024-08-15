@@ -1,10 +1,12 @@
 ﻿using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FrontEnd.Controllers
 {
+    [Authorize]
     public class CitaController : Controller
     {
         ICitaHelper citaHelper;
@@ -16,6 +18,8 @@ namespace FrontEnd.Controllers
             this.mascotaHelper = mascotaHelper;
         }
         // GET: CitaController
+        
+        
         public ActionResult Index()
         {
            List<CitaViewModel> lista = citaHelper.GetAllCitas();

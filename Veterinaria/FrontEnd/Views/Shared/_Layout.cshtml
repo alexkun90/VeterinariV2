@@ -16,8 +16,6 @@
     <link rel="stylesheet" href="~/css/Footer.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-    <link rel="stylesheet" href="~/Veterinaria.styles.css" asp-append-version="true" />
-
     <link rel="icon" type="image/png" href="Img/Logo.png">
 
 </head>
@@ -27,14 +25,9 @@
 
             <div class="menu">
                 <a class="menu-item" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                <a class="menu-item" asp-area="" asp-controller="Mascotas" asp-action="Index">Mascotas</a>
-               
-                        <a class="menu-item" asp-area="" asp-controller="Citas" asp-action="Index">Citas</a>
-
-                        <a class="menu-item" asp-area="" asp-controller="Citas" asp-action="IndexVeterinario">Veterinario</a>
-                  
-
-                
+                <a class="menu-item" asp-area="" asp-controller="Mascota" asp-action="Index">Mascotas</a>
+                <a class="menu-item" asp-area="" asp-controller="Cita" asp-action="Index">Citas</a>
+                <a class="menu-item" asp-area="" asp-controller="Citas" asp-action="IndexVeterinario">Veterinario</a>                            
                 <a class="menu-item" asp-area="" asp-controller="Home" asp-action="Index">Admin</a>
 
             </div>

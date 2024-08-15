@@ -26,7 +26,7 @@ namespace API.Controllers
         }
 
         // GET: api/Cita
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public ActionResult GetCitas()
         {

@@ -1,0 +1,79 @@
+﻿@model FrontEnd.Models.UserViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_LayoutExterno";
+}
+
+<div class="login-Body">
+    <div class="login-container">
+        
+        <div class="form-container">
+            <div style="margin-bottom:60px;margin-left:20px">
+                <h1 class="welcome-title">¡Bienvenido!</h1>
+            </div>
+            <form asp-action="Login" method="post">
+                @Html.HiddenFor(Model => Model.ReturnUrl)
+                <div class="input-group">
+                    <label for="username">
+                        <input type="text" id="username" name="username" asp-for="UserName" placeholder="ingrese su nombre de usuario" required>
+                    </label>
+                </div>
+                <div class="input-group">
+                    <label for="password">
+                        <input type="password" id="password" name="password" asp-for="Password" placeholder="ingrese su contraseña" required>
+                    </label>
+                </div>
+                <button type="submit" class="login-btn">Iniciar Sesión</button>
+               
+                <div class="link">
+                    <a href="#">Registrar Usuario</a>
+                </div>
+                
+            </form>
+        </div>
+        <div class="image-container">
+            <img src="~/img/login.jpg" alt="Login Image">
+        </div>
+    </div>
+</div>
+
+
+@* <h1>Login</h1>
+
+<h4>UserViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login">
+
+            @Html.HiddenFor(Model => Model.ReturnUrl)
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>  *@
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
