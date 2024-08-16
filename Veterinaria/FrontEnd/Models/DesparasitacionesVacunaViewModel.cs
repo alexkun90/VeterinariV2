@@ -17,7 +17,5 @@ namespace FrontEnd.Models
 
         public IEnumerable<MascotaViewModel> Mascotas { get; set; }
 
-        public virtual MascotaViewModel? Mascota { get; set; }
-
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace FrontEnd.Models
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace FrontEnd.Models
 {
     public class MascotaViewModel
     {
@@ -6,6 +9,7 @@
 
         public string? NombreMascota { get; set; }
 
+        [DisplayName("Tipo de Mascota")]
         public int? TipoMascotaId { get; set; }
         //public IEnumerable<TiposMascota> TiposMascotas { get; set; }
         //public TiposMascota TiposMascota { get; set; }

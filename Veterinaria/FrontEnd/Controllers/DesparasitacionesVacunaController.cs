@@ -8,10 +8,12 @@ namespace FrontEnd.Controllers
     public class DesparasitacionesVacunaController : Controller
     {
         IDesparasitacionesVacunaHelper DesparasitacionesVacunaHelper;
+        IMascotaHelper MascotaHelper;
 
-        public DesparasitacionesVacunaController(IDesparasitacionesVacunaHelper desparasitacionesVacunaHelper)
+        public DesparasitacionesVacunaController(IDesparasitacionesVacunaHelper desparasitacionesVacunaHelper, IMascotaHelper mascotaHelper)
         {
             DesparasitacionesVacunaHelper = desparasitacionesVacunaHelper;
+            MascotaHelper = mascotaHelper;
         }
 
         // GET: DesparasitacionesVacunaController
@@ -31,7 +33,9 @@ namespace FrontEnd.Controllers
         // GET: DesparasitacionesVacunaController/Create
         public ActionResult Create()
         {
-            return View();
+            DesparasitacionesVacunaViewModel desparasitaciones = new DesparasitacionesVacunaViewModel();
+            desparasitaciones.Mascotas = MascotaHelper.GetMascotas();
+            return View(desparasitaciones);
         }
 
         // POST: DesparasitacionesVacunaController/Create
@@ -54,6 +58,7 @@ namespace FrontEnd.Controllers
         public ActionResult Edit(int id)
         {
             DesparasitacionesVacunaViewModel desparasitacionesVacuna = DesparasitacionesVacunaHelper.GetDesparasitaciones(id);
+            desparasitacionesVacuna.Mascotas = MascotaHelper.GetMascotas();
             return View(desparasitacionesVacuna);
         }
 
