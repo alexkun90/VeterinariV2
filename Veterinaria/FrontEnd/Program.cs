@@ -32,6 +32,8 @@ builder.Services.AddScoped<IRazasHelper, RazasHelper>();
 builder.Services.AddScoped<IPadecimientosHelper, PadecimientosHelper>();
 // tipos mascotas
 builder.Services.AddScoped<ITiposMascotasHelper, TiposMascotasHelper>();
+//usuarios
+builder.Services.AddScoped<IUsuarioHelper, UsuarioHelper>();
 
 //Security
 builder.Services.AddScoped<ISecurityHelper, SecurityHelper>();
