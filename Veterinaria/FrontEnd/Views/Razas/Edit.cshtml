@@ -13,15 +13,16 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @Html.HiddenFor(model => model.CodigoRaza)
-            <div class="form-group">
-                <label asp-for="CodigoRaza" class="control-label"></label>
-                <input asp-for="CodigoRaza" class="form-control" />
-                <span asp-validation-for="CodigoRaza" class="text-danger"></span>
-            </div>
+         
             <div class="form-group">
                 <label asp-for="NombreRaza" class="control-label"></label>
                 <input asp-for="NombreRaza" class="form-control" />
                 <span asp-validation-for="NombreRaza" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TipoMascotaID" class="control-label"></label>
+                @Html.DropDownListFor(model => model.TipoMascotaID, new SelectList(Model.TiposMascotas, "CodigoTipoMascota", "NombreTipoMascota"), "--Seleccione Tipo de Mascota--", new { @class = "form-control" })
+                <span asp-validation-for="TipoMascotaID" class="text-danger"></span>
             </div>
            
             <div class="form-group">
