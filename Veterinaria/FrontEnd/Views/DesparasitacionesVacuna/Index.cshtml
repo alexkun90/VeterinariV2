@@ -1,53 +1,50 @@
 ﻿@model IEnumerable<FrontEnd.Models.DesparasitacionesVacunaViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Registro de Desparasitaciones y Vacunas";
+    <link rel="stylesheet" href="~/css/HomeSections/SectionCitas.css" asp-append-version="true" />
 }
 
-<h1>Index</h1>
+<section class="section-citas container mt-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-titulo text-primary">
+            <i class="fa fa-syringe"></i> Registro de Desparasitaciones y Vacunas
+        </h1>
+        <a href="@Url.Action("Create")" class="btn btn-primary btn-create">
+            <i class="fa fa-plus"></i> Agregar Nuevo Registro
+        </a>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoDesparasitacionVacuna)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tipo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Producto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MascotaId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodigoDesparasitacionVacuna)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tipo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Producto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MascotaId)
-            </td>
-            <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.CodigoDesparasitacionVacuna }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.CodigoDesparasitacionVacuna }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.CodigoDesparasitacionVacuna })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="section-tabla table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.CodigoDesparasitacionVacuna)</th>
+                    <th>@Html.DisplayNameFor(model => model.Tipo)</th>
+                    <th>@Html.DisplayNameFor(model => model.Producto)</th>
+                    <th>@Html.DisplayNameFor(model => model.MascotaId)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.CodigoDesparasitacionVacuna)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Tipo)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Producto)</td>
+                        <td>@Html.DisplayFor(modelItem => item.MascotaId)</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                @Html.ActionLink("Editar", "Edit", new { id = item.CodigoDesparasitacionVacuna }, new { @class = "btn btn-warning btn-sm" })
+                                @Html.ActionLink("Detalles", "Details", new { id = item.CodigoDesparasitacionVacuna }, new { @class = "btn btn-info btn-sm" })
+                                @Html.ActionLink("Eliminar", "Delete", new { id = item.CodigoDesparasitacionVacuna }, new { @class = "btn btn-danger btn-sm" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+</section>

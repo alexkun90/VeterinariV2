@@ -1,42 +1,55 @@
 ﻿@model FrontEnd.Models.DesparasitacionesVacunaViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de la Desparasitación o Vacuna";
+    <link rel="stylesheet" href="~/css/HomeSections/SectionCitas.css" asp-append-version="true" />
 }
 
-<h1>Details</h1>
+<section class="section-edit-cita container mt-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-titulo text-primary">
+            <i class="fa fa-syringe"></i> Detalles de la Desparasitación o Vacuna
+        </h1>
+    </div>
 
-<div>
-    <h4>DesparasitacionesVacunaViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CodigoDesparasitacionVacuna)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CodigoDesparasitacionVacuna)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Tipo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Tipo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Producto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Producto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MascotaId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MascotaId)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CodigoDesparasitacionVacuna }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="card shadow-lg rounded border-0">
+        <div class="card-body p-4">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">
+                    <i class="fas fa-id-card-alt text-primary"></i> Código
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.CodigoDesparasitacionVacuna)
+                </dd>
+
+                <dt class="col-sm-3">
+                    <i class="fas fa-vial text-success"></i> Tipo
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Tipo)
+                </dd>
+
+                <dt class="col-sm-3">
+                    <i class="fas fa-pills text-info"></i> Producto
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Producto)
+                </dd>
+
+                <dt class="col-sm-3">
+                    <i class="fas fa-paw text-warning"></i> ID de la Mascota
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.MascotaId)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <a href="@Url.Action("Index")" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="fa fa-arrow-left"></i> Volver a la Lista
+        </a>
+    </div>
+    <br />
+</section>

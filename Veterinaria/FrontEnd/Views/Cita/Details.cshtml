@@ -1,66 +1,83 @@
 ﻿@model FrontEnd.Models.CitaViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de la Cita";
+    <link rel="stylesheet" href="~/css/HomeSections/SectionCitas.css" asp-append-version="true" />
 }
 
-<h1>Details</h1>
+<section class="section-edit-cita container mt-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-titulo text-primary">
+            <i class="fa fa-calendar"></i> Detalles de la Cita
+        </h1>
+    </div>
 
-<div>
-    <h4>CitaViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CitaId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CitaId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MascotaId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MascotaId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaHora)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaHora)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VeterinarioPrincipalId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VeterinarioPrincipalId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VeterinarioSecundarioId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VeterinarioSecundarioId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DescripcionCita)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DescripcionCita)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Diagnostico)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Diagnostico)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CitaId  }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="card shadow-lg rounded border-0">
+        <div class="card-body p-4">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">
+                    <i class="fas fa-id-card-alt text-primary"></i> ID de la Cita
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.CitaId)
+                </dd>
+
+                <dt class="col-sm-3">
+                    <i class="fas fa-paw text-success"></i> ID de la Mascota
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.MascotaId)
+                </dd>
+
+                <dt class="col-sm-3">
+                    <i class="fas fa-calendar-alt text-info"></i> Fecha y Hora
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.FechaHora)
+                </dd>
+
+                <dt class="col-sm-3">
+                    <i class="fas fa-user-md text-warning"></i> Veterinario Principal
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.VeterinarioPrincipalId)
+                </dd>
+
+                <dt class="col-sm-3">
+                    <i class="fas fa-user-nurse text-danger"></i> Veterinario Secundario
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.VeterinarioSecundarioId)
+                </dd>
+
+                <dt class="col-sm-3">
+                    <i class="fas fa-notes-medical text-secondary"></i> Descripción de la Cita
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.DescripcionCita)
+                </dd>
+
+                <dt class="col-sm-3">
+                    <i class="fas fa-stethoscope text-info"></i> Diagnóstico
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Diagnostico)
+                </dd>
+
+                <dt class="col-sm-3">
+                    <i class="fas fa-clipboard-check text-success"></i> Estado
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Estado)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <a href="@Url.Action("Index")" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="fa fa-arrow-left"></i> Volver a la Lista
+        </a>
+    </div>
+    <br />
+</section>
