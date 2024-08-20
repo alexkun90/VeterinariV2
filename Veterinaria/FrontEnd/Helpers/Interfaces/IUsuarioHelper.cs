@@ -8,6 +8,6 @@ namespace FrontEnd.Helpers.Interfaces
         UsuarioViewModel GetUsuarioId(string id);
         UsuarioViewModel AddUsuario(UsuarioViewModel UsuarioViewModel);
         UsuarioViewModel EditUsuario(string id, UsuarioViewModel UsuarioViewModel);
-        void DeleteCita(string id);
+        void DeleteUsuario(string id);
     }
 }

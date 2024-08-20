@@ -19,10 +19,24 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("GetUsers")]
-        public ActionResult GetUsers()
+        public async Task<ActionResult> GetUsers()
         {
-            var ListaUsuarios = userManager.Users.ToList();
-            return new JsonResult(ListaUsuarios);
+            var listaUsuarios = new List<UserModel>();
+
+            foreach (var user in userManager.Users.ToList())
+            {
+                var roles = await userManager.GetRolesAsync(user);
+
+                listaUsuarios.Add(new UserModel
+                {
+                    Id = user.Id,
+                    Username = user.UserName,
+                    Email = user.Email,
+                    Password = user.PasswordHash, 
+                    Roles = roles.ToList()
+                });
+            }
+            return new JsonResult(listaUsuarios);
         }
 
         [HttpGet]
@@ -30,19 +44,25 @@ namespace API.Controllers
         public async Task<ActionResult> GetUser(string id)
         {
             var usuario = await userManager.FindByIdAsync(id);
-            if(usuario == null)
+            if (usuario == null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Usuario no encontrado!" });
+                return StatusCode(StatusCodes.Status404NotFound, new Response { Status = "Error", Message = "Usuario no encontrado!" });
             }
 
             var roles = await userManager.GetRolesAsync(usuario);
+
             var result = new
             {
-                User = usuario,
+                User = new
+                {
+                    usuario.Id,
+                    usuario.UserName,
+                    usuario.Email
+                },
                 Roles = roles
             };
 
-            return new JsonResult(result);
+            return Ok(result);
         }
 
         [HttpPost]
@@ -150,12 +170,27 @@ namespace API.Controllers
                     }
                 }
             }
-
             return Ok(new Response { Status = "Success", Message = "Usuario actualizado exitosamente." });
         }
 
-        /*[HttpDelete]
-        [Route("DeleteUser")]*/
+        [HttpDelete]
+        [Route("DeleteUser/{id}")]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound(new Response { Status = "Error", Message = "Usuario no encontrado." });
+            }
+
+            var result = await userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Error al eliminar el usuario." });
+            }
+
+            return Ok(new Response { Status = "Success", Message = "Usuario eliminado exitosamente." });
+        }
 
     }
 }

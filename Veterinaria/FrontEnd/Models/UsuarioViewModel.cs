@@ -13,5 +13,7 @@ namespace FrontEnd.Models
         public string? Password { get; set; }
 
         public IList<string>? Roles { get; set; }
+
+        public IList<string> AvailableRoles { get; set; } = new List<string>(); 
     }
 }

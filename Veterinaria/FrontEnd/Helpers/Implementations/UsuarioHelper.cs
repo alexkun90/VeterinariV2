@@ -1,7 +1,9 @@
 ﻿using FrontEnd.ApiModels;
 using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace FrontEnd.Helpers.Implementations
 {
@@ -13,32 +15,81 @@ namespace FrontEnd.Helpers.Implementations
             this._serviceRepository = serviceRepository;
         }
 
-        public UsuarioViewModel AddUsuario(UsuarioViewModel UsuarioViewModel)
+        public UsuarioViewModel AddUsuario(UsuarioViewModel usuarioViewModel)
         {
-            /*var responseMessage = _serviceRepository.PostResponse("api/CreateUser", Convertir(UsuarioViewModel));
-            if (responseMessage != null)
+            
+            var userAPI = new UserAPI
             {
-                var content =  responseMessage.Content.ReadAsStringAsync();
-            }*/
+                Id = usuarioViewModel.Id,
+                Username = usuarioViewModel.Username,
+                Email = usuarioViewModel.Email,
+                Password = usuarioViewModel.Password,
+                Roles = usuarioViewModel.Roles
+            };
 
-            return new UsuarioViewModel { };
+            var responseMessage = _serviceRepository.PostResponse("api/Usuario/CreateUser", userAPI);
+
+            if (responseMessage != null && responseMessage.IsSuccessStatusCode)
+            {
+                var content = responseMessage.Content.ReadAsStringAsync().Result;
+                var createdUser = JsonConvert.DeserializeObject<UserAPI>(content);
+
+                return new UsuarioViewModel
+                {
+                    Id = createdUser.Id,
+                    Username = createdUser.Username,
+                    Email = createdUser.Email,
+                    Roles = createdUser.Roles
+                };
+            }
+            else
+            {
+                Console.WriteLine("HTTP Error: " + responseMessage?.StatusCode);
+                throw new Exception("Error al crear el usuario.");
+            }
         }
 
-        public void DeleteCita(string id)
+        public void DeleteUsuario(string id)
         {
-            throw new NotImplementedException();
-        }
-
-        public UsuarioViewModel EditUsuario(string id, UsuarioViewModel UsuarioViewModel)
-        {
-            /*var responseMessage = _serviceRepository.PutResponse($"api/UpdateUser/{id}", Convertir(UsuarioViewModel));
+            HttpResponseMessage responseMessage = _serviceRepository.DeleteResponse("api/Usuario/DeleteUser/" + id.ToString());
             if (responseMessage != null)
             {
                 var content = responseMessage.Content.ReadAsStringAsync().Result;
-                
-            }*/
+            }
+        }
 
-            return new UsuarioViewModel { };
+        public UsuarioViewModel EditUsuario(string id, UsuarioViewModel usuarioViewModel)
+        {
+            var userAPI = new UserAPI
+            {
+                Id = usuarioViewModel.Id,
+                Username = usuarioViewModel.Username,
+                Email = usuarioViewModel.Email,
+                Password = usuarioViewModel.Password,
+                Roles = usuarioViewModel.Roles
+            };
+
+            var responseMessage = _serviceRepository.PutResponse($"api/Usuario/UpdateUser/{id}", userAPI);
+
+            if (responseMessage != null && responseMessage.IsSuccessStatusCode)
+            {
+                var content = responseMessage.Content.ReadAsStringAsync().Result;
+
+                var updatedUser = JsonConvert.DeserializeObject<UserAPI>(content);
+
+                return new UsuarioViewModel
+                {
+                    Id = updatedUser.Id,
+                    Username = updatedUser.Username,
+                    Email = updatedUser.Email,
+                    Roles = updatedUser.Roles
+                };
+            }
+            else
+            {
+                Console.WriteLine("HTTP Error: " + responseMessage?.StatusCode);
+                throw new Exception("Error al actualizar el usuario.");
+            }
         }
 
         public List<UsuarioViewModel> GetAllUsuarios()
@@ -144,6 +195,7 @@ namespace FrontEnd.Helpers.Implementations
 
             return usuarioViewModel;
         }
+
     }
 
 
