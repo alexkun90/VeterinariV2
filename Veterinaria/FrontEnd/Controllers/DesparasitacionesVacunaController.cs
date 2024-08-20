@@ -19,14 +19,23 @@ namespace FrontEnd.Controllers
         // GET: DesparasitacionesVacunaController
         public ActionResult Index()
         {
+            var desparasitaciones = DesparasitacionesVacunaHelper.GetDesparasitaciones();
+            var mascotas = MascotaHelper.GetMascotas();
+            
+            foreach (var desparasitacion in desparasitaciones)
+            {
+                desparasitacion.Mascotas = mascotas; 
+            }
 
-            return View(DesparasitacionesVacunaHelper.GetDesparasitaciones());
+            return View(desparasitaciones);
         }
 
         // GET: DesparasitacionesVacunaController/Details/5
         public ActionResult Details(int id)
         {
             DesparasitacionesVacunaViewModel desparasitacionesVacuna = DesparasitacionesVacunaHelper.GetDesparasitaciones(id);
+            desparasitacionesVacuna.Mascotas = MascotaHelper.GetMascotas();
+
             return View(desparasitacionesVacuna);
         }
 
