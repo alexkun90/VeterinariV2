@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.Producto)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MascotaId)
+                Mascota
             </th>
             <th></th>
         </tr>
@@ -39,9 +39,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Producto)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MascotaId)
-            </td>
+                <td>
+                    @{
+                        var nombreMascota = item.Mascotas.FirstOrDefault(m => m.MascotaId == item.MascotaId)?.NombreMascota;
+                    }
+                    @nombreMascota 
+                </td>
             <td>
                     @Html.ActionLink("Edit", "Edit", new { id=item.CodigoDesparasitacionVacuna }) |
                     @Html.ActionLink("Details", "Details", new { id=item.CodigoDesparasitacionVacuna }) |
