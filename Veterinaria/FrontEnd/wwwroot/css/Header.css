@@ -1,10 +1,11 @@
 nav {
     background-color: #eaae00;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between; 
     align-items: center;
     height: 90px;
     width: 100%;
+    padding: 0 20px; 
 }
 
 .logo-company {
@@ -14,8 +15,9 @@ nav {
 
 .menu {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    flex-grow: 1; 
+    justify-content: flex-start; 
 }
 
 .menu-item {
@@ -25,39 +27,47 @@ nav {
     font-size: 25px;
 }
 
-    .menu-item:hover {
-        font-size: 29px;
+.login-item {
+    color: #fefaf5;
+    text-decoration: none;
+    font-size: 20px;
+    margin-right:5px
+}
+
+.menu-item:last-child {
+    margin-right: 0; 
+}
+
+.menu-item:hover {
+    font-size: 29px;
+    transition: 0.5s;
+}
+
+.login-item:hover {
+    font-size: 22px;
+    transition: 0.5s;
+}
+
+.logout {
+    margin-left:auto;
+}
+
+.logout-item {
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+    .logout-item:hover {
+        color: #0d6efd;
+        font-size: 25px;
         transition: 0.5s;
     }
 
-input.input-menu {
-    height: 30px;
-    padding-bottom: 5px;
-    padding-top: 10px;
-    padding-left: 10px;
-    background-color: #ffc400;
-    border: none;
-    color: #ffffff;
-    font-size: 19px;
-    box-shadow: 30px 30px 190px -1px #000000;
-}
-
-    input.input-menu::placeholder {
-        color: #fff;
-        font-size: 19px;
-    }
-
-    input.input-menu:focus {
-        outline: none; /* quita el borde  cuandp hay  un focus */
-    }
-
-.button-menu {
-    background-color: #00bfcc;
-    height: 45px;
-    width: 50px;
-    border: none;
-    box-shadow: 10px -20px 180px -10px #000;
-    margin-right: 10px;
+.logout-item i {
+    margin-right: 8px;
 }
 
 .lupa-button {

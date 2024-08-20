@@ -1,0 +1,47 @@
+﻿@model FrontEnd.Models.UserViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_LayoutExterno";
+}
+
+<div class="login-Body">
+    <div class="login-container">
+         
+        <div class="form-container">
+            <div style="margin-bottom:40px;">
+                <h1 class="welcome-title">¡Bienvenido!</h1>
+            </div>
+            <form asp-action="Login" method="post" style="margin-right:30px;">
+                @Html.HiddenFor(Model => Model.ReturnUrl)
+                <div class="input-group">
+                    <label for="username">
+                        <input type="text" id="username" name="username" asp-for="UserName" placeholder="ingrese su nombre de usuario" required>
+                    </label>
+                </div>
+                <div class="input-group">
+                    <label for="password">
+                        <input type="password" id="password" name="password" asp-for="Password" placeholder="ingrese su contraseña" required>
+                    </label>
+                </div>
+                <button type="submit" class="login-btn">Iniciar Sesión</button>
+               
+                <div class="link">
+                    <a asp-area="" asp-controller="Account" asp-action="Register">¿No tienes usuario?</a>
+                </div>
+                
+            </form>
+        </div>
+        <div class="image-container">
+            <img src="~/img/login.jpg" alt="Login Image">
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
