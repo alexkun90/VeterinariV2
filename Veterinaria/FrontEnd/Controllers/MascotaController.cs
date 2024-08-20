@@ -8,32 +8,63 @@ namespace FrontEnd.Controllers
     public class MascotaController : Controller
     {
         IMascotaHelper MascotaHelper;
-        //IRazaHelper RazaHelper;
-        //ITipoMascota TipoMascota;
+        IRazasHelper RazaHelper;
+        ITiposMascotasHelper TipoMascotaHelper;
 
-        public MascotaController(IMascotaHelper mascotaHelper)
+        public MascotaController(IMascotaHelper mascotaHelper, IRazasHelper razaHelper, ITiposMascotasHelper tipoMascotaHelper)
         {
-            this.MascotaHelper = mascotaHelper;
+            MascotaHelper = mascotaHelper;
+            RazaHelper = razaHelper;
+            TipoMascotaHelper = tipoMascotaHelper;
         }
         // GET: MascotaController
         public ActionResult Index()
         {
             List<MascotaViewModel> lista = MascotaHelper.GetMascotas();
 
-            return View(MascotaHelper.GetMascotas());
+            foreach (var item in lista)
+            {
+                if (item.TipoMascotaId.HasValue)
+                {
+                    item.TipoMascota = TipoMascotaHelper.GetTiposMascota((int)item.TipoMascotaId);
+                }
+                else
+                {
+                    // Cuando TipoMascotaId asigna un valor null
+                    item.TipoMascota = null; 
+                }
+
+                if (item.RazaId.HasValue)
+                {
+                    item.Raza = RazaHelper.GetRaza((int)item.RazaId);
+                }
+                else
+                {
+                    // Cuando RazaId asigna un valor null
+                    item.Raza = null; 
+                }
+            }
+
+            return View(lista);
         }
+
 
         // GET: MascotaController/Details/5
         public ActionResult Details(int id)
         {
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
+            mascota.Razas = RazaHelper.GetRazas();
+            mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
             return View(mascota);
         }
 
         // GET: DistritoController/Create
         public ActionResult Create()
         {
-            return View();
+            MascotaViewModel mascota = new MascotaViewModel();
+            mascota.Razas = RazaHelper.GetRazas();
+            mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            return View(mascota);
         }
 
         // POST: DistritoController/Create
@@ -56,6 +87,8 @@ namespace FrontEnd.Controllers
         public ActionResult Edit(int id)
         {
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
+            mascota.Razas = RazaHelper.GetRazas();
+            mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
             return View(mascota);
         }
 
@@ -79,6 +112,8 @@ namespace FrontEnd.Controllers
         public ActionResult Delete(int id)
         {
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
+            mascota.Razas = RazaHelper.GetRazas();
+            mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
             return View(mascota);
         }
 
