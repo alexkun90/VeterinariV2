@@ -10,6 +10,8 @@
 
         public int? CitaId { get; set; }
 
-        //public virtual Cita? Cita { get; set; }
+        public IEnumerable<CitaViewModel> Citas { get; set; }
+
+        public CitaViewModel Cita { get; set; }
     }
 }

@@ -1,41 +1,45 @@
 ﻿@model FrontEnd.Models.RazasViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Raza";
+    <link rel="stylesheet" href="~/css/HomeSections/SectionCitas.css" asp-append-version="true" />
 }
 
 <h1>Edit</h1>
 
 <h4>RazasViewModel</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @Html.HiddenFor(model => model.CodigoRaza)
-         
+    <div class="card shadow-lg rounded border-0">
+        <div class="card-body p-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded shadow-sm"></div>
+
+                @Html.HiddenFor(model => model.CodigoRaza)
+
+                <div class="form-group mb-3">
+                    <label asp-for="NombreRaza" class="form-label fw-bold">Nombre de la Raza</label>
+                    <input asp-for="NombreRaza" class="form-control rounded-pill" placeholder="Ingrese el nombre de la raza" />
+                    <span asp-validation-for="NombreRaza" class="text-danger"></span>
+                </div>
             <div class="form-group">
-                <label asp-for="NombreRaza" class="control-label"></label>
-                <input asp-for="NombreRaza" class="form-control" />
-                <span asp-validation-for="NombreRaza" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TipoMascotaID" class="control-label"></label>
+                <label asp-for="TipoMascotaID" class="form-label fw-bold"></label>
                 @Html.DropDownListFor(model => model.TipoMascotaID, new SelectList(Model.TiposMascotas, "CodigoTipoMascota", "NombreTipoMascota"), "--Seleccione Tipo de Mascota--", new { @class = "form-control" })
                 <span asp-validation-for="TipoMascotaID" class="text-danger"></span>
             </div>
-           
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary rounded-pill px-4">
+                        <i class="fa fa-arrow-left"></i> Volver a la Lista
+                    </a>
+                    <input type="submit" value="Guardar" class="btn btn-primary rounded-pill px-4" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <br />
+</section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

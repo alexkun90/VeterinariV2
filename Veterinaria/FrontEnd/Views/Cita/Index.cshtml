@@ -1,78 +1,76 @@
 ﻿@model IEnumerable<FrontEnd.Models.CitaViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Registro de Citas";
+    <link rel="stylesheet" href="~/css/HomeSections/SectionCitas.css" asp-append-version="true" />
 }
 
-<h1>Index</h1>
+<section class="section-citas container mt-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-titulo text-primary">
+            <i class="fa fa-calendar"></i> Registro de Citas
+        </h1>
+        <a href="@Url.Action("Create")" class="btn btn-primary btn-create">
+            <i class="fa fa-plus"></i> Agregar Nueva Cita
+        </a>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CitaId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MascotaId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaHora)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VeterinarioPrincipalId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VeterinarioSecundarioId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DescripcionCita)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Diagnostico)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CitaId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MascotaId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaHora)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VeterinarioPrincipalId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VeterinarioSecundarioId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DescripcionCita)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Diagnostico)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.CitaId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.CitaId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.CitaId })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="section-tabla table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.CitaId)</th>
+                    <th>@Html.DisplayNameFor(model => model.MascotaId)</th>
+                    <th>@Html.DisplayNameFor(model => model.FechaHora)</th>
+                    <th>@Html.DisplayNameFor(model => model.VeterinarioPrincipalId)</th>
+                    <th>@Html.DisplayNameFor(model => model.VeterinarioSecundarioId)</th>
+                    <th>@Html.DisplayNameFor(model => model.DescripcionCita)</th>
+                    <th>@Html.DisplayNameFor(model => model.Diagnostico)</th>
+                    <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.CitaId)</td>
+                        <td>
+                            @{
+                                var nombreMascota = item.Mascotas.FirstOrDefault(m => m.MascotaId == item.MascotaId)?.NombreMascota;
+                            }@nombreMascota
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.FechaHora)</td>
+                        <td>
+                            @{
+                                var nombreVeterinario1 = item.Usuarios.FirstOrDefault(m => m.Id == item.VeterinarioPrincipalId)?.Username;
+                            }@nombreVeterinario1
+                        </td>
+                        <td>
+                            @{
+                                var nombreVeterinario2 = item.Usuarios.FirstOrDefault(m => m.Id == item.VeterinarioSecundarioId)?.Username;
+                            }@nombreVeterinario2
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.DescripcionCita)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Diagnostico)</td>
+                        <td>
+                            @{
+                                var estadoClass = item.Estado.HasValue ? (item.Estado.Value ? "badge-success" : "badge-danger") : "badge-secondary";
+                                var estadoTexto = item.Estado.HasValue ? (item.Estado.Value ? "Activo" : "Inactivo") : "Sin Definir";
+                            }
+                            <span class="badge @estadoClass">@estadoTexto</span>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                @Html.ActionLink("Editar", "Edit", new { id = item.CitaId }, new { @class = "btn btn-warning btn-sm" })
+                                @Html.ActionLink("Detalles", "Details", new { id = item.CitaId }, new { @class = "btn btn-info btn-sm" })
+                                @Html.ActionLink("Eliminar", "Delete", new { id = item.CitaId }, new { @class = "btn btn-danger btn-sm" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+</section>

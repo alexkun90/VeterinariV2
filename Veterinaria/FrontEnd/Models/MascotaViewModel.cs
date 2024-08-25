@@ -29,6 +29,8 @@ namespace FrontEnd.Models
         public byte[]? ImagenMascota { get; set; }
 
         public string? DueñoId { get; set; }
+        public IEnumerable<UsuarioViewModel> Usuarios { get; set; }
+        public UsuarioViewModel Usuario { get; set; }
 
         public string? CodigoUsuarioCreacion { get; set; }
 

@@ -5,90 +5,92 @@
     <link rel="stylesheet" href="~/css/HomeSections/SectionMascotas.css" asp-append-version="true" />
 }
 
-<section class="section-edit-mascota">
-    <div class="container">
-        <div class="section-header">
-            <h1 class="section-titulo">Editar Mascota</h1>
-            <hr />
-        </div>
+<section class="section-edit-mascota container mt-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-titulo text-primary">
+            <i class="fa fa-paw"></i> Editar Mascota
+        </h1>
+    </div>
 
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <form asp-action="Edit">
-                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+    <div class="card shadow-lg rounded border-0">
+        <div class="card-body p-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded shadow-sm"></div>
 
-                    @Html.HiddenFor(model => model.MascotaId)
+                @Html.HiddenFor(model => model.MascotaId)
 
-                    <div class="form-group">
-                        <label asp-for="NombreMascota" class="control-label"></label>
-                        <input asp-for="NombreMascota" class="form-control" placeholder="Nombre de la Mascota" />
-                        <span asp-validation-for="NombreMascota" class="text-danger"></span>
-                    </div>
+                <div class="form-group mb-3">
+                    <label asp-for="NombreMascota" class="form-label fw-bold">Nombre de la Mascota</label>
+                    <input asp-for="NombreMascota" class="form-control rounded-pill" placeholder="Nombre de la Mascota" />
+                    <span asp-validation-for="NombreMascota" class="text-danger"></span>
+                </div>
 
-                    <div class="form-group">
-                        <label asp-for="TipoMascotaId" class="control-label"></label>
-                        @Html.DropDownListFor(model => model.TipoMascotaId, new SelectList(Model.TiposMascotas, "CodigoTipoMascota", "NombreTipoMascota"), "--Seleccione Tipo de Mascota--", new { @class = "form-control" })
-                        <span asp-validation-for="TipoMascotaId" class="text-danger"></span>
-                    </div>
+                <div class="form-group mb-3">
+                    <label asp-for="TipoMascotaId" class="form-label fw-bold">Tipo de Mascota</label>
+                    @Html.DropDownListFor(model => model.TipoMascotaId, new SelectList(Model.TiposMascotas, "CodigoTipoMascota", "NombreTipoMascota"), "--Seleccione Tipo de Mascota--", new { @class = "form-control rounded-pill" })
+                    <span asp-validation-for="TipoMascotaId" class="text-danger"></span>
+                </div>
 
-                    <div class="form-group">
-                        <label asp-for="RazaId" class="control-label"></label>
-                        @Html.DropDownListFor(model => model.RazaId, new SelectList(Model.Razas, "CodigoRaza", "NombreRaza"), "--Seleccione Raza--", new { @class = "form-control" })
-                        <span asp-validation-for="RazaId" class="text-danger"></span>
-                    </div>
+                <div class="form-group mb-3">
+                    <label asp-for="RazaId" class="form-label fw-bold">Raza</label>
+                    @Html.DropDownListFor(model => model.RazaId, new SelectList(Model.Razas, "CodigoRaza", "NombreRaza"), "--Seleccione Raza--", new { @class = "form-control rounded-pill" })
+                    <span asp-validation-for="RazaId" class="text-danger"></span>
+                </div>
 
-                    <div class="form-group">
-                        <label asp-for="Genero" class="control-label"></label>
-                        <select asp-for="Genero" class="form-control">
-                            <option value="">--Seleccione Género--</option>
-                            <option value="Macho">Macho</option>
-                            <option value="Hembra">Hembra</option>
-                        </select>
-                        <span asp-validation-for="Genero" class="text-danger"></span>
-                    </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Genero" class="form-label fw-bold">Género</label>
+                    <select asp-for="Genero" class="form-control rounded-pill">
+                        <option value="">--Seleccione Género--</option>
+                        <option value="Macho">Macho</option>
+                        <option value="Hembra">Hembra</option>
+                    </select>
+                    <span asp-validation-for="Genero" class="text-danger"></span>
+                </div>
 
-                    <div class="form-group">
-                        <label asp-for="Edad" class="control-label"></label>
-                        <input asp-for="Edad" class="form-control" placeholder="Edad de la Mascota" />
-                        <span asp-validation-for="Edad" class="text-danger"></span>
-                    </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Edad" class="form-label fw-bold">Edad</label>
+                    <input asp-for="Edad" class="form-control rounded-pill" placeholder="Edad de la Mascota" />
+                    <span asp-validation-for="Edad" class="text-danger"></span>
+                </div>
 
-                    <div class="form-group">
-                        <label asp-for="Peso" class="control-label"></label>
-                        <input asp-for="Peso" class="form-control" placeholder="Peso en kg" />
-                        <span asp-validation-for="Peso" class="text-danger"></span>
-                    </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Peso" class="form-label fw-bold">Peso</label>
+                    <input asp-for="Peso" class="form-control rounded-pill" placeholder="Peso en kg" />
+                    <span asp-validation-for="Peso" class="text-danger"></span>
+                </div>
 
-                    <div class="form-group">
-                        <label asp-for="ImagenMascota" class="control-label"></label>
-                        <input asp-for="ImagenMascota" class="form-control" placeholder="URL de la Imagen" />
-                        <span asp-validation-for="ImagenMascota" class="text-danger"></span>
-                    </div>
+                <div class="form-group mb-3">
+                    <label asp-for="ImagenMascota" class="form-label fw-bold">Imagen</label>
+                    <input asp-for="ImagenMascota" class="form-control rounded-pill" placeholder="URL de la Imagen" />
+                    <span asp-validation-for="ImagenMascota" class="text-danger"></span>
+                </div>
 
-                    <div class="form-group">
-                        <label asp-for="DueñoId" class="control-label"></label>
-                        <input asp-for="DueñoId" class="form-control" placeholder="ID del Dueño" />
-                        <span asp-validation-for="DueñoId" class="text-danger"></span>
-                    </div>
+                <div class="form-group mb-3">
+                    <label asp-for="DueñoId" class="form-label fw-bold">ID del Dueño</label>
+                    @Html.DropDownListFor(model => model.DueñoId, new SelectList(Model.Usuarios, "Id", "Username"), "--Seleccione el dueño--", new { @class = "form-select rounded-pill" })
+                    <span asp-validation-for="DueñoId" class="text-danger"></span>
+                </div>
 
-                    <div class="form-group">
-                        <label asp-for="Estado" class="control-label"></label>
-                        <select asp-for="Estado" class="form-control">
-                            <option value="">--Seleccione Estado--</option>
-                            <option value="true">Activo</option>
-                            <option value="false">Inactivo</option>
-                        </select>
-                        <span asp-validation-for="Estado" class="text-danger"></span>
-                    </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Estado" class="form-label fw-bold">Estado</label>
+                    <select asp-for="Estado" class="form-control rounded-pill">
+                        <option value="">--Seleccione Estado--</option>
+                        <option value="true">Activo</option>
+                        <option value="false">Inactivo</option>
+                    </select>
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
 
-                    <div class="form-group text-center">
-                        <button type="submit" class="btn btn-success">Guardar Cambios</button>
-                        <a asp-action="Index" class="btn btn-secondary">Volver a la Lista</a>
-                    </div>
-                </form>
-            </div>
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary rounded-pill px-4">
+                        <i class="fa fa-arrow-left"></i> Volver a la Lista
+                    </a>
+                    <input type="submit" value="Guardar Cambios" class="btn btn-primary rounded-pill px-4" />
+                </div>
+            </form>
         </div>
     </div>
+    <br />
 </section>
 
 @section Scripts {

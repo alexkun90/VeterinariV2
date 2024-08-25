@@ -8,5 +8,7 @@
         public string NombrePadecimiento { get; set; } = null!;
 
         public int? MascotaID { get; set; }
+        public IEnumerable<MascotaViewModel> Mascotas { get; set; }
+        public MascotaViewModel Mascota { get; set; }
     }
 }
