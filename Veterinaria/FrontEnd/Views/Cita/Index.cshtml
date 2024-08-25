@@ -35,10 +35,22 @@
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.CitaId)</td>
-                        <td>@Html.DisplayFor(modelItem => item.MascotaId)</td>
+                        <td>
+                            @{
+                                var nombreMascota = item.Mascotas.FirstOrDefault(m => m.MascotaId == item.MascotaId)?.NombreMascota;
+                            }@nombreMascota
+                        </td>
                         <td>@Html.DisplayFor(modelItem => item.FechaHora)</td>
-                        <td>@Html.DisplayFor(modelItem => item.VeterinarioPrincipalId)</td>
-                        <td>@Html.DisplayFor(modelItem => item.VeterinarioSecundarioId)</td>
+                        <td>
+                            @{
+                                var nombreVeterinario1 = item.Usuarios.FirstOrDefault(m => m.Id == item.VeterinarioPrincipalId)?.Username;
+                            }@nombreVeterinario1
+                        </td>
+                        <td>
+                            @{
+                                var nombreVeterinario2 = item.Usuarios.FirstOrDefault(m => m.Id == item.VeterinarioSecundarioId)?.Username;
+                            }@nombreVeterinario2
+                        </td>
                         <td>@Html.DisplayFor(modelItem => item.DescripcionCita)</td>
                         <td>@Html.DisplayFor(modelItem => item.Diagnostico)</td>
                         <td>

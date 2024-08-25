@@ -1,4 +1,5 @@
-﻿using FrontEnd.Helpers.Interfaces;
+﻿using FrontEnd.Helpers.Implementations;
+using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -12,42 +13,35 @@ namespace FrontEnd.Controllers
         IMascotaHelper MascotaHelper;
         IRazasHelper RazaHelper;
         ITiposMascotasHelper TipoMascotaHelper;
+        IUsuarioHelper UsuarioHelper;
 
-        public MascotaController(IMascotaHelper mascotaHelper, IRazasHelper razaHelper, ITiposMascotasHelper tipoMascotaHelper)
+        public MascotaController(IMascotaHelper mascotaHelper, IRazasHelper razaHelper, ITiposMascotasHelper tipoMascotaHelper, IUsuarioHelper usuarioHelper)
         {
             MascotaHelper = mascotaHelper;
             RazaHelper = razaHelper;
             TipoMascotaHelper = tipoMascotaHelper;
+            UsuarioHelper = usuarioHelper;
         }
         // GET: MascotaController
         public ActionResult Index()
         {
-            List<MascotaViewModel> lista = MascotaHelper.GetMascotas();
+            
 
-            foreach (var item in lista)
+            var mascotas = MascotaHelper.GetMascotas();
+            var razas = RazaHelper.GetRazas();
+            var tiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            var usuarios = UsuarioHelper.GetAllUsuarios();
+
+            foreach (var item in mascotas)
             {
-                if (item.TipoMascotaId.HasValue)
-                {
-                    item.TipoMascota = TipoMascotaHelper.GetTiposMascota((int)item.TipoMascotaId);
-                }
-                else
-                {
-                    // Cuando TipoMascotaId asigna un valor null
-                    item.TipoMascota = null; 
-                }
 
-                if (item.RazaId.HasValue)
-                {
-                    item.Raza = RazaHelper.GetRaza((int)item.RazaId);
-                }
-                else
-                {
-                    // Cuando RazaId asigna un valor null
-                    item.Raza = null; 
-                }
+                item.TiposMascotas = tiposMascotas;
+                item.Razas = razas;
+                item.Usuarios = usuarios;
             }
+              
 
-            return View(lista);
+            return View(mascotas);
         }
 
 
@@ -57,6 +51,8 @@ namespace FrontEnd.Controllers
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
             mascota.Razas = RazaHelper.GetRazas();
             mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
+
             return View(mascota);
         }
 
@@ -66,6 +62,7 @@ namespace FrontEnd.Controllers
             MascotaViewModel mascota = new MascotaViewModel();
             mascota.Razas = RazaHelper.GetRazas();
             mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
             return View(mascota);
         }
 
@@ -91,6 +88,8 @@ namespace FrontEnd.Controllers
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
             mascota.Razas = RazaHelper.GetRazas();
             mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
+
             return View(mascota);
         }
 
@@ -116,6 +115,7 @@ namespace FrontEnd.Controllers
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
             mascota.Razas = RazaHelper.GetRazas();
             mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
             return View(mascota);
         }
 

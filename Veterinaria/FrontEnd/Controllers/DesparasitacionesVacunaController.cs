@@ -91,6 +91,8 @@ namespace FrontEnd.Controllers
         public ActionResult Delete(int id)
         {
             DesparasitacionesVacunaViewModel desparasitacionesVacuna = DesparasitacionesVacunaHelper.GetDesparasitaciones(id);
+            desparasitacionesVacuna.Mascotas = MascotaHelper.GetMascotas();
+
             return View(desparasitacionesVacuna);
         }
 

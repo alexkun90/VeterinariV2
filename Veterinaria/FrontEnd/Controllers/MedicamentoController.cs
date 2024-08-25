@@ -8,29 +8,41 @@ namespace FrontEnd.Controllers
     public class MedicamentoController : Controller
     {
         IMedicamentoHelper MedicamentoHelper;
-
-        public MedicamentoController(IMedicamentoHelper medicamentoHelper)
+        ICitaHelper CitaHelper;
+        public MedicamentoController(IMedicamentoHelper medicamentoHelper, ICitaHelper citaHelper)
         {
             MedicamentoHelper = medicamentoHelper;
+            CitaHelper = citaHelper;
         }
         // GET: MascotaController
         public ActionResult Index()
         {
-            List<MedicamentoViewModel> lista = MedicamentoHelper.GetMedicamentos();
-            return View(MedicamentoHelper.GetMedicamentos());
+            var lista = MedicamentoHelper.GetMedicamentos();
+            var citas = CitaHelper.GetAllCitas();
+
+            foreach(var item in lista)
+            {
+                item.Citas = citas;
+            }
+            return View(lista);
         }
 
         // GET: MascotaController/Details/5
         public ActionResult Details(int id)
         {
             MedicamentoViewModel medicamento = MedicamentoHelper.GetMedicamento(id);
+             medicamento.Citas = CitaHelper.GetAllCitas();
+
             return View(medicamento);
         }
 
         // GET: DistritoController/Create
         public ActionResult Create()
         {
-            return View();
+            MedicamentoViewModel medicamento = new MedicamentoViewModel();
+            medicamento.Citas = CitaHelper.GetAllCitas();
+
+            return View(medicamento);
         }
 
         // POST: DistritoController/Create
@@ -53,6 +65,8 @@ namespace FrontEnd.Controllers
         public ActionResult Edit(int id)
         {
             MedicamentoViewModel medicamento = MedicamentoHelper.GetMedicamento(id);
+            medicamento.Citas = CitaHelper.GetAllCitas();
+
             return View(medicamento);
         }
 
@@ -76,6 +90,8 @@ namespace FrontEnd.Controllers
         public ActionResult Delete(int id)
         {
             MedicamentoViewModel medicamento = MedicamentoHelper.GetMedicamento(id);
+            medicamento.Citas = CitaHelper.GetAllCitas();
+
             return View(medicamento);
         }
 

@@ -65,7 +65,7 @@
 
                 <div class="form-group mb-3">
                     <label asp-for="DueñoId" class="form-label fw-bold">ID del Dueño</label>
-                    <input asp-for="DueñoId" class="form-control rounded-pill" placeholder="Ingrese el ID del dueño" />
+                    @Html.DropDownListFor(model => model.DueñoId, new SelectList(Model.Usuarios, "Id", "Username"), "--Seleccione el dueño--", new { @class = "form-select rounded-pill" })
                     <span asp-validation-for="DueñoId" class="text-danger"></span>
                 </div>
 

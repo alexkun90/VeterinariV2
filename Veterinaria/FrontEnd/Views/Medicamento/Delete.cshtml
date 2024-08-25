@@ -31,6 +31,15 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Dosis)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Cita)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var fechaCita = Model.Citas.FirstOrDefault(m => m.CitaId == Model.CitaId)?.FechaHora;
+            }
+            @fechaCita
+        </dd>
         
     </dl>
     

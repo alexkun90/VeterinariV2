@@ -30,10 +30,13 @@
                 </dd>
 
                 <dt class="col-sm-3">
-                    <i class="fas fa-paw text-info"></i> Tipo de Mascota ID
+                    <i class="fas fa-paw text-info"></i> Tipo de Mascota
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.TipoMascota.NombreTipoMascota)
+                    @{
+                        var nombreTipoMascota = Model.TiposMascotas.FirstOrDefault(m => m.CodigoTipoMascota == Model.TipoMascotaID)?.NombreTipoMascota;
+                    }
+                    @nombreTipoMascota
                 </dd>
             </dl>
         </div>

@@ -21,17 +21,12 @@
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.MascotaId)</th>
                     <th>@Html.DisplayNameFor(model => model.NombreMascota)</th>
-                    <th>@Html.DisplayNameFor(model => model.TipoMascota.NombreTipoMascota)</th>
-                    <th>@Html.DisplayNameFor(model => model.Raza.NombreRaza)</th>
+                    <th>@Html.DisplayNameFor(model => model.TipoMascota)</th>
+                    <th>@Html.DisplayNameFor(model => model.Raza)</th>
                     <th>@Html.DisplayNameFor(model => model.Genero)</th>
                     <th>@Html.DisplayNameFor(model => model.Edad)</th>
                     <th>@Html.DisplayNameFor(model => model.Peso)</th>
-                    <th>@Html.DisplayNameFor(model => model.ImagenMascota)</th>
                     <th>@Html.DisplayNameFor(model => model.DueñoId)</th>
-                    <th>@Html.DisplayNameFor(model => model.CodigoUsuarioCreacion)</th>
-                    <th>@Html.DisplayNameFor(model => model.FechaCreacion)</th>
-                    <th>@Html.DisplayNameFor(model => model.CodigoUsuarioModificacion)</th>
-                    <th>@Html.DisplayNameFor(model => model.FechaModificacion)</th>
                     <th>@Html.DisplayNameFor(model => model.Estado)</th>
                     <th>Acciones</th>
                 </tr>
@@ -42,19 +37,24 @@
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.MascotaId)</td>
                         <td>@Html.DisplayFor(modelItem => item.NombreMascota)</td>
-                        <td>@Html.DisplayFor(modelItem => item.TipoMascota.NombreTipoMascota)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Raza.NombreRaza)</td>
+                        <td>
+                            @{
+                                var nombreTipoMascota = item.TiposMascotas.FirstOrDefault(m => m.CodigoTipoMascota == item.TipoMascotaId)?.NombreTipoMascota;
+                            }@nombreTipoMascota
+                        </td>
+                        <td>
+                            @{
+                                var nombreRaza = item.Razas.FirstOrDefault(m => m.CodigoRaza == item.RazaId)?.NombreRaza;
+                            }@nombreRaza
+                        </td>
                         <td>@Html.DisplayFor(modelItem => item.Genero)</td>
                         <td>@Html.DisplayFor(modelItem => item.Edad)</td>
                         <td>@Html.DisplayFor(modelItem => item.Peso)</td>
-                        <td>
-                            <img src="@Url.Content("~/images/mascotas/" + item.ImagenMascota)" alt="Imagen de @item.NombreMascota" class="img-thumbnail" style="max-width: 80px;" />
+                        <td> @{
+                            var nombreDueno = item.Usuarios.FirstOrDefault(m => m.Id == item.DueñoId)?.Username;
+                        }@nombreDueno
                         </td>
-                        <td>@Html.DisplayFor(modelItem => item.DueñoId)</td>
-                        <td>@Html.DisplayFor(modelItem => item.CodigoUsuarioCreacion)</td>
-                        <td>@Html.DisplayFor(modelItem => item.FechaCreacion)</td>
-                        <td>@Html.DisplayFor(modelItem => item.CodigoUsuarioModificacion)</td>
-                        <td>@Html.DisplayFor(modelItem => item.FechaModificacion)</td>
+
                         <td>
                             @{
                                 var estadoClass = item.Estado.HasValue ? (item.Estado.Value ? "badge-success" : "badge-danger") : "badge-secondary";

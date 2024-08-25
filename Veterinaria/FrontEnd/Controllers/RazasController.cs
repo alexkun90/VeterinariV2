@@ -21,18 +21,11 @@ namespace FrontEnd.Controllers
         // GET: RazasController
         public ActionResult Index()
         {
-            List<RazasViewModel> lista = RazasHelper.GetRazas();
+            var lista = RazasHelper.GetRazas();
+            var tipoMascotas = TipoMascotaHelper.GetTiposMascotas();
             foreach (var item in lista)
             {
-                if (item.TipoMascotaID.HasValue)
-                {
-                    item.TipoMascota = TipoMascotaHelper.GetTiposMascota((int)item.TipoMascotaID);
-                }
-                else
-                {
-                    // Cuando TipoMascotaId asigna un valor null
-                    item.TipoMascota = null;
-                }
+               item.TiposMascotas = tipoMascotas;
             }
                 return View(lista);
         }

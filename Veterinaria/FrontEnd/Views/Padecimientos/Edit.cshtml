@@ -24,7 +24,11 @@
                     <input asp-for="NombrePadecimiento" class="form-control rounded-pill" placeholder="Ingrese el nombre del padecimiento" />
                     <span asp-validation-for="NombrePadecimiento" class="text-danger"></span>
                 </div>
-
+                <div class="form-group mb-3">
+                    <label asp-for="MascotaID" class="form-label fw-bold">Mascota</label>
+                    @Html.DropDownListFor(model => model.MascotaID, new SelectList(Model.Mascotas, "MascotaId", "NombreMascota"), "--Seleccione la Mascota--", new { @class = "form-select rounded-pill" })
+                    <span asp-validation-for="MascotaID" class="text-danger"></span>
+                </div>
                 <div class="d-flex justify-content-between align-items-center mt-4">
                     <a href="@Url.Action("Index")" class="btn btn-outline-secondary rounded-pill px-4">
                         <i class="fa fa-arrow-left"></i> Volver a la Lista

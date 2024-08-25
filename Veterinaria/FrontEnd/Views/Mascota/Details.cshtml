@@ -33,14 +33,21 @@
                     <i class="fas fa-cat text-info"></i> Tipo de Mascota
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.TipoMascota.NombreTipoMascota)
+                    @{
+                        var nombreTipoMascota = Model.TiposMascotas.FirstOrDefault(m => m.CodigoTipoMascota == Model.TipoMascotaId)?.NombreTipoMascota;
+                    }
+                    @nombreTipoMascota
                 </dd>
 
                 <dt class="col-sm-3">
                     <i class="fas fa-dog text-warning"></i> Raza
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Raza.NombreRaza)
+
+                    @{
+                        var nombreRazaMascota = Model.Razas.FirstOrDefault(m => m.CodigoRaza == Model.RazaId)?.NombreRaza;
+                    }
+                    @nombreRazaMascota
                 </dd>
 
                 <dt class="col-sm-3">
@@ -75,14 +82,21 @@
                     <i class="fas fa-user text-primary"></i> ID del Dueño
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.DueñoId)
+
+                    @{
+                        var nombreUsuario = Model.Usuarios.FirstOrDefault(m => m.Id == Model.DueñoId)?.Username;
+                    }
+                    @nombreUsuario
                 </dd>
 
                 <dt class="col-sm-3">
                     <i class="fas fa-user-circle text-info"></i> Código de Usuario (Creación)
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.CodigoUsuarioCreacion)
+                    @{
+                        var UsuarioCreacion = Model.Usuarios.FirstOrDefault(m => m.Id == Model.CodigoUsuarioCreacion)?.Username;
+                    }
+                    @UsuarioCreacion
                 </dd>
 
                 <dt class="col-sm-3">
@@ -96,7 +110,10 @@
                     <i class="fas fa-user-circle text-danger"></i> Código de Usuario (Modificación)
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.CodigoUsuarioModificacion)
+                    @{
+                        var UsuarioModificacion = Model.Usuarios.FirstOrDefault(m => m.Id == Model.CodigoUsuarioModificacion)?.Username;
+                    }
+                    @UsuarioModificacion
                 </dd>
 
                 <dt class="col-sm-3">

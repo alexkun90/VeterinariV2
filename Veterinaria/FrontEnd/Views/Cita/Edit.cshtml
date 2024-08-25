@@ -33,13 +33,13 @@
 
                 <div class="form-group mb-3">
                     <label asp-for="VeterinarioPrincipalId" class="form-label fw-bold">Veterinario Principal</label>
-                    <input asp-for="VeterinarioPrincipalId" class="form-control rounded-pill" placeholder="Ingrese el ID del Veterinario Principal" />
+                    @Html.DropDownListFor(model => model.VeterinarioPrincipalId, new SelectList(Model.Usuarios, "Id", "Username"), "--Seleccione el veterinario--", new { @class = "form-select rounded-pill" })
                     <span asp-validation-for="VeterinarioPrincipalId" class="text-danger"></span>
                 </div>
 
                 <div class="form-group mb-3">
                     <label asp-for="VeterinarioSecundarioId" class="form-label fw-bold">Veterinario Secundario</label>
-                    <input asp-for="VeterinarioSecundarioId" class="form-control rounded-pill" placeholder="Ingrese el ID del Veterinario Secundario" />
+                    @Html.DropDownListFor(model => model.VeterinarioSecundarioId, new SelectList(Model.Usuarios, "Id", "Username"), "--Seleccione el veterinario--", new { @class = "form-select rounded-pill" })
                     <span asp-validation-for="VeterinarioSecundarioId" class="text-danger"></span>
                 </div>
 
@@ -59,8 +59,8 @@
                     <label asp-for="Estado" class="form-label fw-bold">Estado</label>
                     <select asp-for="Estado" class="form-control rounded-pill">
                         <option value="">--Seleccione Estado--</option>
-                        <option value="Activo">Activo</option>
-                        <option value="Inactivo">Inactivo</option>
+                        <option value="true">Activo</option>
+                        <option value="false">Inactivo</option>
                     </select>
                     <span asp-validation-for="Estado" class="text-danger"></span>
                 </div>

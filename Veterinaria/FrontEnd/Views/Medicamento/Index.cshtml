@@ -22,6 +22,7 @@
                     <th>@Html.DisplayNameFor(model => model.CodigoMedicamento)</th>
                     <th>@Html.DisplayNameFor(model => model.NombreMedicamento)</th>
                     <th>@Html.DisplayNameFor(model => model.Dosis)</th>
+                    <th>@Html.DisplayNameFor(model => model.Cita)</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -32,6 +33,11 @@
                         <td>@Html.DisplayFor(modelItem => item.CodigoMedicamento)</td>
                         <td>@Html.DisplayFor(modelItem => item.NombreMedicamento)</td>
                         <td>@Html.DisplayFor(modelItem => item.Dosis)</td>
+                        <td>
+                            @{
+                                var fechaHora = item.Citas.FirstOrDefault(m => m.CitaId == item.CitaId)?.FechaHora;
+                            }@fechaHora
+                        </td>
                         <td>
                             <div class="btn-group" role="group">
                                 @Html.ActionLink("Editar", "Edit", new { id = item.CodigoMedicamento }, new { @class = "btn btn-warning btn-sm" })

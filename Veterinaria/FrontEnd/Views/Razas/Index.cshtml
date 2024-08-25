@@ -21,7 +21,7 @@
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.CodigoRaza)</th>
                     <th>@Html.DisplayNameFor(model => model.NombreRaza)</th>
-                    <th>@Html.DisplayNameFor(model => model.TipoMascotaID)</th>
+                    <th>@Html.DisplayNameFor(model => model.TipoMascota)</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -31,7 +31,11 @@
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.CodigoRaza)</td>
                         <td>@Html.DisplayFor(modelItem => item.NombreRaza)</td>
-                        <td> @Html.DisplayFor(modelItem => item.TipoMascota.NombreTipoMascota)</td>
+                        <td>
+                            @{
+                                var nombreTipoMascota = item.TiposMascotas.FirstOrDefault(m => m.CodigoTipoMascota == item.TipoMascotaID)?.NombreTipoMascota;
+                            }@nombreTipoMascota
+                        </td>
                         <td>
                             <div class="btn-group" role="group">
                                 @Html.ActionLink("Editar", "Edit", new { id = item.CodigoRaza }, new { @class = "btn btn-warning btn-sm" })

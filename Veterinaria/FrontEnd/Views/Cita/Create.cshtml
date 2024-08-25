@@ -31,13 +31,13 @@
 
                 <div class="form-group mb-3">
                     <label asp-for="VeterinarioPrincipalId" class="form-label fw-bold">Veterinario Principal</label>
-                    <input asp-for="VeterinarioPrincipalId" class="form-control rounded-pill" placeholder="Ingrese el ID del veterinario principal" />
+                    @Html.DropDownListFor(model => model.VeterinarioPrincipalId, new SelectList(Model.Usuarios, "Id", "Username"), "--Seleccione el veterinario--", new { @class = "form-select rounded-pill" })
                     <span asp-validation-for="VeterinarioPrincipalId" class="text-danger"></span>
                 </div>
 
                 <div class="form-group mb-3">
                     <label asp-for="VeterinarioSecundarioId" class="form-label fw-bold">Veterinario Asistente</label>
-                    <input asp-for="VeterinarioSecundarioId" class="form-control rounded-pill" placeholder="Ingrese el ID del veterinario asistente" />
+                    @Html.DropDownListFor(model => model.VeterinarioSecundarioId, new SelectList(Model.Usuarios, "Id", "Username"), "--Seleccione el veterinario--", new { @class = "form-select rounded-pill" })
                     <span asp-validation-for="VeterinarioSecundarioId" class="text-danger"></span>
                 </div>
 
