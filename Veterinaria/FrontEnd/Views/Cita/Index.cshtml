@@ -75,9 +75,15 @@
                         </td>
                         <td>
                             <div class="btn-group" role="group">
-                                @Html.ActionLink("Editar", "Edit", new { id = item.CitaId }, new { @class = "btn btn-warning btn-sm" })
+                                @if (!User.IsInRole("User"))
+                                {
+                                    @Html.ActionLink("Editar", "Edit", new { id = item.CitaId }, new { @class = "btn btn-warning btn-sm" })
+                                }
                                 @Html.ActionLink("Detalles", "Details", new { id = item.CitaId }, new { @class = "btn btn-info btn-sm" })
-                                @Html.ActionLink("Eliminar", "Delete", new { id = item.CitaId }, new { @class = "btn btn-danger btn-sm" })
+                                @if (!User.IsInRole("User"))
+                                {
+                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.CitaId }, new { @class = "btn btn-danger btn-sm" })
+                                }
                             </div>
                         </td>
                     </tr>
