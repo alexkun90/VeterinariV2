@@ -22,6 +22,8 @@
 
         public bool? Estado { get; set; }
 
+        public string? UsuarioId { get; set; }
+
 
     }
 }

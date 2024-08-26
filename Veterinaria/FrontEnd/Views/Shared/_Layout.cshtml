@@ -38,11 +38,7 @@
                 {
                     <a class="menu-item" asp-area="" asp-controller="Mascota" asp-action="IndexCliente">Mascotas</a>
                 }
-                @if (User.IsInRole("User"))
-                {
-                    <a class="menu-item" asp-area="" asp-controller="Cita" asp-action="IndexCliente">Citas</a>
-                }
-                else if (User.IsInRole("Veterinario"))
+                @if (User.IsInRole("User") || User.IsInRole("Veterinario") || User.IsInRole("Admin"))
                 {
                     <a class="menu-item" asp-area="" asp-controller="Cita" asp-action="Index">Citas</a>
                 }

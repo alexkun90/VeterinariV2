@@ -4,6 +4,7 @@ using FrontEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FrontEnd.Controllers
 {
@@ -23,22 +24,27 @@ namespace FrontEnd.Controllers
         }
         // GET: CitaController
 
-        [Authorize(Roles = "Veterinario")]
+        [Authorize(Roles = "Veterinario, User, Admin")]
         public ActionResult Index()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var lista = citaHelper.GetAllCitas();
+            var citasFiltradas = lista.Where(c => c.UsuarioId == userId).ToList();
+
             var usuarios = UsuarioHelper.GetAllUsuarios();
             var mascotas = mascotaHelper.GetMascotas();
 
-            foreach (var item in lista)
+            foreach (var item in citasFiltradas)
             {
                 item.Usuarios = usuarios;
                 item.Mascotas = mascotas;
             }
 
-                return View(lista);
+            return View(citasFiltradas);
         }
-         [Authorize(Roles = "User")]
+
+
+        [Authorize(Roles = "User")]
         public ActionResult IndexCliente()
         {
             var lista = citaHelper.GetAllCitas();
@@ -69,11 +75,19 @@ namespace FrontEnd.Controllers
         public ActionResult Create()
         {
             CitaViewModel cita = new CitaViewModel();
+
             cita.Mascotas = mascotaHelper.GetMascotas();
-            cita.Usuarios = UsuarioHelper.GetAllUsuarios();
+            var todosLosUsuarios = UsuarioHelper.GetAllUsuarios();
+
+            var veterinarios = todosLosUsuarios
+        .Where(u => u.Roles != null && u.Roles.Contains("Veterinario"))
+        .ToList();
+
+            cita.Usuarios = veterinarios;
 
             return View(cita);
         }
+
 
         // POST: CitaController/Create
         [HttpPost]
