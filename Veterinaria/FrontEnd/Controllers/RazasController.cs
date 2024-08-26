@@ -2,38 +2,50 @@
 
 using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace FrontEnd.Controllers
 {
+    [Authorize(Roles = "User , Veterinario")]
     public class RazasController : Controller
     {
         IRazasHelper RazasHelper;
-
-        public RazasController(IRazasHelper razasHelper)
+        ITiposMascotasHelper TipoMascotaHelper;
+        public RazasController(IRazasHelper razasHelper, ITiposMascotasHelper tipoMascotaHelper)
         {
-            this.RazasHelper = razasHelper;
+            RazasHelper = razasHelper;
+            TipoMascotaHelper = tipoMascotaHelper;
         }
 
         // GET: RazasController
         public ActionResult Index()
         {
-            return View(RazasHelper.GetRazas());
+            var lista = RazasHelper.GetRazas();
+            var tipoMascotas = TipoMascotaHelper.GetTiposMascotas();
+            foreach (var item in lista)
+            {
+               item.TiposMascotas = tipoMascotas;
+            }
+                return View(lista);
         }
 
         // GET: RazasController/Details/5
         public ActionResult Details(int id)
         {
             RazasViewModel razas = RazasHelper.GetRaza(id);
+            razas.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
             return View(razas);
         }
 
         // GET: RazasController/Create
         public ActionResult Create()
         {
-            return View();
+            RazasViewModel razas = new RazasViewModel();
+            razas.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            return View(razas);
         }
 
         // POST: RazasController/Create
@@ -60,6 +72,7 @@ namespace FrontEnd.Controllers
         public ActionResult Edit(int id)
         {
             RazasViewModel razas = RazasHelper.GetRaza(id);
+            razas.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
             return View(razas);
         }
 
@@ -84,6 +97,7 @@ namespace FrontEnd.Controllers
 
         {
             RazasViewModel razas = RazasHelper.GetRaza(id);
+            razas.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
             return View(razas);
         }
 

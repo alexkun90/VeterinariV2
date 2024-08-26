@@ -1,36 +1,54 @@
 ﻿@model FrontEnd.Models.PadecimientosViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles del Padecimiento";
+    <link rel="stylesheet" href="~/css/HomeSections/SectionCitas.css" asp-append-version="true" />
 }
 
-<h1>Details</h1>
+<section class="section-edit-cita container mt-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-titulo text-primary">
+            <i class="fas fa-heartbeat"></i> Detalles del Padecimiento
+        </h1>
+    </div>
 
-<div>
-    <h4>PadecimientosViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CodigoPadecimiento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CodigoPadecimiento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NombrePadecimiento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NombrePadecimiento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MascotaID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MascotaID)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CodigoPadecimiento }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="card shadow-lg rounded border-0">
+        <div class="card-body p-4">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">
+                    <i class="fas fa-barcode text-primary"></i> Código del Padecimiento
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.CodigoPadecimiento)
+                </dd>
+
+                <dt class="col-sm-3">
+                    <i class="fas fa-notes-medical text-success"></i> Nombre del Padecimiento
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.NombrePadecimiento)
+                </dd>
+
+                <dt class="col-sm-3">
+                    <i class="fas fa-paw text-info"></i> Mascota
+                </dt>
+                <dd class="col-sm-9">
+                    @{
+                        var nombreMascota = Model.Mascotas.FirstOrDefault(m => m.MascotaId == Model.MascotaID)?.NombreMascota;
+                    }
+                    @nombreMascota
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <a href="@Url.Action("Index")" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="fa fa-arrow-left"></i> Volver a la Lista
+        </a>
+        <a class="btn btn-primary rounded-pill px-4" href="@Url.Action("Edit", new { id = Model.CodigoPadecimiento })">
+            <i class="fas fa-edit"></i> Editar
+        </a>
+    </div>
+    <br />
+</section>

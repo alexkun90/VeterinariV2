@@ -1,10 +1,12 @@
 ﻿using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FrontEnd.Controllers
 {
+    [Authorize(Roles = "Veterinario")]
     public class DesparasitacionesVacunaController : Controller
     {
         IDesparasitacionesVacunaHelper DesparasitacionesVacunaHelper;
@@ -91,6 +93,8 @@ namespace FrontEnd.Controllers
         public ActionResult Delete(int id)
         {
             DesparasitacionesVacunaViewModel desparasitacionesVacuna = DesparasitacionesVacunaHelper.GetDesparasitaciones(id);
+            desparasitacionesVacuna.Mascotas = MascotaHelper.GetMascotas();
+
             return View(desparasitacionesVacuna);
         }
 

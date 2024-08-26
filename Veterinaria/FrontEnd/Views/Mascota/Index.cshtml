@@ -1,113 +1,88 @@
 ﻿@model IEnumerable<FrontEnd.Models.MascotaViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Registro de Mascotas";
+    <link rel="stylesheet" href="~/css/HomeSections/SectionMascotas.css" asp-append-version="true" />
 }
 
-<h1>Index</h1>
+<section class="section-mascotas container mt-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-titulo text-primary">
+            <i class="fa fa-paw"></i> Registro de Mascotas
+        </h1>
+        <a href="@Url.Action("Create")" class="btn btn-primary btn-create">
+            <i class="fa fa-plus"></i> Agregar Nueva Mascota
+        </a>
+        @if (User.IsInRole("Admin") || User.IsInRole("Veterinario"))
+        {
+             <a class="btn btn-secondary btn-create" asp-area="" asp-controller="Razas" asp-action="Index">
+            <i class="fa fa-plus"></i>   Razas
+            </a>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MascotaId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreMascota)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoMascotaId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RazaId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Genero)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Edad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Peso)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagenMascota)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DueñoId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoUsuarioCreacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaCreacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoUsuarioModificacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaModificacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MascotaId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreMascota)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoMascotaId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RazaId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Edad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Peso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImagenMascota)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DueñoId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodigoUsuarioCreacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaCreacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodigoUsuarioModificacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaModificacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.MascotaId }) |
-                @Html.ActionLink("Details", "Details", new {  id=item.MascotaId }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.MascotaId })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            <a class="btn btn-success btn-create" asp-area="" asp-controller="TiposMascotas" asp-action="Index">
+            <i class="fa fa-plus"></i>   Tipos Mascotas
+            </a>
+        }
+       
+    </div>
+
+    <div class="section-tabla table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.MascotaId)</th>
+                    <th>@Html.DisplayNameFor(model => model.NombreMascota)</th>
+                    <th>@Html.DisplayNameFor(model => model.TipoMascota)</th>
+                    <th>@Html.DisplayNameFor(model => model.Raza)</th>
+                    <th>@Html.DisplayNameFor(model => model.Genero)</th>
+                    <th>@Html.DisplayNameFor(model => model.Edad)</th>
+                    <th>@Html.DisplayNameFor(model => model.Peso)</th>
+                    <th>@Html.DisplayNameFor(model => model.DueñoId)</th>
+                    <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.MascotaId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NombreMascota)</td>
+                        <td>
+                            @{
+                                var nombreTipoMascota = item.TiposMascotas.FirstOrDefault(m => m.CodigoTipoMascota == item.TipoMascotaId)?.NombreTipoMascota;
+                            }@nombreTipoMascota
+                        </td>
+                        <td>
+                            @{
+                                var nombreRaza = item.Razas.FirstOrDefault(m => m.CodigoRaza == item.RazaId)?.NombreRaza;
+                            }@nombreRaza
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Genero)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Edad)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Peso)</td>
+                        <td> @{
+                            var nombreDueno = item.Usuarios.FirstOrDefault(m => m.Id == item.DueñoId)?.Username;
+                        }@nombreDueno
+                        </td>
+
+                        <td>
+                            @{
+                                var estadoClass = item.Estado.HasValue ? (item.Estado.Value ? "badge-success" : "badge-danger") : "badge-secondary";
+                                var estadoTexto = item.Estado.HasValue ? (item.Estado.Value ? "Activo" : "Inactivo") : "Sin Definir";
+                            }
+                            <span class="badge @estadoClass">@estadoTexto</span>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                @Html.ActionLink("Editar", "Edit", new { id = item.MascotaId }, new { @class = "btn btn-warning btn-sm" })
+                                @Html.ActionLink("Detalles", "Details", new { id = item.MascotaId }, new { @class = "btn btn-info btn-sm" })
+                                @Html.ActionLink("Eliminar", "Delete", new { id = item.MascotaId }, new { @class = "btn btn-danger btn-sm" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

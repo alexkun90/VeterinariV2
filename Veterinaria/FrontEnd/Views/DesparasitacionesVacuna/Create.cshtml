@@ -1,43 +1,54 @@
 ﻿@model FrontEnd.Models.DesparasitacionesVacunaViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Desparasitación o Vacuna";
+    <link rel="stylesheet" href="~/css/HomeSections/SectionCitas.css" asp-append-version="true" />
 }
 
-<h1>Create</h1>
-
-<h4>DesparasitacionesVacunaViewModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Tipo" class="control-label"></label>
-                <input asp-for="Tipo" class="form-control" />
-                <span asp-validation-for="Tipo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Producto" class="control-label"></label>
-                <input asp-for="Producto" class="form-control" />
-                <span asp-validation-for="Producto" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MascotaId" class="control-label"></label>
-                @Html.DropDownListFor(model => model.MascotaId, new SelectList(Model.Mascotas, "MascotaId", "NombreMascota"), "--Seleccione Mascota--")
-                <span asp-validation-for="MascotaId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<section class="section-citas container mt-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-titulo text-primary">
+            <i class="fa fa-syringe"></i> Crear Desparasitación o Vacuna
+        </h1>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="card shadow-lg rounded border-0">
+        <div class="card-body p-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded shadow-sm"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Tipo" class="form-label fw-bold">Tipo</label>
+                    <input asp-for="Tipo" class="form-control rounded-pill" placeholder="Ingrese el tipo de desparasitación o vacuna" />
+                    <span asp-validation-for="Tipo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Producto" class="form-label fw-bold">Producto</label>
+                    <input asp-for="Producto" class="form-control rounded-pill" placeholder="Ingrese el nombre del producto" />
+                    <span asp-validation-for="Producto" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="MascotaId" class="form-label fw-bold">Mascota</label>
+                    @Html.DropDownListFor(model => model.MascotaId, new SelectList(Model.Mascotas, "MascotaId", "NombreMascota"), "--Seleccione la Mascota--", new { @class = "form-select rounded-pill" })
+                    <span asp-validation-for="MascotaId" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary rounded-pill px-4">
+                        <i class="fa fa-arrow-left"></i> Volver a la Lista
+                    </a>
+                    <input type="submit" value="Crear" class="btn btn-primary rounded-pill px-4" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+</section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

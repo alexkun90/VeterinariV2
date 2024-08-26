@@ -1,14 +1,27 @@
+using Entities.Entities;
 using FrontEnd.Helpers.Implementations;
 using FrontEnd.Helpers.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(x => x.LoginPath = "/account/login");
+
+
+builder.Services.AddSession();
+
+
+
 //Configuracion FrontEnd
-
-
 builder.Services.AddHttpClient<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 
@@ -26,6 +39,12 @@ builder.Services.AddScoped<IRazasHelper, RazasHelper>();
 builder.Services.AddScoped<IPadecimientosHelper, PadecimientosHelper>();
 // tipos mascotas
 builder.Services.AddScoped<ITiposMascotasHelper, TiposMascotasHelper>();
+//usuarios
+builder.Services.AddScoped<IUsuarioHelper, UsuarioHelper>();
+
+//Security
+builder.Services.AddScoped<ISecurityHelper, SecurityHelper>();
+
 
 //Soporte Paginas Razor
 builder.Services.AddControllersWithViews();
@@ -41,6 +60,8 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 

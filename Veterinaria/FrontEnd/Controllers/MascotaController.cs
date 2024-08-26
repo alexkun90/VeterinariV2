@@ -1,39 +1,94 @@
-﻿using FrontEnd.Helpers.Interfaces;
+﻿using FrontEnd.Helpers.Implementations;
+using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FrontEnd.Controllers
 {
+    [Authorize]
     public class MascotaController : Controller
     {
         IMascotaHelper MascotaHelper;
-        //IRazaHelper RazaHelper;
-        //ITipoMascota TipoMascota;
+        IRazasHelper RazaHelper;
+        ITiposMascotasHelper TipoMascotaHelper;
+        IUsuarioHelper UsuarioHelper;
 
-        public MascotaController(IMascotaHelper mascotaHelper)
+        public MascotaController(IMascotaHelper mascotaHelper, IRazasHelper razaHelper, ITiposMascotasHelper tipoMascotaHelper, IUsuarioHelper usuarioHelper)
         {
-            this.MascotaHelper = mascotaHelper;
+            MascotaHelper = mascotaHelper;
+            RazaHelper = razaHelper;
+            TipoMascotaHelper = tipoMascotaHelper;
+            UsuarioHelper = usuarioHelper;
         }
+
         // GET: MascotaController
+        [Authorize(Roles = "Admin , Veterinario")]
         public ActionResult Index()
         {
-            List<MascotaViewModel> lista = MascotaHelper.GetMascotas();
+            var mascotas = MascotaHelper.GetMascotas();
+            var razas = RazaHelper.GetRazas();
+            var tiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            var usuarios = UsuarioHelper.GetAllUsuarios();
 
-            return View(MascotaHelper.GetMascotas());
+            foreach (var item in mascotas)
+            {
+
+                item.TiposMascotas = tiposMascotas;
+                item.Razas = razas;
+                item.Usuarios = usuarios;
+            }
+              
+
+            return View(mascotas);
+        }
+        [Authorize(Roles = "User")]
+        public ActionResult IndexCliente()
+        {
+            // Obtener el UserId del usuario logueado
+            var identidad = User.Identity as ClaimsIdentity;
+            string idUsuarioLoggeado = identidad.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            ViewData["UserId"] = idUsuarioLoggeado;
+            // Filtrar las mascotas por el UserId
+            var mascotas = MascotaHelper.GetMascotas().Where(m => m.DueñoId == idUsuarioLoggeado).ToList();
+
+            var razas = RazaHelper.GetRazas();
+            var tiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            var usuarios = UsuarioHelper.GetAllUsuarios();
+            
+            foreach (var item in mascotas)
+            {
+
+                item.TiposMascotas = tiposMascotas;
+                item.Razas = razas;
+                item.Usuarios = usuarios;
+            }
+
+
+            return View(mascotas);
         }
 
         // GET: MascotaController/Details/5
         public ActionResult Details(int id)
         {
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
+            mascota.Razas = RazaHelper.GetRazas();
+            mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
+
             return View(mascota);
         }
 
         // GET: DistritoController/Create
         public ActionResult Create()
         {
-            return View();
+            MascotaViewModel mascota = new MascotaViewModel();
+            mascota.Razas = RazaHelper.GetRazas();
+            mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
+            return View(mascota);
         }
 
         // POST: DistritoController/Create
@@ -56,6 +111,10 @@ namespace FrontEnd.Controllers
         public ActionResult Edit(int id)
         {
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
+            mascota.Razas = RazaHelper.GetRazas();
+            mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
+
             return View(mascota);
         }
 
@@ -79,6 +138,9 @@ namespace FrontEnd.Controllers
         public ActionResult Delete(int id)
         {
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
+            mascota.Razas = RazaHelper.GetRazas();
+            mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
             return View(mascota);
         }
 
