@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@600&display=swaprel=" stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!--Links hacia las hojas de estilo css-->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -16,15 +17,12 @@
     <link rel="stylesheet" href="~/css/Footer.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-    <link rel="stylesheet" href="~/Veterinaria.styles.css" asp-append-version="true" />
-
     <link rel="icon" type="image/png" href="Img/Logo.png">
 
 </head>
 <body>
     <header>
         <nav>
-
             <div class="menu">
                 <a class="menu-item" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 <a class="menu-item" asp-area="" asp-controller="Mascota" asp-action="Index">Mascotas</a>
@@ -33,6 +31,24 @@
                 <a class="menu-item" asp-area="" asp-controller="DesparasitacionesVacuna" asp-action="Index">Desparasitaciones</a>
                 <a class="menu-item" asp-area="" asp-controller="Home" asp-action="Index">Admin</a>
             </div>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <a class="login-item" asp-controller="Account" asp-action="Login">Inicio Sesión</a> 
+                <span style="color:#fff; margin-right:5px; font-size:30px">|</span>
+                <a class="login-item" asp-controller="Account" asp-action="Register">Registrarse</a>
+            }
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                
+                <div class="logout">
+                    <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+                        <button type="submit" class="logout-item" style="border: none; background: transparent; cursor: pointer;">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </form>
+                </div>
+            }
         </nav>
     </header>
     <main>
