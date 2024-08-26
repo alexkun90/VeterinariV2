@@ -2,12 +2,14 @@
 
 using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace FrontEnd.Controllers
 {
+    [Authorize(Roles = "User , Veterinario")]
     public class RazasController : Controller
     {
         IRazasHelper RazasHelper;

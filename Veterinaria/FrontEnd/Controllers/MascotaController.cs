@@ -4,6 +4,7 @@ using FrontEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FrontEnd.Controllers
 {
@@ -22,11 +23,11 @@ namespace FrontEnd.Controllers
             TipoMascotaHelper = tipoMascotaHelper;
             UsuarioHelper = usuarioHelper;
         }
+
         // GET: MascotaController
+        [Authorize(Roles = "Admin , Veterinario")]
         public ActionResult Index()
         {
-            
-
             var mascotas = MascotaHelper.GetMascotas();
             var razas = RazaHelper.GetRazas();
             var tiposMascotas = TipoMascotaHelper.GetTiposMascotas();
@@ -43,7 +44,31 @@ namespace FrontEnd.Controllers
 
             return View(mascotas);
         }
+        [Authorize(Roles = "User")]
+        public ActionResult IndexCliente()
+        {
+            // Obtener el UserId del usuario logueado
+            var identidad = User.Identity as ClaimsIdentity;
+            string idUsuarioLoggeado = identidad.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            ViewData["UserId"] = idUsuarioLoggeado;
+            // Filtrar las mascotas por el UserId
+            var mascotas = MascotaHelper.GetMascotas().Where(m => m.DueñoId == idUsuarioLoggeado).ToList();
 
+            var razas = RazaHelper.GetRazas();
+            var tiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            var usuarios = UsuarioHelper.GetAllUsuarios();
+            
+            foreach (var item in mascotas)
+            {
+
+                item.TiposMascotas = tiposMascotas;
+                item.Razas = razas;
+                item.Usuarios = usuarios;
+            }
+
+
+            return View(mascotas);
+        }
 
         // GET: MascotaController/Details/5
         public ActionResult Details(int id)

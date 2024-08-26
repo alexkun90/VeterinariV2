@@ -13,6 +13,19 @@
         <a href="@Url.Action("Create")" class="btn btn-primary btn-create">
             <i class="fa fa-plus"></i> Agregar Nueva Cita
         </a>
+         @if (User.IsInRole("Veterinario"))
+        {
+        <a class="btn btn-secondary btn-create" asp-area="" asp-controller="Medicamento" asp-action="Index">
+            <i class="fa fa-plus"></i>   Medicamento
+        </a>
+        <a class="btn btn-success btn-create" asp-area="" asp-controller="Padecimientos" asp-action="Index">
+            <i class="fa fa-plus"></i>   Padecimientos
+        </a>
+        <a class="btn btn-warning btn-create" asp-area="" asp-controller="DesparasitacionesVacuna" asp-action="Index">
+            <i class="fa fa-plus"></i>   Desparasitaciones o Vacuna
+        </a> 
+        }
+        
     </div>
 
     <div class="section-tabla table-responsive">

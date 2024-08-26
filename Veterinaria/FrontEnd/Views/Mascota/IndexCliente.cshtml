@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Registro de Mascotas";
+    var userId = ViewData["UserId"] as string;
     <link rel="stylesheet" href="~/css/HomeSections/SectionMascotas.css" asp-append-version="true" />
 }
 
@@ -12,18 +13,7 @@
         </h1>
         <a href="@Url.Action("Create")" class="btn btn-primary btn-create">
             <i class="fa fa-plus"></i> Agregar Nueva Mascota
-        </a>
-        @if (User.IsInRole("Admin") || User.IsInRole("Veterinario"))
-        {
-             <a class="btn btn-secondary btn-create" asp-area="" asp-controller="Razas" asp-action="Index">
-            <i class="fa fa-plus"></i>   Razas
-            </a>
-
-            <a class="btn btn-success btn-create" asp-area="" asp-controller="TiposMascotas" asp-action="Index">
-            <i class="fa fa-plus"></i>   Tipos Mascotas
-            </a>
-        }
-       
+        </a>       
     </div>
 
     <div class="section-tabla table-responsive">
