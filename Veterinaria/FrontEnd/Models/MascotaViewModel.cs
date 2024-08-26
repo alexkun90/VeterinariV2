@@ -9,14 +9,16 @@ namespace FrontEnd.Models
 
         public string? NombreMascota { get; set; }
 
-        [DisplayName("Tipo de Mascota")]
+        
         public int? TipoMascotaId { get; set; }
-        //public IEnumerable<TiposMascota> TiposMascotas { get; set; }
-        //public TiposMascota TiposMascota { get; set; }
+        public IEnumerable<TiposMascotasViewModel> TiposMascotas { get; set; }
 
-        public int? RazaId { get; set; }
-       // public IEnumerable<Raza> Razas { get; set; }
-        //public Raza Raza { get; set; }
+        public TiposMascotasViewModel TipoMascota { get; set; }
+      
+        public IEnumerable<RazasViewModel> Razas { get; set; }
+        public int? RazaId { get; set; }      
+        
+        public RazasViewModel Raza { get; set; }
 
         public string? Genero { get; set; }
 
@@ -27,6 +29,8 @@ namespace FrontEnd.Models
         public byte[]? ImagenMascota { get; set; }
 
         public string? DueñoId { get; set; }
+        public IEnumerable<UsuarioViewModel> Usuarios { get; set; }
+        public UsuarioViewModel Usuario { get; set; }
 
         public string? CodigoUsuarioCreacion { get; set; }
 

@@ -1,38 +1,54 @@
 ﻿
+using FrontEnd.ApiMoldels;
 using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FrontEnd.Controllers
 {
+    [Authorize(Roles = "Veterinario")]
     public class PadecimientosController : Controller
     {
         IPadecimientosHelper PadecimientosHelper;
+        IMascotaHelper MascotaHelper;
 
-        public PadecimientosController(IPadecimientosHelper padecimientosHelper)
+        public PadecimientosController(IPadecimientosHelper padecimientosHelper, IMascotaHelper mascotaHelper)
         {
             PadecimientosHelper = padecimientosHelper;
+            MascotaHelper = mascotaHelper;
         }
 
         // GET: PadecimientosController
         public ActionResult Index()
         {
+            var padecimientos = PadecimientosHelper.GetPadecimientos();
+            var mascotas = MascotaHelper.GetMascotas();
 
-            return View(PadecimientosHelper.GetPadecimientos());
+            foreach (var item in padecimientos)
+            {
+                item.Mascotas = mascotas;
+            }
+
+            return View(padecimientos);
         }
 
         // GET: PadecimientosController/Details/5
         public ActionResult Details(int id)
         {
             PadecimientosViewModel padecimientos = PadecimientosHelper.GetPadecimiento(id);
+            padecimientos.Mascotas = MascotaHelper.GetMascotas();
             return View(padecimientos);
         }
 
         // GET: PadecimientosController/Create
         public ActionResult Create()
         {
-            return View();
+            PadecimientosViewModel padecimiento = new PadecimientosViewModel();
+            padecimiento.Mascotas = MascotaHelper.GetMascotas();
+
+            return View(padecimiento);
         }
 
         // POST: PadecimientosController/Create
@@ -55,6 +71,8 @@ namespace FrontEnd.Controllers
         public ActionResult Edit(int id)
         {
            PadecimientosViewModel padecimientos = PadecimientosHelper.GetPadecimiento(id);
+            padecimientos.Mascotas = MascotaHelper.GetMascotas();
+
             return View(padecimientos);
         }
 
@@ -78,6 +96,8 @@ namespace FrontEnd.Controllers
         public ActionResult Delete(int id)
         {
             PadecimientosViewModel padecimientos = PadecimientosHelper.GetPadecimiento(id);
+            padecimientos.Mascotas = MascotaHelper.GetMascotas();
+
             return View(padecimientos);
         }
 

@@ -10,6 +10,7 @@ using API.Services.Interfaces;
 using API.Model;
 using API.Services.Implementations;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -25,6 +26,7 @@ namespace API.Controllers
         }
 
         // GET: api/Cita
+        //[Authorize]
         [HttpGet]
         public ActionResult GetCitas()
         {

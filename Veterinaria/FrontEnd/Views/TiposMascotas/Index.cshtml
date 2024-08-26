@@ -1,41 +1,51 @@
 ﻿@model IEnumerable<FrontEnd.Models.TiposMascotasViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Registro de Tipos de Mascotas";
+    <link rel="stylesheet" href="~/css/HomeSections/SectionTiposMascotas.css" asp-append-version="true" />
 }
 
-<h1>Index</h1>
+<section class="section-tipos-mascotas container mt-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-titulo text-primary">
+            <i class="fa fa-paw"></i> Registro de Tipos de Mascotas
+        </h1>
+        <a href="@Url.Action("Create")" class="btn btn-primary btn-create">
+            <i class="fa fa-plus"></i> Agregar Nuevo Tipo de Mascota
+        </a>
+        <a class="btn btn-secondary btn-create" asp-area="" asp-controller="Mascota" asp-action="Index">
+            <i class="fa fa-plus"></i>   Mascotas
+        </a>
+        <a class="btn btn-success btn-create" asp-area="" asp-controller="Razas" asp-action="Index">
+            <i class="fa fa-plus"></i>   Razas
+        </a>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoTipoMascota)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreTipoMascota)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodigoTipoMascota)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreTipoMascota)
-            </td>
-            <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.CodigoTipoMascota }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.CodigoTipoMascota }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.CodigoTipoMascota })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="section-tabla table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.CodigoTipoMascota)</th>
+                    <th>@Html.DisplayNameFor(model => model.NombreTipoMascota)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.CodigoTipoMascota)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NombreTipoMascota)</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                @Html.ActionLink("Editar", "Edit", new { id = item.CodigoTipoMascota }, new { @class = "btn btn-warning btn-sm" })
+                                @Html.ActionLink("Detalles", "Details", new { id = item.CodigoTipoMascota }, new { @class = "btn btn-info btn-sm" })
+                                @Html.ActionLink("Eliminar", "Delete", new { id = item.CodigoTipoMascota }, new { @class = "btn btn-danger btn-sm" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

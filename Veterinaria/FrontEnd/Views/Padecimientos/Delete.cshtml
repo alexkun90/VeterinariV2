@@ -24,10 +24,13 @@
             @Html.DisplayFor(model => model.NombrePadecimiento)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MascotaID)
+            @Html.DisplayNameFor(model => model.Mascota)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MascotaID)
+            @{
+                var nombreMascota = Model.Mascotas.FirstOrDefault(m => m.MascotaId == Model.MascotaID)?.NombreMascota;
+            }
+            @nombreMascota
         </dd>
     </dl>
     

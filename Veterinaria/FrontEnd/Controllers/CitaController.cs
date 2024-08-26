@@ -1,31 +1,68 @@
-﻿using FrontEnd.Helpers.Interfaces;
+﻿using FrontEnd.Helpers.Implementations;
+using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FrontEnd.Controllers
 {
+    [Authorize]
     public class CitaController : Controller
     {
         ICitaHelper citaHelper;
         IMascotaHelper mascotaHelper;
+        IUsuarioHelper UsuarioHelper;
 
-        public CitaController(ICitaHelper citaHelper,IMascotaHelper mascotaHelper)
+
+        public CitaController(ICitaHelper citaHelper,IMascotaHelper mascotaHelper, IUsuarioHelper usuarioHelper)
         {
             this.citaHelper = citaHelper;
+            UsuarioHelper = usuarioHelper;
             this.mascotaHelper = mascotaHelper;
         }
         // GET: CitaController
+
+        [Authorize(Roles = "Veterinario")]
         public ActionResult Index()
         {
-           List<CitaViewModel> lista = citaHelper.GetAllCitas();
+            var lista = citaHelper.GetAllCitas();
+            var usuarios = UsuarioHelper.GetAllUsuarios();
+            var mascotas = mascotaHelper.GetMascotas();
+
+            foreach (var item in lista)
+            {
+                item.Usuarios = usuarios;
+                item.Mascotas = mascotas;
+            }
+
+                return View(lista);
+        }
+         [Authorize(Roles = "User")]
+        public ActionResult IndexCliente()
+        {
+            var lista = citaHelper.GetAllCitas();
+            var usuarios = UsuarioHelper.GetAllUsuarios();
+            var mascotas = mascotaHelper.GetMascotas();
+
+            foreach (var item in lista)
+            {
+                item.Usuarios = usuarios;
+                item.Mascotas = mascotas;
+            }
+
             return View(lista);
         }
+    
 
         // GET: CitaController/Details/5
         public ActionResult Details(int id)
         {
-            return View(citaHelper.GetCitaId(id));
+            CitaViewModel citaViewModel = citaHelper.GetCitaId(id);
+            citaViewModel.Mascotas = mascotaHelper.GetMascotas();
+            citaViewModel.Usuarios = UsuarioHelper.GetAllUsuarios();
+
+            return View(citaViewModel);
         }
 
         // GET: CitaController/Create
@@ -33,6 +70,8 @@ namespace FrontEnd.Controllers
         {
             CitaViewModel cita = new CitaViewModel();
             cita.Mascotas = mascotaHelper.GetMascotas();
+            cita.Usuarios = UsuarioHelper.GetAllUsuarios();
+
             return View(cita);
         }
 
@@ -57,6 +96,8 @@ namespace FrontEnd.Controllers
         {
             CitaViewModel cita = citaHelper.GetCitaId(id);
             cita.Mascotas = mascotaHelper.GetMascotas();
+            cita.Usuarios = UsuarioHelper.GetAllUsuarios();
+
             return View(cita);
         }
 
@@ -79,8 +120,12 @@ namespace FrontEnd.Controllers
         // GET: CitaController/Delete/5
         public ActionResult Delete(int id)
         {
-            CitaViewModel cita = citaHelper.GetCitaId(id);
-            return View(cita);
+            CitaViewModel citaViewModel = citaHelper.GetCitaId(id);
+            citaViewModel.Mascotas = mascotaHelper.GetMascotas();
+            citaViewModel.Usuarios = UsuarioHelper.GetAllUsuarios();
+
+            return View(citaViewModel);
+           
         }
 
         // POST: CitaController/Delete/5

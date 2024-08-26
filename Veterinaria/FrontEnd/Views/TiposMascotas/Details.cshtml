@@ -1,30 +1,41 @@
 ﻿@model FrontEnd.Models.TiposMascotasViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles del Tipo de Mascota";
+    <link rel="stylesheet" href="~/css/HomeSections/SectionCitas.css" asp-append-version="true" />
 }
 
-<h1>Details</h1>
+<section class="section-edit-cita container mt-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-titulo text-primary">
+            <i class="fas fa-paw"></i> Detalles del Tipo de Mascota
+        </h1>
+    </div>
 
-<div>
-    <h4>TiposMascotasViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CodigoTipoMascota)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CodigoTipoMascota)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NombreTipoMascota)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NombreTipoMascota)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CodigoTipoMascota }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="card shadow-lg rounded border-0">
+        <div class="card-body p-4">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">
+                    <i class="fas fa-barcode text-primary"></i> Código del Tipo de Mascota
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.CodigoTipoMascota)
+                </dd>
+
+                <dt class="col-sm-3">
+                    <i class="fas fa-dog text-success"></i> Nombre del Tipo de Mascota
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.NombreTipoMascota)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <a href="@Url.Action("Index")" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="fa fa-arrow-left"></i> Volver a la Lista
+        </a>
+    </div>
+    <br />
+</section>

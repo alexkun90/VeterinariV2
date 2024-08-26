@@ -1,65 +1,84 @@
 ﻿@model FrontEnd.Models.CitaViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Cita";
+    <link rel="stylesheet" href="~/css/HomeSections/SectionCitas.css" asp-append-version="true" />
 }
 
-<h1>Edit</h1>
-
-<h4>CitaViewModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                @Html.HiddenFor(Model => Model.CitaId)
-            </div>
-            <div class="form-group">
-                <label asp-for="MascotaId" class="control-label"></label>
-                @Html.DropDownListFor(model => model.MascotaId, new SelectList(Model.Mascotas, "MascotaId", "NombreMascota"), "--Select Category--")
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaHora" class="control-label"></label>
-                <input asp-for="FechaHora" class="form-control" />
-                <span asp-validation-for="FechaHora" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VeterinarioPrincipalId" class="control-label"></label>
-                <input asp-for="VeterinarioPrincipalId" class="form-control" />
-                <span asp-validation-for="VeterinarioPrincipalId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VeterinarioSecundarioId" class="control-label"></label>
-                <input asp-for="VeterinarioSecundarioId" class="form-control" />
-                <span asp-validation-for="VeterinarioSecundarioId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DescripcionCita" class="control-label"></label>
-                <input asp-for="DescripcionCita" class="form-control" />
-                <span asp-validation-for="DescripcionCita" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Diagnostico" class="control-label"></label>
-                <input asp-for="Diagnostico" class="form-control" />
-                <span asp-validation-for="Diagnostico" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<section class="section-edit-cita container mt-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-titulo text-primary">
+            <i class="fa fa-calendar"></i> Editar Cita
+        </h1>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="card shadow-lg rounded border-0">
+        <div class="card-body p-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded shadow-sm"></div>
+
+                @Html.HiddenFor(model => model.CitaId)
+
+                <div class="form-group mb-3">
+                    <label asp-for="MascotaId" class="form-label fw-bold">Mascota</label>
+                    @Html.DropDownListFor(model => model.MascotaId, new SelectList(Model.Mascotas, "MascotaId", "NombreMascota"), "--Seleccione Mascota--", new { @class = "form-control rounded-pill" })
+                    <span asp-validation-for="MascotaId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="FechaHora" class="form-label fw-bold">Fecha y Hora</label>
+                    <input asp-for="FechaHora" class="form-control rounded-pill" placeholder="Ingrese la fecha y hora" />
+                    <span asp-validation-for="FechaHora" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="VeterinarioPrincipalId" class="form-label fw-bold">Veterinario Principal</label>
+                    @Html.DropDownListFor(model => model.VeterinarioPrincipalId, new SelectList(Model.Usuarios, "Id", "Username"), "--Seleccione el veterinario--", new { @class = "form-select rounded-pill" })
+                    <span asp-validation-for="VeterinarioPrincipalId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="VeterinarioSecundarioId" class="form-label fw-bold">Veterinario Secundario</label>
+                    @Html.DropDownListFor(model => model.VeterinarioSecundarioId, new SelectList(Model.Usuarios, "Id", "Username"), "--Seleccione el veterinario--", new { @class = "form-select rounded-pill" })
+                    <span asp-validation-for="VeterinarioSecundarioId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="DescripcionCita" class="form-label fw-bold">Descripción</label>
+                    <input asp-for="DescripcionCita" class="form-control rounded-pill" placeholder="Ingrese la descripción de la cita" />
+                    <span asp-validation-for="DescripcionCita" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Diagnostico" class="form-label fw-bold">Diagnóstico</label>
+                    <input asp-for="Diagnostico" class="form-control rounded-pill" placeholder="Ingrese el diagnóstico" />
+                    <span asp-validation-for="Diagnostico" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Estado" class="form-label fw-bold">Estado</label>
+                    <select asp-for="Estado" class="form-control rounded-pill">
+                        <option value="">--Seleccione Estado--</option>
+                        <option value="true">Activo</option>
+                        <option value="false">Inactivo</option>
+                    </select>
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary rounded-pill px-4">
+                        <i class="fa fa-arrow-left"></i> Volver a la Lista
+                    </a>
+                    <input type="submit" value="Guardar Cambios" class="btn btn-primary rounded-pill px-4" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+</section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
