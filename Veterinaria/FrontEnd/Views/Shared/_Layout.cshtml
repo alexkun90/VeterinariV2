@@ -25,21 +25,42 @@
         <nav>
             <div class="menu">
                 <a class="menu-item" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                <a class="menu-item" asp-area="" asp-controller="Mascota" asp-action="Index">Mascotas</a>
-                <a class="menu-item" asp-area="" asp-controller="Cita" asp-action="Index">Citas</a>
-                <a class="menu-item" asp-area="" asp-controller="DesparasitacionesVacuna" asp-action="Index">Desparasitaciones</a>
-                <a class="menu-item" asp-area="" asp-controller="Usuario" asp-action="Index">Admin</a>
+
+                @if (User.IsInRole("User"))
+                {
+                    <a class="menu-item" asp-area="" asp-controller="Mascota" asp-action="IndexCliente">Mascotas</a>
+                }
+                else if (User.IsInRole("Veterinario"))
+                {
+                    <a class="menu-item" asp-area="" asp-controller="Mascota" asp-action="Index">Mascotas</a>
+                }
+                else
+                {
+                    <a class="menu-item" asp-area="" asp-controller="Mascota" asp-action="IndexCliente">Mascotas</a>
+                }
+                @if (User.IsInRole("User"))
+                {
+                    <a class="menu-item" asp-area="" asp-controller="Cita" asp-action="IndexCliente">Citas</a>
+                }
+                else if (User.IsInRole("Veterinario"))
+                {
+                    <a class="menu-item" asp-area="" asp-controller="Cita" asp-action="Index">Citas</a>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="menu-item" asp-area="" asp-controller="Usuario" asp-action="Index">Admin</a>
+                }
             </div>
+
             @if (!User.Identity.IsAuthenticated)
             {
-                <a class="login-item" asp-controller="Account" asp-action="Login">Inicio Sesión</a> 
+                <a class="login-item" asp-controller="Account" asp-action="Login">Inicio Sesión</a>
                 <span style="color:#fff; margin-right:5px; font-size:30px">|</span>
                 <a class="login-item" asp-controller="Account" asp-action="Register">Registrarse</a>
             }
 
             @if (User.Identity.IsAuthenticated)
             {
-                
                 <div class="logout">
                     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
                         <button type="submit" class="logout-item" style="border: none; background: transparent; cursor: pointer;">
@@ -66,7 +87,6 @@
         </div>
 
         <div class="services">
-
             <h2 class="titulo">Servicios</h2>
             <p class=" services-item">How to Order</p>
             <p class="services-item">Our Product</p>

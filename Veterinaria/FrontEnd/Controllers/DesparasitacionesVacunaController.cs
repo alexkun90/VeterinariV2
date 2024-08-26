@@ -1,10 +1,12 @@
 ﻿using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FrontEnd.Controllers
 {
+    [Authorize(Roles = "Veterinario")]
     public class DesparasitacionesVacunaController : Controller
     {
         IDesparasitacionesVacunaHelper DesparasitacionesVacunaHelper;

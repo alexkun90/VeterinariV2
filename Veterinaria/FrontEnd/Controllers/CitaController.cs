@@ -22,8 +22,8 @@ namespace FrontEnd.Controllers
             this.mascotaHelper = mascotaHelper;
         }
         // GET: CitaController
-        
-        
+
+        [Authorize(Roles = "Veterinario")]
         public ActionResult Index()
         {
             var lista = citaHelper.GetAllCitas();
@@ -38,6 +38,22 @@ namespace FrontEnd.Controllers
 
                 return View(lista);
         }
+         [Authorize(Roles = "User")]
+        public ActionResult IndexCliente()
+        {
+            var lista = citaHelper.GetAllCitas();
+            var usuarios = UsuarioHelper.GetAllUsuarios();
+            var mascotas = mascotaHelper.GetMascotas();
+
+            foreach (var item in lista)
+            {
+                item.Usuarios = usuarios;
+                item.Mascotas = mascotas;
+            }
+
+            return View(lista);
+        }
+    
 
         // GET: CitaController/Details/5
         public ActionResult Details(int id)

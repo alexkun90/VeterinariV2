@@ -1,8 +1,14 @@
+using Entities.Entities;
 using FrontEnd.Helpers.Implementations;
 using FrontEnd.Helpers.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -12,6 +18,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 
 builder.Services.AddSession();
+
 
 
 //Configuracion FrontEnd

@@ -1,6 +1,7 @@
 ﻿using FrontEnd.Helpers.Implementations;
 using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace FrontEnd.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UsuarioController : Controller
     {
         IUsuarioHelper usuarioHelper;
