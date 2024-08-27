@@ -11,17 +11,33 @@ namespace API.Controllers
     public class MascotaController : ControllerBase
     {
         private IMascotaService _mascotaService;
+        ILogger<MascotaController> _logger;
 
-        public MascotaController(IMascotaService mascotaService)
+        public MascotaController(IMascotaService mascotaService, ILogger<MascotaController> logger)
         {
             this._mascotaService = mascotaService;
+            this._logger = logger;
         }
 
         // GET: api/<DistritoController>
         [HttpGet]
         public IEnumerable<MascotaDTO> Get()
         {
-            return _mascotaService.Get();
+            try
+            {
+
+                _logger.LogError("Funciona sin error");
+                return _mascotaService.Get();
+
+            }
+            catch (Exception e)
+            {
+
+                _logger.LogError(e.Message);
+                throw;
+
+
+            }
         }
 
         // GET api/<DistritoController>/5

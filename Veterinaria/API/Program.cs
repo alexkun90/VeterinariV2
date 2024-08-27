@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -118,6 +119,18 @@ builder.Services.AddScoped<IPadecimientosService, PadecimientosService>();
 //Token
 builder.Services.AddScoped<ITokenService, TokenService > ();
 #endregion
+
+#region Serilog
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Host.UseSerilog((ctx, lc) => lc
+           .WriteTo.File("logs/logsbackend.txt", rollingInterval: RollingInterval.Day)
+           .MinimumLevel.Error());
+
+
+#endregion
+
 
 var app = builder.Build();
 

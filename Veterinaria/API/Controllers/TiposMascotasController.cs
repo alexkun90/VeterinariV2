@@ -14,18 +14,33 @@ namespace BackEnd.Controllers
     {
 
         private ITiposMascotasService _tiposMascotasService;
+        ILogger<TiposMascotasController> _logger;
 
-
-        public TiposMascotasController(ITiposMascotasService tiposMascotasService)
+        public TiposMascotasController(ITiposMascotasService tiposMascotasService, ILogger<TiposMascotasController> logger)
         {
             this._tiposMascotasService = tiposMascotasService;
+            this._logger = logger;
         }
 
         // GET: api/<TiposMascotasController>
         [HttpGet]
         public IEnumerable<TiposMascotasModel> Get()
         {
-            return _tiposMascotasService.Get();
+            try
+            {
+
+                _logger.LogError("Funciona sin error");
+                return _tiposMascotasService.Get();
+
+            }
+            catch (Exception e)
+            {
+
+                _logger.LogError(e.Message);
+                throw;
+
+
+            }
         }
 
         // GET api/<TiposMascotasController>/5

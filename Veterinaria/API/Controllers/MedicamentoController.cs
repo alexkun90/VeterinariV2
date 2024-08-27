@@ -11,17 +11,34 @@ namespace API.Controllers
     public class MedicamentoController : ControllerBase
     {
         private IMedicamentoService _medicamentoService;
+        ILogger<MedicamentoController> _logger;
 
-        public MedicamentoController(IMedicamentoService medicamentoService)
+        public MedicamentoController(IMedicamentoService medicamentoService, ILogger<MedicamentoController> logger)
         {
             this._medicamentoService = medicamentoService;
+            this._logger = logger;
         }
 
         // GET: api/<DistritoController>
         [HttpGet]
         public IEnumerable<MedicamentoDTO> Get()
         {
-            return _medicamentoService.Get();
+            try
+
+            {
+
+                _logger.LogError("Funciona sin error");
+                return _medicamentoService.Get();
+
+            }
+            catch (Exception e)
+            {
+
+                _logger.LogError(e.Message);
+                throw;
+
+
+            }
         }
 
         // GET api/<DistritoController>/5
