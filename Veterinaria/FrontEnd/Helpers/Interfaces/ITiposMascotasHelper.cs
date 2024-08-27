@@ -7,7 +7,7 @@ namespace FrontEnd.Helpers.Interfaces
         List<TiposMascotasViewModel> GetTiposMascotas();
         TiposMascotasViewModel GetTiposMascota(int id);
         TiposMascotasViewModel Add(TiposMascotasViewModel tiposMascotas);
-        TiposMascotasViewModel Remove(int id);
+        //TiposMascotasViewModel Remove(int id);
         TiposMascotasViewModel Update(TiposMascotasViewModel tiposMascotas);
     }
 }

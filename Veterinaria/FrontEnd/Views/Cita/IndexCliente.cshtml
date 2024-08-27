@@ -1,0 +1,96 @@
+﻿@model IEnumerable<FrontEnd.Models.CitaViewModel>
+
+@{
+    ViewData["Title"] = "Registro de Citas";
+    <link rel="stylesheet" href="~/css/HomeSections/SectionCitas.css" asp-append-version="true" />
+}
+
+<section class="section-citas container mt-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-titulo text-primary">
+            <i class="fa fa-calendar"></i> Registro de Citas
+        </h1>
+        <a href="@Url.Action("Create")" class="btn btn-primary btn-create">
+            <i class="fa fa-plus"></i> Agregar Nueva Cita
+        </a>
+        @if (User.IsInRole("Veterinario"))
+        {
+            <a class="btn btn-secondary btn-create" asp-area="" asp-controller="Medicamento" asp-action="Index">
+                <i class="fa fa-plus"></i>   Medicamento
+            </a>
+            <a class="btn btn-success btn-create" asp-area="" asp-controller="Padecimientos" asp-action="Index">
+                <i class="fa fa-plus"></i>   Padecimientos
+            </a>
+            <a class="btn btn-warning btn-create" asp-area="" asp-controller="DesparasitacionesVacuna" asp-action="Index">
+                <i class="fa fa-plus"></i>   Desparasitaciones o Vacuna
+            </a>
+        }
+
+    </div>
+
+    <div class="section-tabla table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.CitaId)</th>
+                    <th>@Html.DisplayNameFor(model => model.MascotaId)</th>
+                    <th>@Html.DisplayNameFor(model => model.FechaHora)</th>
+                    <th>@Html.DisplayNameFor(model => model.VeterinarioPrincipalId)</th>
+                    <th>@Html.DisplayNameFor(model => model.VeterinarioSecundarioId)</th>
+                    <th>@Html.DisplayNameFor(model => model.DescripcionCita)</th>
+                    <th>@Html.DisplayNameFor(model => model.Diagnostico)</th>
+                    <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.CitaId)</td>
+                        <td>
+                            @{
+                                var nombreMascota = item.Mascotas.FirstOrDefault(m => m.MascotaId == item.MascotaId)?.NombreMascota;
+                            }@nombreMascota
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.FechaHora)</td>
+                        <td>
+                            @{
+                                var nombreVeterinario1 = item.Usuarios.FirstOrDefault(m => m.Id == item.VeterinarioPrincipalId)?.Username;
+                            }@nombreVeterinario1
+                        </td>
+                        <td>
+                            @{
+                                var nombreVeterinario2 = item.Usuarios.FirstOrDefault(m => m.Id == item.VeterinarioSecundarioId)?.Username;
+                            }@nombreVeterinario2
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.DescripcionCita)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Diagnostico)</td>
+                        <td>
+                            @{
+                                var estadoClass = item.Estado.HasValue ? (item.Estado.Value ? "badge-success" : "badge-danger") : "badge-secondary";
+                                var estadoTexto = item.Estado.HasValue ? (item.Estado.Value ? "Activo" : "Inactivo") : "Sin Definir";
+                            }
+                            <span class="badge @estadoClass">@estadoTexto</span>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                @if (!User.IsInRole("User"))
+                                {
+                                    @Html.ActionLink("Editar", "Edit", new { id = item.CitaId }, new { @class = "btn btn-warning btn-sm" })
+                                }
+                                @Html.ActionLink("Detalles", "Details", new { id = item.CitaId }, new { @class = "btn btn-info btn-sm" })
+                                @if (!User.IsInRole("User"))
+                                {
+                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.CitaId }, new { @class = "btn btn-danger btn-sm" })
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+</section>
+

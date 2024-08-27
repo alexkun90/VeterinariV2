@@ -1,5 +1,6 @@
 ﻿
 using FrontEnd.ApiMoldels;
+using FrontEnd.Helpers.Implementations;
 using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -92,23 +93,13 @@ namespace FrontEnd.Controllers
             }
         }
 
-        // GET: PadecimientosController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            PadecimientosViewModel padecimientos = PadecimientosHelper.GetPadecimiento(id);
-            padecimientos.Mascotas = MascotaHelper.GetMascotas();
-
-            return View(padecimientos);
-        }
-
-        // POST: PadecimientosController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(PadecimientosViewModel padecimientos)
+        public ActionResult Delete(PadecimientosViewModel model)
         {
             try
             {
-                _ = PadecimientosHelper.Remove(padecimientos.CodigoPadecimiento);
+                PadecimientosHelper.Remove(model.CodigoPadecimiento);
                 return RedirectToAction(nameof(Index));
             }
             catch

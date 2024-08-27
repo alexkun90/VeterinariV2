@@ -27,23 +27,34 @@ namespace API.Controllers
         {
             IdentityUser user = await userManager.FindByNameAsync(model.Username);
             LoginModel Usuario = new LoginModel();
-            if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
+            if (user != null)
+            {       
+                if(await userManager.CheckPasswordAsync(user, model.Password))
+                {
+
+                    var userRoles = await userManager.GetRolesAsync(user);
+
+                    var jwtToken = TokenService.CreateToken(user, userRoles.ToList());
+
+                    Usuario.Token = jwtToken;
+                    Usuario.Roles = userRoles.ToList();
+                    Usuario.Username = user.UserName;
+
+
+                    return Ok(Usuario);
+                }
+                else
+                {
+                    return Unauthorized(new { message = "Contraseña incorrecta." });
+                }
+            }
+            else
             {
-
-                var userRoles = await userManager.GetRolesAsync(user);
-
-                var jwtToken = TokenService.CreateToken(user, userRoles.ToList());
-
-                Usuario.Token = jwtToken;
-                Usuario.Roles = userRoles.ToList();
-                Usuario.Username = user.UserName;
-
-
-                return Ok(Usuario);
+                return NotFound(new { message = "El nombre de usuario no está registrado." });
             }
 
-            return Unauthorized();
-        }
+
+    }
 
         [HttpPost]
         [Route("register")]
@@ -54,7 +65,7 @@ namespace API.Controllers
 
             if (userExists != null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Ese nombre de usuario ya existe!" });
             }
 
             IdentityUser user = new IdentityUser
@@ -67,7 +78,7 @@ namespace API.Controllers
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "INternal server Error" });
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Error Interno" });
 
             }
             var roles = await roleManager.RoleExistsAsync("User");

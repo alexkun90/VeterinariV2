@@ -1,5 +1,6 @@
 ﻿
 
+using FrontEnd.Helpers.Implementations;
 using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FrontEnd.Controllers
 {
-    [Authorize(Roles = "User , Veterinario")]
+    [Authorize(Roles = "Admin , Veterinario")]
     public class RazasController : Controller
     {
         IRazasHelper RazasHelper;
@@ -92,23 +93,13 @@ namespace FrontEnd.Controllers
             }
         }
 
-        // GET: RazasController/Delete/5
-        public ActionResult Delete(int id)
-
-        {
-            RazasViewModel razas = RazasHelper.GetRaza(id);
-            razas.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
-            return View(razas);
-        }
-
-        // POST: RazasController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(RazasViewModel razas)
+        public ActionResult Delete(RazasViewModel model)
         {
             try
             {
-                _ = RazasHelper.Remove(razas.CodigoRaza);
+                RazasHelper.Remove(model.CodigoRaza);
                 return RedirectToAction(nameof(Index));
             }
             catch

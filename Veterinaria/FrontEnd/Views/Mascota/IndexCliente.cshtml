@@ -3,32 +3,26 @@
 @{
     ViewData["Title"] = "Registro de Mascotas";
     var userId = ViewData["UserId"] as string;
-    <link rel="stylesheet" href="~/css/HomeSections/SectionMascotas.css" asp-append-version="true" />
 }
 
-<section class="section-mascotas container mt-5">
+<section class="section-mascotas container mt-5 vh-100">
     <div class="section-header d-flex justify-content-between align-items-center mb-4">
         <h1 class="section-titulo text-primary">
-            <i class="fa fa-paw"></i> Registro de Mascotas
+            <i class="fa fa-paw"></i> Mis Mascotas Registradas
         </h1>
-        <a href="@Url.Action("Create")" class="btn btn-primary btn-create">
-            <i class="fa fa-plus"></i> Agregar Nueva Mascota
-        </a>       
     </div>
 
     <div class="section-tabla table-responsive">
-        <table class="table table-hover table-striped">
+        <table id="mascotasTable" class="table table-hover table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.MascotaId)</th>
-                    <th>@Html.DisplayNameFor(model => model.NombreMascota)</th>
-                    <th>@Html.DisplayNameFor(model => model.TipoMascota)</th>
-                    <th>@Html.DisplayNameFor(model => model.Raza)</th>
-                    <th>@Html.DisplayNameFor(model => model.Genero)</th>
-                    <th>@Html.DisplayNameFor(model => model.Edad)</th>
-                    <th>@Html.DisplayNameFor(model => model.Peso)</th>
-                    <th>@Html.DisplayNameFor(model => model.DueñoId)</th>
-                    <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                    <th>Nombre Mascota</th>
+                    <th>Tipo</th>
+                    <th>Raza</th>
+                    <th>Género</th>
+                    <th>Edad</th>
+                    <th>Peso</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -36,38 +30,30 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.MascotaId)</td>
                         <td>@Html.DisplayFor(modelItem => item.NombreMascota)</td>
                         <td>
                             @{
                                 var nombreTipoMascota = item.TiposMascotas.FirstOrDefault(m => m.CodigoTipoMascota == item.TipoMascotaId)?.NombreTipoMascota;
-                            }@nombreTipoMascota
+                            } @nombreTipoMascota
                         </td>
                         <td>
                             @{
                                 var nombreRaza = item.Razas.FirstOrDefault(m => m.CodigoRaza == item.RazaId)?.NombreRaza;
-                            }@nombreRaza
+                            } @nombreRaza
                         </td>
                         <td>@Html.DisplayFor(modelItem => item.Genero)</td>
                         <td>@Html.DisplayFor(modelItem => item.Edad)</td>
                         <td>@Html.DisplayFor(modelItem => item.Peso)</td>
-                        <td> @{
-                            var nombreDueno = item.Usuarios.FirstOrDefault(m => m.Id == item.DueñoId)?.Username;
-                        }@nombreDueno
-                        </td>
-
                         <td>
                             @{
                                 var estadoClass = item.Estado.HasValue ? (item.Estado.Value ? "badge-success" : "badge-danger") : "badge-secondary";
                                 var estadoTexto = item.Estado.HasValue ? (item.Estado.Value ? "Activo" : "Inactivo") : "Sin Definir";
                             }
-                            <span class="badge @estadoClass">@estadoTexto</span>
+                            <span class="badge text-black @estadoClass">@estadoTexto</span>
                         </td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                @Html.ActionLink("Editar", "Edit", new { id = item.MascotaId }, new { @class = "btn btn-warning btn-sm" })
-                                @Html.ActionLink("Detalles", "Details", new { id = item.MascotaId }, new { @class = "btn btn-info btn-sm" })
-                                @Html.ActionLink("Eliminar", "Delete", new { id = item.MascotaId }, new { @class = "btn btn-danger btn-sm" })
+                        <td class="text-center">
+                            <div class="align-middle">
+                                @Html.ActionLink("Detalles", "Details", new { id = item.MascotaId }, new { @class = "btn btn-primary" })
                             </div>
                         </td>
                     </tr>
@@ -76,3 +62,19 @@
         </table>
     </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#mascotasTable').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
+            },
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": false,
+            "autoWidth": false
+        });
+    });
+</script>

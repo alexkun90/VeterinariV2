@@ -41,5 +41,9 @@ namespace FrontEnd.Models
         public DateTime? FechaModificacion { get; set; }
 
         public bool? Estado { get; set; }
+
+        public IEnumerable<CitaViewModel> Citas { get; set; }
+
+        public CitaViewModel Cita { get; set; }
     }
 }

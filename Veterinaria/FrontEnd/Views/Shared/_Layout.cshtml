@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@600&display=swaprel=" stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
 
     <!--Links hacia las hojas de estilo css-->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -24,27 +25,46 @@
     <header>
         <nav>
             <div class="menu">
-                <a class="menu-item" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="menu-item" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
 
                 @if (User.IsInRole("User"))
                 {
-                    <a class="menu-item" asp-area="" asp-controller="Mascota" asp-action="IndexCliente">Mascotas</a>
+                    <a class="menu-item" asp-area="" asp-controller="Mascota" asp-action="IndexCliente">Mis Mascotas</a>
                 }
-                else if (User.IsInRole("Veterinario"))
+                else if (User.IsInRole("Veterinario") || User.IsInRole("Admin"))
                 {
-                    <a class="menu-item" asp-area="" asp-controller="Mascota" asp-action="Index">Mascotas</a>
-                }
-                else
-                {
-                    <a class="menu-item" asp-area="" asp-controller="Mascota" asp-action="IndexCliente">Mascotas</a>
-                }
-                @if (User.IsInRole("User") || User.IsInRole("Veterinario") || User.IsInRole("Admin"))
-                {
-                    <a class="menu-item" asp-area="" asp-controller="Cita" asp-action="Index">Citas</a>
+                    <div class="dropdown">
+                        <a class="menu-item dropdown-toggle" href="#" id="mascotasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Mascotas
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="mascotasDropdown">
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Mascota" asp-action="Index">General</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Razas" asp-action="Index">Razas</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-controller="TiposMascotas" asp-action="Index">Tipos</a></li>
+                        </ul>
+                    </div>
                 }
                 @if (User.IsInRole("Admin"))
                 {
-                    <a class="menu-item" asp-area="" asp-controller="Usuario" asp-action="Index">Admin</a>
+                    <a class="menu-item" asp-area="" asp-controller="Cita" asp-action="Index">Citas</a>
+                }
+                else if (User.IsInRole("Veterinario"))
+                {
+                    <div class="dropdown">
+                        <a class="menu-item dropdown-toggle" href="#" id="citasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Citas
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="citasDropdown">
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Cita" asp-action="Index">General</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Medicamento" asp-action="Index">Medicamentos</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Padecimientos" asp-action="Index">Padecimientos</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-controller="DesparasitacionesVacuna" asp-action="Index">Desparasitaciones</a></li>
+                        </ul>
+                    </div>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="menu-item" asp-area="" asp-controller="Usuario" asp-action="Index">Administración</a>
                 }
             </div>
 
@@ -60,7 +80,7 @@
                 <div class="logout">
                     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
                         <button type="submit" class="logout-item" style="border: none; background: transparent; cursor: pointer;">
-                            <i class="fas fa-sign-out-alt"></i>
+                            <i class="fas fa-sign-out-alt"></i> <span>Cerrar Sesión</span>
                         </button>
                     </form>
                 </div>
@@ -110,6 +130,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/2964e4382f.js" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

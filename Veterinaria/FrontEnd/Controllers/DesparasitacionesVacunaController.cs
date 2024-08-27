@@ -1,4 +1,5 @@
-﻿using FrontEnd.Helpers.Interfaces;
+﻿using FrontEnd.Helpers.Implementations;
+using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -89,24 +90,13 @@ namespace FrontEnd.Controllers
             }
         }
 
-        // GET: DesparasitacionesVacunaController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            DesparasitacionesVacunaViewModel desparasitacionesVacuna = DesparasitacionesVacunaHelper.GetDesparasitaciones(id);
-            desparasitacionesVacuna.Mascotas = MascotaHelper.GetMascotas();
-
-            return View(desparasitacionesVacuna);
-        }
-
-        // POST: DesparasitacionesVacunaController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(DesparasitacionesVacunaViewModel desparasitacionesVacuna)
+        public ActionResult Delete(DesparasitacionesVacunaViewModel model)
         {
             try
             {
-                _ = DesparasitacionesVacunaHelper.Remove(desparasitacionesVacuna.CodigoDesparasitacionVacuna);
-
+                DesparasitacionesVacunaHelper.Remove(model.CodigoDesparasitacionVacuna);
                 return RedirectToAction(nameof(Index));
             }
             catch

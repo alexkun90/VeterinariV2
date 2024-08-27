@@ -59,15 +59,10 @@
                     <span asp-validation-for="Peso" class="text-danger"></span>
                 </div>
 
-                <div class="form-group mb-3">
-                    <label asp-for="ImagenMascota" class="form-label fw-bold">Imagen</label>
-                    <input asp-for="ImagenMascota" class="form-control rounded-pill" placeholder="URL de la Imagen" />
-                    <span asp-validation-for="ImagenMascota" class="text-danger"></span>
-                </div>
 
                 <div class="form-group mb-3">
                     <label asp-for="DueñoId" class="form-label fw-bold">ID del Dueño</label>
-                    @Html.DropDownListFor(model => model.DueñoId, new SelectList(Model.Usuarios, "Id", "Username"), "--Seleccione el dueño--", new { @class = "form-select rounded-pill" })
+                    @Html.DropDownListFor(model => model.DueñoId, new SelectList(Model.Usuarios, "Username", "Username"), "--Seleccione el dueño--", new { @class = "form-select rounded-pill" })
                     <span asp-validation-for="DueñoId" class="text-danger"></span>
                 </div>
 

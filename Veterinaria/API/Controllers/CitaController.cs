@@ -21,13 +21,15 @@ namespace API.Controllers
     {
         private ICitaService _citaService;
         ILogger<CitaController> _logger;
+        private VeteProV2Context context;
 
-        public CitaController(ICitaService citaService, ILogger<CitaController> logger)
+        public CitaController(ICitaService citaService, ILogger<CitaController> logger, VeteProV2Context context)
         {
             this._citaService = citaService;
             this._logger = logger;
+            this.context = context;
+        
         }
-
         // GET: api/Cita
         //[Authorize]
         [HttpGet]
