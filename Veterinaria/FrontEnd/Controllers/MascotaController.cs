@@ -76,10 +76,35 @@ namespace FrontEnd.Controllers
         }
 
         // GET: MascotaController/Details/5
-        [Authorize(Roles = "User,Admin,Veterinario")]
+        [Authorize(Roles = "Admin,Veterinario")]
         public ActionResult Details(int id)
         {
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
+            mascota.Razas = RazaHelper.GetRazas();
+            mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
+            mascota.Citas = CitaHelper.GetAllCitas();
+
+            return View(mascota);
+        }
+        [Authorize(Roles = "User")]
+        public ActionResult DetailsCliente(int id)
+        {
+            // Obtener el UserId del usuario logueado
+            var identidad = User.Identity as ClaimsIdentity;
+            string idUsuarioLoggeado = identidad.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+
+            // Filtrar la mascota por el ID y verificar si pertenece al usuario logueado
+            var mascota = MascotaHelper.GetMascotas()
+                                       .Where(m => m.MascotaId == id && m.DueñoId == idUsuarioLoggeado)
+                                       .FirstOrDefault();
+
+            if (mascota == null)
+            {
+                return NotFound();
+            }
+
+            // Obtener las listas asociadas
             mascota.Razas = RazaHelper.GetRazas();
             mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
             mascota.Usuarios = UsuarioHelper.GetAllUsuarios();

@@ -16,7 +16,6 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //holaa
     public class CitaController : ControllerBase
     {
         private ICitaService _citaService;
