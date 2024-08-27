@@ -27,7 +27,7 @@ namespace API.Controllers
 
             {
 
-                _logger.LogError("prueba");
+                _logger.LogError("Funciona sin error");
                 return _medicamentoService.Get();
 
             }

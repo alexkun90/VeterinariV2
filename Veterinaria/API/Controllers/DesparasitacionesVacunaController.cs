@@ -25,7 +25,7 @@ namespace API.Controllers
             try
             {
 
-                _logger.LogError("Prueba");
+                _logger.LogError("Funciona sin error");
                 return _vacunaService.Get();
 
             }

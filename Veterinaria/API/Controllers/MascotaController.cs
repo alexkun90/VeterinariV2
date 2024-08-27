@@ -26,7 +26,7 @@ namespace API.Controllers
             try
             {
 
-                _logger.LogError("prueba");
+                _logger.LogError("Funciona sin error");
                 return _mascotaService.Get();
 
             }
