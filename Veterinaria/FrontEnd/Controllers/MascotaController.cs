@@ -120,7 +120,13 @@ namespace FrontEnd.Controllers
             MascotaViewModel mascota = new MascotaViewModel();
             mascota.Razas = RazaHelper.GetRazas();
             mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
-            mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
+            var todosLosUsuarios = UsuarioHelper.GetAllUsuarios();
+
+            var usuarios = todosLosUsuarios
+            .Where(u => u.Roles != null && u.Roles.Contains("User"))
+            .ToList();
+
+            mascota.Usuarios = usuarios;
             return View(mascota);
         }
 
@@ -148,7 +154,13 @@ namespace FrontEnd.Controllers
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
             mascota.Razas = RazaHelper.GetRazas();
             mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
-            mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
+            var todosLosUsuarios = UsuarioHelper.GetAllUsuarios();
+
+            var usuarios = todosLosUsuarios
+            .Where(u => u.Roles != null && u.Roles.Contains("User"))
+            .ToList();
+
+            mascota.Usuarios = usuarios;
 
             return View(mascota);
         }
