@@ -52,13 +52,13 @@ namespace BackEnd.Controllers
             return tiposMascotas;
         }
 
-        // DELETE api/<TiposMascotasController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            TiposMascotasModel tiposMascotas = new TiposMascotasModel { CodigoTipoMascota = id };
-            _tiposMascotasService.Remove(tiposMascotas);
+        //// DELETE api/<TiposMascotasController>/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //    TiposMascotasModel tiposMascotas = new TiposMascotasModel { CodigoTipoMascota = id };
+        //    _tiposMascotasService.Remove(tiposMascotas);
 
-        }
+        //}
     }
 }

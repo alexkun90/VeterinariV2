@@ -182,3 +182,24 @@
     .register-btn:hover {
         background-color: #d59f00;
     }
+
+
+.custom-validation-summary {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+    .custom-validation-summary ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .custom-validation-summary li {
+        margin-bottom: 5px;
+    }

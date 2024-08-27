@@ -27,24 +27,21 @@ namespace FrontEnd.Controllers
         [Authorize(Roles = "Veterinario, User, Admin")]
         public ActionResult Index()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var lista = citaHelper.GetAllCitas();
-            var citasFiltradas = lista.Where(c => c.UsuarioId == userId).ToList();
-
             var usuarios = UsuarioHelper.GetAllUsuarios();
             var mascotas = mascotaHelper.GetMascotas();
 
-            foreach (var item in citasFiltradas)
+            foreach (var item in lista)
             {
                 item.Usuarios = usuarios;
                 item.Mascotas = mascotas;
             }
 
-            return View(citasFiltradas);
+            return View(lista);
         }
 
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public ActionResult IndexCliente()
         {
             var lista = citaHelper.GetAllCitas();
@@ -80,8 +77,8 @@ namespace FrontEnd.Controllers
             var todosLosUsuarios = UsuarioHelper.GetAllUsuarios();
 
             var veterinarios = todosLosUsuarios
-        .Where(u => u.Roles != null && u.Roles.Contains("Veterinario"))
-        .ToList();
+            .Where(u => u.Roles != null && u.Roles.Contains("Veterinario"))
+            .ToList();
 
             cita.Usuarios = veterinarios;
 
@@ -142,14 +139,13 @@ namespace FrontEnd.Controllers
            
         }
 
-        // POST: CitaController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(CitaViewModel cita)
+        public ActionResult Delete(CitaViewModel model)
         {
             try
             {
-                citaHelper.DeleteCita(cita.CitaId);
+                citaHelper.DeleteCita(model.CitaId);
                 return RedirectToAction(nameof(Index));
             }
             catch

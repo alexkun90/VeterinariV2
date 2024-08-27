@@ -4,56 +4,62 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>UsuarioViewModel</h4>
-<hr />
-<div id="error-message" class="alert alert-danger" style="display:none;"></div>
-<div class="row">
-    <div class="col-md-4">
-        <form id="editUserForm" asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @Html.HiddenFor(model => model.Id)
-
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label">Roles</label>
-                <div>
-                    @foreach (var role in Model.AvailableRoles)
-                    {
-                        <div class="form-check">
-                            <input type="checkbox"
-                                   name="Roles"
-                                   value="@role"
-                                   class="form-check-input"
-                                   id="@role"
-                            @(Model.Roles.Contains(role) ? "checked" : "") />
-                            <label class="form-check-label" for="@role">
-                                @role
-                            </label>
-                        </div>
-                    }
-                </div>
-                <span asp-validation-for="Roles" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<section class="section-citas container mt-5 vh-100">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-titulo text-primary">
+            <i class="fa fa-user"></i> Editar Usuario
+        </h1>
     </div>
-</div>
+
+    <div class="card shadow-lg rounded border-0">
+        <div class="card-body p-4">
+            <div id="error-message" class="alert alert-danger" style="display:none;"></div>
+            <form id="editUserForm" asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="form-group">
+                    <label asp-for="Username" class="control-label"></label>
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Roles</label>
+                    <div>
+                        @foreach (var role in Model.AvailableRoles)
+                        {
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       name="Roles"
+                                       value="@role"
+                                       class="form-check-input"
+                                       id="@role"
+                                @(Model.Roles.Contains(role) ? "checked" : "") />
+                                <label class="form-check-label" for="@role">
+                                    @role
+                                </label>
+                            </div>
+                        }
+                    </div>
+                    <span asp-validation-for="Roles" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+</section>
+
 
 @section Scripts {
     @{

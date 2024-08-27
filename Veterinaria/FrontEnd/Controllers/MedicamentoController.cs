@@ -88,24 +88,13 @@ namespace FrontEnd.Controllers
             }
         }
 
-        // GET: DistritoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            MedicamentoViewModel medicamento = MedicamentoHelper.GetMedicamento(id);
-            medicamento.Citas = CitaHelper.GetAllCitas();
-
-            return View(medicamento);
-        }
-
-        // POST: DistritoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(MedicamentoViewModel medicamento)
+        public ActionResult Delete(MedicamentoViewModel model)
         {
             try
             {
-                _ = MedicamentoHelper.Remove(medicamento.CodigoMedicamento);
-
+                MedicamentoHelper.Remove(model.CodigoMedicamento);
                 return RedirectToAction(nameof(Index));
             }
             catch

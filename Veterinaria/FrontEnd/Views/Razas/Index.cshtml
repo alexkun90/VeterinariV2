@@ -5,24 +5,18 @@
     <link rel="stylesheet" href="~/css/HomeSections/SectionRazas.css" asp-append-version="true" />
 }
 
-<section class="section-razas container mt-5">
+<section class="section-razas container mt-5 vh-50">
     <div class="section-header d-flex justify-content-between align-items-center mb-4">
         <h1 class="section-titulo text-primary">
             <i class="fa fa-paw"></i> Registro de Razas
         </h1>
-        <a href="@Url.Action("Create")" class="btn btn-primary btn-create">
+        <a href="@Url.Action("Create")" class="btn btn-success btn-create">
             <i class="fa fa-plus"></i> Agregar Nueva Raza
-        </a>
-        <a class="btn btn-secondary btn-create" asp-area="" asp-controller="Mascota" asp-action="Index">
-            <i class="fa fa-plus"></i>   Mascotas
-        </a>
-        <a class="btn btn-success btn-create" asp-area="" asp-controller="TiposMascotas" asp-action="Index">
-            <i class="fa fa-plus"></i>   Tipos Mascotas
         </a>
     </div>
 
     <div class="section-tabla table-responsive">
-        <table class="table table-hover table-striped">
+        <table id="indexTable" class="table table-hover table-striped">
             <thead class="thead-dark">
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.CodigoRaza)</th>
@@ -42,11 +36,15 @@
                                 var nombreTipoMascota = item.TiposMascotas.FirstOrDefault(m => m.CodigoTipoMascota == item.TipoMascotaID)?.NombreTipoMascota;
                             }@nombreTipoMascota
                         </td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                @Html.ActionLink("Editar", "Edit", new { id = item.CodigoRaza }, new { @class = "btn btn-warning btn-sm" })
-                                @Html.ActionLink("Detalles", "Details", new { id = item.CodigoRaza }, new { @class = "btn btn-info btn-sm" })
-                                @Html.ActionLink("Eliminar", "Delete", new { id = item.CodigoRaza }, new { @class = "btn btn-danger btn-sm" })
+                        <td class="text-center">
+                            <div class="align-middle">
+                                @Html.ActionLink("Editar", "Edit", new { id = item.CodigoRaza }, new { @class = "btn btn-warning text-white" })
+                                @Html.ActionLink("Detalles", "Details", new { id = item.CodigoRaza }, new { @class = "btn btn-primary" })
+                                <form action="@Url.Action("Delete", "Razas")" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="CodigoRaza" value="@item.CodigoRaza" />
+                                    <button type="submit" class="delete-button btn btn-danger">Eliminar</button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -55,3 +53,46 @@
         </table>
     </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                var form = button.closest('form');
+                var url = form.action;
+
+                Swal.fire({
+                    title: 'Confirmación de Eliminación de Raza',
+                    text: "¿Está seguro de que desea eliminar esta raza?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $('#indexTable').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
+            },
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": false,
+            "autoWidth": false
+        });
+    });
+
+</script>

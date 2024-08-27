@@ -36,16 +36,7 @@
             <p class="caja-parrafo">
                 Ofrecemos servicios con expertos en veterinaria
             </p>
-        </div>
-        <div class="section-tres-caja2">
-            <img src="https://www.kivet.com/wp-content/uploads/2022/07/vacunacion-veterinaria-.webp"
-                 alt=""
-                 class="caja2-img" style="height: 350px" />
-            <h3 class="caja-titulo">Vacunación</h3>
-            <p class="caja-parrafo">
-                Servicios de todo tipo de vacunación
-            </p>
-        </div>
+        </div>      
         <div class="section-tres-caja3">
             <img src="https://broomfieldvet.com/wp-content/uploads/2020/08/dental_pet_care.png"
                  alt=""
@@ -70,8 +61,9 @@
             <img src="https://q5dcn6ppfh42-u1253.pressidiumcdn.com/wp-content/uploads/2022/12/faq-min-1024x701.png"
                  alt=""
                  class="caja2-img" />
-
-            <a class="button-caja" asp-area="" asp-controller="Mascotas" asp-action="Index">Ingresar a mi mascota</a>
+            @if (!User.Identity.IsAuthenticated){
+                <a class="button-caja" asp-area="" asp-controller="Mascota" asp-action="IndexCliente">Ingresar a mi mascota</a>
+            }
         </div>
 
     </div>

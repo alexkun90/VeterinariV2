@@ -94,18 +94,18 @@ namespace FrontEnd.Helpers.Implementations
 
         
 
-        public TiposMascotasViewModel Remove(int id)
-        {
-            HttpResponseMessage responseMessage = ServiceRepository.DeleteResponse("api/tiposMascotas/" + id.ToString());
-            TiposMascotas resultado = new TiposMascotas();
-            if (responseMessage != null)
-            {
-                var content = responseMessage.Content.ReadAsStringAsync().Result;
+        //public TiposMascotasViewModel Remove(int id)
+        //{
+        //    HttpResponseMessage responseMessage = ServiceRepository.DeleteResponse("api/tiposMascotas/" + id.ToString());
+        //    TiposMascotas resultado = new TiposMascotas();
+        //    if (responseMessage != null)
+        //    {
+        //        var content = responseMessage.Content.ReadAsStringAsync().Result;
 
-            }
+        //    }
 
-            return Convertir(resultado);
-        }
+        //    return Convertir(resultado);
+        //}
 
         public TiposMascotasViewModel Update(TiposMascotasViewModel tiposMascotas)
         {

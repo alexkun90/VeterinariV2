@@ -44,7 +44,7 @@
                 </dt>
                 <dd class="col-sm-9">
                     @{
-                        var nombreVeterianrio1 = Model.Usuarios.FirstOrDefault(m => m.Id == Model.VeterinarioPrincipalId)?.Username;
+                        var nombreVeterianrio1 = Model.Usuarios.FirstOrDefault(m => m.Username == Model.VeterinarioPrincipalId)?.Username;
                     }
                     @nombreVeterianrio1
                 </dd>
@@ -54,7 +54,7 @@
                 </dt>
                 <dd class="col-sm-9">
                     @{
-                        var nombreVeterianrio2 = Model.Usuarios.FirstOrDefault(m => m.Id == Model.VeterinarioSecundarioId)?.Username;
+                        var nombreVeterianrio2 = Model.Usuarios.FirstOrDefault(m => m.Username == Model.VeterinarioSecundarioId)?.Username;
                     }
                     @nombreVeterianrio2
                 </dd>

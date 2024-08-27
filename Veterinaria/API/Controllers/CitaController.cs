@@ -19,10 +19,12 @@ namespace API.Controllers
     public class CitaController : ControllerBase
     {
         private ICitaService _citaService;
+        private VeteProV2Context context;
 
-        public CitaController(ICitaService citaService)
+        public CitaController(ICitaService citaService, VeteProV2Context context)
         {
             this._citaService = citaService;
+            this.context = context;
         }
 
         // GET: api/Cita

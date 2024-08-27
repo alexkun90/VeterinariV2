@@ -4,6 +4,7 @@ using FrontEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Security.Claims;
 
 namespace FrontEnd.Controllers
@@ -15,13 +16,15 @@ namespace FrontEnd.Controllers
         IRazasHelper RazaHelper;
         ITiposMascotasHelper TipoMascotaHelper;
         IUsuarioHelper UsuarioHelper;
+        ICitaHelper CitaHelper;
 
-        public MascotaController(IMascotaHelper mascotaHelper, IRazasHelper razaHelper, ITiposMascotasHelper tipoMascotaHelper, IUsuarioHelper usuarioHelper)
+        public MascotaController(IMascotaHelper mascotaHelper, IRazasHelper razaHelper, ITiposMascotasHelper tipoMascotaHelper, IUsuarioHelper usuarioHelper, ICitaHelper citaHelper)
         {
             MascotaHelper = mascotaHelper;
             RazaHelper = razaHelper;
             TipoMascotaHelper = tipoMascotaHelper;
             UsuarioHelper = usuarioHelper;
+            CitaHelper = citaHelper;
         }
 
         // GET: MascotaController
@@ -32,6 +35,7 @@ namespace FrontEnd.Controllers
             var razas = RazaHelper.GetRazas();
             var tiposMascotas = TipoMascotaHelper.GetTiposMascotas();
             var usuarios = UsuarioHelper.GetAllUsuarios();
+            var citas = CitaHelper.GetAllCitas();
 
             foreach (var item in mascotas)
             {
@@ -39,6 +43,7 @@ namespace FrontEnd.Controllers
                 item.TiposMascotas = tiposMascotas;
                 item.Razas = razas;
                 item.Usuarios = usuarios;
+                item.Citas = citas;
             }
               
 
@@ -71,17 +76,20 @@ namespace FrontEnd.Controllers
         }
 
         // GET: MascotaController/Details/5
+        [Authorize(Roles = "User,Admin,Veterinario")]
         public ActionResult Details(int id)
         {
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
             mascota.Razas = RazaHelper.GetRazas();
             mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
             mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
+            mascota.Citas = CitaHelper.GetAllCitas();
 
             return View(mascota);
         }
 
         // GET: DistritoController/Create
+        [Authorize(Roles = "Admin , Veterinario")]
         public ActionResult Create()
         {
             MascotaViewModel mascota = new MascotaViewModel();
@@ -92,6 +100,7 @@ namespace FrontEnd.Controllers
         }
 
         // POST: DistritoController/Create
+        [Authorize(Roles = "Admin , Veterinario")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(MascotaViewModel mascota)
@@ -108,6 +117,7 @@ namespace FrontEnd.Controllers
         }
 
         // GET: DistritoController/Edit/5
+        [Authorize(Roles = "Admin , Veterinario")]
         public ActionResult Edit(int id)
         {
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
@@ -119,6 +129,7 @@ namespace FrontEnd.Controllers
         }
 
         // POST: DistritoController/Edit/5
+        [Authorize(Roles = "Admin , Veterinario")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MascotaViewModel mascota)
@@ -134,25 +145,18 @@ namespace FrontEnd.Controllers
             }
         }
 
-        // GET: DistritoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            MascotaViewModel mascota = MascotaHelper.GetMascota(id);
-            mascota.Razas = RazaHelper.GetRazas();
-            mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
-            mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
-            return View(mascota);
-        }
-
-        // POST: DistritoController/Delete/5
+        [Authorize(Roles = "Admin , Veterinario")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(MascotaViewModel mascota)
+        public ActionResult Delete(MascotaViewModel model, int idCita)
         {
             try
-            {
-                _ = MascotaHelper.Remove(mascota.MascotaId);
-
+            {              
+                if(idCita != 0)
+                {
+                    CitaHelper.DeleteCita(idCita);
+                }
+                MascotaHelper.Remove(model.MascotaId);
                 return RedirectToAction(nameof(Index));
             }
             catch
