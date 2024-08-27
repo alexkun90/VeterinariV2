@@ -14,18 +14,34 @@ namespace BackEnd.Controllers
     {
 
         private IRazasService _razasService;
+        ILogger<RazasController> _logger;
 
-
-        public RazasController(IRazasService razasService)
+        public RazasController(IRazasService razasService, ILogger<RazasController> logger)
         {
             this._razasService = razasService;
+            this._logger = logger;
         }
 
         // GET: api/<RazasController>
         [HttpGet]
         public IEnumerable<RazasModel> Get()
         {
-            return _razasService.Get();
+            try
+            {
+
+                _logger.LogError("prueba");
+                return _razasService.Get();
+
+            }
+            catch (Exception e)
+            {
+
+                _logger.LogError(e.Message);
+                throw;
+
+
+            }
+
         }
 
         // GET api/<RazasController>/5

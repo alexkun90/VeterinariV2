@@ -14,18 +14,33 @@ namespace BackEnd.Controllers
     {
 
         private IPadecimientosService _padecimientosService;
+        ILogger<PadecimientosController> _logger;
 
-
-        public PadecimientosController(IPadecimientosService padecimientosService)
+        public PadecimientosController(IPadecimientosService padecimientosService, ILogger<PadecimientosController> logger)
         {
             this._padecimientosService = padecimientosService;
+            this._logger = logger;
         }
 
         // GET: api/<PadecimientosController>
         [HttpGet]
         public IEnumerable<PadecimientosModel> Get()
         {
-            return _padecimientosService.Get();
+            try
+            {
+
+                _logger.LogError("prueba");
+                return _padecimientosService.Get();
+
+            }
+            catch (Exception e)
+            {
+
+                _logger.LogError(e.Message);
+                throw;
+
+
+            }
         }
 
         // GET api/<PadecimientosController>/5
