@@ -107,7 +107,13 @@ namespace FrontEnd.Controllers
         {
             CitaViewModel cita = citaHelper.GetCitaId(id);
             cita.Mascotas = mascotaHelper.GetMascotas();
-            cita.Usuarios = UsuarioHelper.GetAllUsuarios();
+            var todosLosUsuarios = UsuarioHelper.GetAllUsuarios();
+
+            var veterinarios = todosLosUsuarios
+            .Where(u => u.Roles != null && u.Roles.Contains("Veterinario"))
+            .ToList();
+
+            cita.Usuarios = veterinarios;
 
             return View(cita);
         }
