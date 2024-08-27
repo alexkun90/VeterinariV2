@@ -10,18 +10,34 @@ namespace API.Controllers
     public class DesparasitacionesVacunaController : ControllerBase
     {
         private IDesparasitacionesVacunaService _vacunaService;
+        ILogger<DesparasitacionesVacunaController> _logger;
 
-
-        public DesparasitacionesVacunaController(IDesparasitacionesVacunaService vacunaService)
+        public DesparasitacionesVacunaController(IDesparasitacionesVacunaService vacunaService, ILogger<DesparasitacionesVacunaController> logger)
         {
             this._vacunaService = vacunaService;
+            this._logger = logger;
         }
 
         // GET: api/<DesparasitacionesVacunaController>
         [HttpGet]
         public IEnumerable<DesparasitacionesVacunaDTO> Get()
         {
-            return _vacunaService.Get();
+            try
+            {
+
+                _logger.LogError("Funciona sin error");
+                return _vacunaService.Get();
+
+            }
+            catch (Exception e)
+            {
+
+                _logger.LogError(e.Message);
+                throw;
+
+
+            }
+
         }
 
         // GET api/<DesparasitacionesVacunaController>/5

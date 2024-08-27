@@ -2,11 +2,13 @@
 using FrontEnd.Helpers.Implementations;
 using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FrontEnd.Controllers
 {
+    [Authorize(Roles = "Admin , Veterinario")]
     public class TiposMascotasController : Controller
     {
         ITiposMascotasHelper TiposMascotasHelper;
@@ -76,28 +78,28 @@ namespace FrontEnd.Controllers
             }
         }
 
-        // GET: TiposMascotasController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            TiposMascotasViewModel tiposMascotas = TiposMascotasHelper.GetTiposMascota(id);
+        //// GET: TiposMascotasController/Delete/5
+        //public ActionResult Delete(int id)
+        //{
+        //    TiposMascotasViewModel tiposMascotas = TiposMascotasHelper.GetTiposMascota(id);
 
-            return View(tiposMascotas);
-        }
+        //    return View(tiposMascotas);
+        //}
 
-        // POST: TiposMascotasController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(TiposMascotasViewModel tiposMascotas)
-        {
-            try
-            {
-                _ = TiposMascotasHelper.Remove(tiposMascotas.CodigoTipoMascota);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// POST: TiposMascotasController/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(TiposMascotasViewModel tiposMascotas)
+        //{
+        //    try
+        //    {
+        //        _ = TiposMascotasHelper.Remove(tiposMascotas.CodigoTipoMascota);
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }

@@ -14,8 +14,7 @@ namespace FrontEnd.Models
         public string? Producto { get; set; }
 
         public int? MascotaId { get; set; }
-
         public IEnumerable<MascotaViewModel> Mascotas { get; set; }
-
+        public MascotaViewModel Mascota { get; set; }
     }
 }

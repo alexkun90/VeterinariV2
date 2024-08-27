@@ -1,36 +1,50 @@
 ﻿using FrontEnd.Helpers.Implementations;
 using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FrontEnd.Controllers
 {
+    [Authorize(Roles = "Veterinario")]
     public class MedicamentoController : Controller
     {
         IMedicamentoHelper MedicamentoHelper;
-
-        public MedicamentoController(IMedicamentoHelper medicamentoHelper)
+        ICitaHelper CitaHelper;
+        public MedicamentoController(IMedicamentoHelper medicamentoHelper, ICitaHelper citaHelper)
         {
             MedicamentoHelper = medicamentoHelper;
+            CitaHelper = citaHelper;
         }
         // GET: MascotaController
         public ActionResult Index()
         {
-            List<MedicamentoViewModel> lista = MedicamentoHelper.GetMedicamentos();
-            return View(MedicamentoHelper.GetMedicamentos());
+            var lista = MedicamentoHelper.GetMedicamentos();
+            var citas = CitaHelper.GetAllCitas();
+
+            foreach(var item in lista)
+            {
+                item.Citas = citas;
+            }
+            return View(lista);
         }
 
         // GET: MascotaController/Details/5
         public ActionResult Details(int id)
         {
             MedicamentoViewModel medicamento = MedicamentoHelper.GetMedicamento(id);
+             medicamento.Citas = CitaHelper.GetAllCitas();
+
             return View(medicamento);
         }
 
         // GET: DistritoController/Create
         public ActionResult Create()
         {
-            return View();
+            MedicamentoViewModel medicamento = new MedicamentoViewModel();
+            medicamento.Citas = CitaHelper.GetAllCitas();
+
+            return View(medicamento);
         }
 
         // POST: DistritoController/Create
@@ -53,6 +67,8 @@ namespace FrontEnd.Controllers
         public ActionResult Edit(int id)
         {
             MedicamentoViewModel medicamento = MedicamentoHelper.GetMedicamento(id);
+            medicamento.Citas = CitaHelper.GetAllCitas();
+
             return View(medicamento);
         }
 
@@ -72,22 +88,13 @@ namespace FrontEnd.Controllers
             }
         }
 
-        // GET: DistritoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            MedicamentoViewModel medicamento = MedicamentoHelper.GetMedicamento(id);
-            return View(medicamento);
-        }
-
-        // POST: DistritoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(MedicamentoViewModel medicamento)
+        public ActionResult Delete(MedicamentoViewModel model)
         {
             try
             {
-                _ = MedicamentoHelper.Remove(medicamento.CodigoMedicamento);
-
+                MedicamentoHelper.Remove(model.CodigoMedicamento);
                 return RedirectToAction(nameof(Index));
             }
             catch

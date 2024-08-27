@@ -23,10 +23,13 @@
                 </dd>
 
                 <dt class="col-sm-3">
-                    <i class="fas fa-paw text-success"></i> ID de la Mascota
+                    <i class="fas fa-paw text-success"></i> Mascota
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.MascotaId)
+                    @{
+                        var nombreMascota = Model.Mascotas.FirstOrDefault(m => m.MascotaId == Model.MascotaId)?.NombreMascota;
+                    }
+                    @nombreMascota
                 </dd>
 
                 <dt class="col-sm-3">
@@ -40,14 +43,20 @@
                     <i class="fas fa-user-md text-warning"></i> Veterinario Principal
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.VeterinarioPrincipalId)
+                    @{
+                        var nombreVeterianrio1 = Model.Usuarios.FirstOrDefault(m => m.Username == Model.VeterinarioPrincipalId)?.Username;
+                    }
+                    @nombreVeterianrio1
                 </dd>
 
                 <dt class="col-sm-3">
                     <i class="fas fa-user-nurse text-danger"></i> Veterinario Secundario
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.VeterinarioSecundarioId)
+                    @{
+                        var nombreVeterianrio2 = Model.Usuarios.FirstOrDefault(m => m.Username == Model.VeterinarioSecundarioId)?.Username;
+                    }
+                    @nombreVeterianrio2
                 </dd>
 
                 <dt class="col-sm-3">

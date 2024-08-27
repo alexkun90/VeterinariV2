@@ -35,6 +35,15 @@
                 <dd class="col-sm-9">
                     @Html.DisplayFor(model => model.Dosis)
                 </dd>
+                <dt class="col-sm-3">
+                    <i class="fas fa-prescription-bottle-alt text-info"></i> Fecha Cita
+                </dt>
+                <dd class="col-sm-9">
+                    @{
+                        var fechaCita = Model.Citas.FirstOrDefault(m => m.CitaId == Model.CitaId)?.FechaHora;
+                    }
+                    @fechaCita
+                </dd>
             </dl>
         </div>
     </div>

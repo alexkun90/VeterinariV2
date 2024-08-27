@@ -5,18 +5,18 @@
     <link rel="stylesheet" href="~/css/HomeSections/SectionTiposMascotas.css" asp-append-version="true" />
 }
 
-<section class="section-tipos-mascotas container mt-5">
+<section class="section-tipos-mascotas container mt-5 vh-100">
     <div class="section-header d-flex justify-content-between align-items-center mb-4">
         <h1 class="section-titulo text-primary">
             <i class="fa fa-paw"></i> Registro de Tipos de Mascotas
         </h1>
-        <a href="@Url.Action("Create")" class="btn btn-primary btn-create">
+        <a href="@Url.Action("Create")" class="btn btn-success btn-create">
             <i class="fa fa-plus"></i> Agregar Nuevo Tipo de Mascota
         </a>
     </div>
 
     <div class="section-tabla table-responsive">
-        <table class="table table-hover table-striped">
+        <table id="indexTable" class="table table-hover table-striped">
             <thead class="thead-dark">
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.CodigoTipoMascota)</th>
@@ -30,11 +30,11 @@
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.CodigoTipoMascota)</td>
                         <td>@Html.DisplayFor(modelItem => item.NombreTipoMascota)</td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                @Html.ActionLink("Editar", "Edit", new { id = item.CodigoTipoMascota }, new { @class = "btn btn-warning btn-sm" })
-                                @Html.ActionLink("Detalles", "Details", new { id = item.CodigoTipoMascota }, new { @class = "btn btn-info btn-sm" })
-                                @Html.ActionLink("Eliminar", "Delete", new { id = item.CodigoTipoMascota }, new { @class = "btn btn-danger btn-sm" })
+                        <td class="text-center">
+                            <div class="align-middle">
+                                @Html.ActionLink("Editar", "Edit", new { id = item.CodigoTipoMascota }, new { @class = "btn btn-warning text-white" })
+                                @Html.ActionLink("Detalles", "Details", new { id = item.CodigoTipoMascota }, new { @class = "btn btn-primary" })
+                                @*  @Html.ActionLink("Eliminar", "Delete", new { id = item.CodigoTipoMascota }, new { @class = "btn btn-danger btn-sm" }) *@
                             </div>
                         </td>
                     </tr>
@@ -43,3 +43,18 @@
         </table>
     </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#indexTable').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
+            },
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": false,
+            "autoWidth": false
+        });
+    });
+</script>

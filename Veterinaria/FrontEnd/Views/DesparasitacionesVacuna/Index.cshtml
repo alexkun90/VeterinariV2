@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Registro de Desparasitaciones y Vacunas";
-    <link rel="stylesheet" href="~/css/HomeSections/SectionCitas.css" asp-append-version="true" />
 }
 
 <section class="section-citas container mt-5">
@@ -10,19 +9,20 @@
         <h1 class="section-titulo text-primary">
             <i class="fa fa-syringe"></i> Registro de Desparasitaciones y Vacunas
         </h1>
-        <a href="@Url.Action("Create")" class="btn btn-primary btn-create">
+        <a href="@Url.Action("Create")" class="btn btn-success btn-create">
             <i class="fa fa-plus"></i> Agregar Nuevo Registro
         </a>
+       
     </div>
 
     <div class="section-tabla table-responsive">
-        <table class="table table-hover table-striped">
+        <table id="indexTable" class="table table-hover table-striped">
             <thead class="thead-dark">
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.CodigoDesparasitacionVacuna)</th>
                     <th>@Html.DisplayNameFor(model => model.Tipo)</th>
                     <th>@Html.DisplayNameFor(model => model.Producto)</th>
-                    <th>@Html.DisplayNameFor(model => model.MascotaId)</th>
+                    <th>@Html.DisplayNameFor(model => model.Mascota)</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -33,12 +33,21 @@
                         <td>@Html.DisplayFor(modelItem => item.CodigoDesparasitacionVacuna)</td>
                         <td>@Html.DisplayFor(modelItem => item.Tipo)</td>
                         <td>@Html.DisplayFor(modelItem => item.Producto)</td>
-                        <td>@Html.DisplayFor(modelItem => item.MascotaId)</td>
                         <td>
-                            <div class="btn-group" role="group">
-                                @Html.ActionLink("Editar", "Edit", new { id = item.CodigoDesparasitacionVacuna }, new { @class = "btn btn-warning btn-sm" })
-                                @Html.ActionLink("Detalles", "Details", new { id = item.CodigoDesparasitacionVacuna }, new { @class = "btn btn-info btn-sm" })
-                                @Html.ActionLink("Eliminar", "Delete", new { id = item.CodigoDesparasitacionVacuna }, new { @class = "btn btn-danger btn-sm" })
+                    @{
+                        var nombreMascota = item.Mascotas.FirstOrDefault(m => m.MascotaId == item.MascotaId)?.NombreMascota;
+                    }
+                    @nombreMascota 
+                        </td>
+                        <td class="text-center">
+                            <div class="align-middle">
+                                @Html.ActionLink("Editar", "Edit", new { id = item.CodigoDesparasitacionVacuna }, new { @class = "btn btn-warning text-white" })
+                                @Html.ActionLink("Detalles", "Details", new { id = item.CodigoDesparasitacionVacuna }, new { @class = "btn btn-primary" })
+                                <form action="@Url.Action("Delete", "DesparasitacionesVacuna")" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="CodigoDesparasitacionVacuna" value="@item.CodigoDesparasitacionVacuna" />
+                                    <button type="submit" class="delete-button btn btn-danger">Eliminar</button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -48,3 +57,46 @@
     </div>
     <br />
 </section>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                var form = button.closest('form');
+                var url = form.action;
+
+                Swal.fire({
+                    title: 'Confirmación de Eliminación de Vacunas',
+                    text: "¿Está seguro de que desea eliminar esta vacunas?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $('#indexTable').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
+            },
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": false,
+            "autoWidth": false
+        });
+    });
+
+</script>

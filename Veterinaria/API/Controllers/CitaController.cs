@@ -16,13 +16,16 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //holaa
     public class CitaController : ControllerBase
     {
         private ICitaService _citaService;
+        ILogger<CitaController> _logger;
 
-        public CitaController(ICitaService citaService)
+        public CitaController(ICitaService citaService, ILogger<CitaController> logger)
         {
             this._citaService = citaService;
+            this._logger = logger;
         }
 
         // GET: api/Cita
@@ -33,6 +36,9 @@ namespace API.Controllers
             IEnumerable<CitaDTO> result = _citaService.Get();
             return new JsonResult(result);
         }
+
+        
+
 
         // GET: api/Cita/5
         [HttpGet("{id}")]

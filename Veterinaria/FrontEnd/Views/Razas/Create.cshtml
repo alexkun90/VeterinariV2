@@ -5,13 +5,10 @@
     <link rel="stylesheet" href="~/css/HomeSections/SectionCitas.css" asp-append-version="true" />
 }
 
-<section class="section-citas container mt-5">
-    <div class="section-header d-flex justify-content-between align-items-center mb-4">
-        <h1 class="section-titulo text-primary">
-            <i class="fa fa-paw"></i> Crear Raza
-        </h1>
-    </div>
+<h1>Create</h1>
 
+<h4>RazasViewModel</h4>
+<hr />
     <div class="card shadow-lg rounded border-0">
         <div class="card-body p-4">
             <form asp-action="Create">
@@ -22,7 +19,11 @@
                     <input asp-for="NombreRaza" class="form-control rounded-pill" placeholder="Ingrese el nombre de la raza" />
                     <span asp-validation-for="NombreRaza" class="text-danger"></span>
                 </div>
-
+                <div class="form-group">
+                    <label asp-for="TipoMascotaID" class="form-label fw-bold"></label>
+                    @Html.DropDownListFor(model => model.TipoMascotaID, new SelectList(Model.TiposMascotas, "CodigoTipoMascota", "NombreTipoMascota"), "--Seleccione Tipo de Mascota--", new { @class = "form-control" })
+                    <span asp-validation-for="TipoMascotaID" class="text-danger"></span>
+                </div>
                 <div class="d-flex justify-content-between align-items-center mt-4">
                     <a href="@Url.Action("Index")" class="btn btn-outline-secondary rounded-pill px-4">
                         <i class="fa fa-arrow-left"></i> Volver a la Lista

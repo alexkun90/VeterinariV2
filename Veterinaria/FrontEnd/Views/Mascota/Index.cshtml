@@ -2,36 +2,32 @@
 
 @{
     ViewData["Title"] = "Registro de Mascotas";
-    <link rel="stylesheet" href="~/css/HomeSections/SectionMascotas.css" asp-append-version="true" />
 }
 
-<section class="section-mascotas container mt-5">
+<section class="section-mascotas container mt-5 vh-100">
     <div class="section-header d-flex justify-content-between align-items-center mb-4">
         <h1 class="section-titulo text-primary">
             <i class="fa fa-paw"></i> Registro de Mascotas
         </h1>
-        <a href="@Url.Action("Create")" class="btn btn-primary btn-create">
+        <a href="@Url.Action("Create")" class="btn btn-success btn-create">
             <i class="fa fa-plus"></i> Agregar Nueva Mascota
         </a>
+       
     </div>
 
     <div class="section-tabla table-responsive">
-        <table class="table table-hover table-striped">
+        <table id="indexTable" class="table table-hover table-striped">
             <thead class="thead-dark">
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.MascotaId)</th>
                     <th>@Html.DisplayNameFor(model => model.NombreMascota)</th>
-                    <th>@Html.DisplayNameFor(model => model.TipoMascota.NombreTipoMascota)</th>
-                    <th>@Html.DisplayNameFor(model => model.Raza.NombreRaza)</th>
+                    <th>@Html.DisplayNameFor(model => model.TipoMascota)</th>
+                    <th>@Html.DisplayNameFor(model => model.Raza)</th>
                     <th>@Html.DisplayNameFor(model => model.Genero)</th>
                     <th>@Html.DisplayNameFor(model => model.Edad)</th>
                     <th>@Html.DisplayNameFor(model => model.Peso)</th>
-                    <th>@Html.DisplayNameFor(model => model.ImagenMascota)</th>
                     <th>@Html.DisplayNameFor(model => model.DueñoId)</th>
-                    <th>@Html.DisplayNameFor(model => model.CodigoUsuarioCreacion)</th>
-                    <th>@Html.DisplayNameFor(model => model.FechaCreacion)</th>
-                    <th>@Html.DisplayNameFor(model => model.CodigoUsuarioModificacion)</th>
-                    <th>@Html.DisplayNameFor(model => model.FechaModificacion)</th>
+                    <th>Cita Estado</th>
                     <th>@Html.DisplayNameFor(model => model.Estado)</th>
                     <th>Acciones</th>
                 </tr>
@@ -42,31 +38,58 @@
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.MascotaId)</td>
                         <td>@Html.DisplayFor(modelItem => item.NombreMascota)</td>
-                        <td>@Html.DisplayFor(modelItem => item.TipoMascota.NombreTipoMascota)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Raza.NombreRaza)</td>
+                        <td>
+                            @{
+                                var nombreTipoMascota = item.TiposMascotas.FirstOrDefault(m => m.CodigoTipoMascota == item.TipoMascotaId)?.NombreTipoMascota;
+                            }@nombreTipoMascota
+                        </td>
+                        <td>
+                            @{
+                                var nombreRaza = item.Razas.FirstOrDefault(m => m.CodigoRaza == item.RazaId)?.NombreRaza;
+                            }@nombreRaza
+                        </td>
                         <td>@Html.DisplayFor(modelItem => item.Genero)</td>
                         <td>@Html.DisplayFor(modelItem => item.Edad)</td>
                         <td>@Html.DisplayFor(modelItem => item.Peso)</td>
-                        <td>
-                            <img src="@Url.Content("~/images/mascotas/" + item.ImagenMascota)" alt="Imagen de @item.NombreMascota" class="img-thumbnail" style="max-width: 80px;" />
-                        </td>
+                       @*  <td> @{
+                            var nombreDueno = item.Usuarios.FirstOrDefault(m => m.Id == item.DueñoId)?.Username;
+                        }@nombreDueno
+                        </td>*@
+
                         <td>@Html.DisplayFor(modelItem => item.DueñoId)</td>
-                        <td>@Html.DisplayFor(modelItem => item.CodigoUsuarioCreacion)</td>
-                        <td>@Html.DisplayFor(modelItem => item.FechaCreacion)</td>
-                        <td>@Html.DisplayFor(modelItem => item.CodigoUsuarioModificacion)</td>
-                        <td>@Html.DisplayFor(modelItem => item.FechaModificacion)</td>
+
+                        @{
+                            var citaState = item.Citas.FirstOrDefault(m => m.MascotaId == item.MascotaId)?.CitaId;
+                        }@citaState
+                        <td>
+                            @if(citaState != null)
+                            {
+                                <span class="text-black"> Tiene Cita</span>
+                            }
+                            else
+                            {
+                                citaState = 0;
+                                <span class="text-black"> No posee cita</span>
+                            }
+                        </td>
+
                         <td>
                             @{
                                 var estadoClass = item.Estado.HasValue ? (item.Estado.Value ? "badge-success" : "badge-danger") : "badge-secondary";
                                 var estadoTexto = item.Estado.HasValue ? (item.Estado.Value ? "Activo" : "Inactivo") : "Sin Definir";
                             }
-                            <span class="badge @estadoClass">@estadoTexto</span>
+                            <span class="badge text-black @estadoClass">@estadoTexto</span>
                         </td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                @Html.ActionLink("Editar", "Edit", new { id = item.MascotaId }, new { @class = "btn btn-warning btn-sm" })
-                                @Html.ActionLink("Detalles", "Details", new { id = item.MascotaId }, new { @class = "btn btn-info btn-sm" })
-                                @Html.ActionLink("Eliminar", "Delete", new { id = item.MascotaId }, new { @class = "btn btn-danger btn-sm" })
+                        <td class="text-center">
+                            <div class="align-middle">
+                                @Html.ActionLink("Editar", "Edit", new { id = item.MascotaId }, new { @class = "btn btn-warning text-white" })
+                                @Html.ActionLink("Detalles", "Details", new { id = item.MascotaId }, new { @class = "btn btn-primary" })
+                                <form action="@Url.Action("Delete", "Mascota")" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="MascotaId" value="@item.MascotaId" />
+                                    <input type="hidden" name="idCita" value="@citaState" />
+                                    <button type="submit" class="delete-button btn btn-danger">Eliminar</button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -75,3 +98,49 @@
         </table>
     </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                var form = button.closest('form');
+                var url = form.action;
+
+                Swal.fire({
+                    title: 'Confirmación de Eliminación de Mascota',
+                    text: "¿Está seguro de que desea eliminar esta mascota?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $('#indexTable').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
+            },
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": false,
+            "autoWidth": false
+        });
+    });
+
+</script>
+
+

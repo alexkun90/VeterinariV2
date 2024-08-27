@@ -1,8 +1,11 @@
-﻿using FrontEnd.Helpers.Interfaces;
+﻿using FrontEnd.Helpers.Implementations;
+using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.TagHelpers;
+using System.Security.Claims;
 
 namespace FrontEnd.Controllers
 {
@@ -12,64 +15,122 @@ namespace FrontEnd.Controllers
         IMascotaHelper MascotaHelper;
         IRazasHelper RazaHelper;
         ITiposMascotasHelper TipoMascotaHelper;
+        IUsuarioHelper UsuarioHelper;
+        ICitaHelper CitaHelper;
 
-        public MascotaController(IMascotaHelper mascotaHelper, IRazasHelper razaHelper, ITiposMascotasHelper tipoMascotaHelper)
+        public MascotaController(IMascotaHelper mascotaHelper, IRazasHelper razaHelper, ITiposMascotasHelper tipoMascotaHelper, IUsuarioHelper usuarioHelper, ICitaHelper citaHelper)
         {
             MascotaHelper = mascotaHelper;
             RazaHelper = razaHelper;
             TipoMascotaHelper = tipoMascotaHelper;
+            UsuarioHelper = usuarioHelper;
+            CitaHelper = citaHelper;
         }
+
         // GET: MascotaController
+        [Authorize(Roles = "Admin , Veterinario")]
         public ActionResult Index()
         {
-            List<MascotaViewModel> lista = MascotaHelper.GetMascotas();
+            var mascotas = MascotaHelper.GetMascotas();
+            var razas = RazaHelper.GetRazas();
+            var tiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            var usuarios = UsuarioHelper.GetAllUsuarios();
+            var citas = CitaHelper.GetAllCitas();
 
-            foreach (var item in lista)
+            foreach (var item in mascotas)
             {
-                if (item.TipoMascotaId.HasValue)
-                {
-                    item.TipoMascota = TipoMascotaHelper.GetTiposMascota((int)item.TipoMascotaId);
-                }
-                else
-                {
-                    // Cuando TipoMascotaId asigna un valor null
-                    item.TipoMascota = null; 
-                }
 
-                if (item.RazaId.HasValue)
-                {
-                    item.Raza = RazaHelper.GetRaza((int)item.RazaId);
-                }
-                else
-                {
-                    // Cuando RazaId asigna un valor null
-                    item.Raza = null; 
-                }
+                item.TiposMascotas = tiposMascotas;
+                item.Razas = razas;
+                item.Usuarios = usuarios;
+                item.Citas = citas;
+            }
+              
+
+            return View(mascotas);
+        }
+        [Authorize(Roles = "User")]
+        public ActionResult IndexCliente()
+        {
+            // Obtener el UserId del usuario logueado
+            var identidad = User.Identity as ClaimsIdentity;
+            string idUsuarioLoggeado = identidad.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            ViewData["UserId"] = idUsuarioLoggeado;
+            // Filtrar las mascotas por el UserId
+            var mascotas = MascotaHelper.GetMascotas().Where(m => m.DueñoId == idUsuarioLoggeado).ToList();
+
+            var razas = RazaHelper.GetRazas();
+            var tiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            var usuarios = UsuarioHelper.GetAllUsuarios();
+            
+            foreach (var item in mascotas)
+            {
+
+                item.TiposMascotas = tiposMascotas;
+                item.Razas = razas;
+                item.Usuarios = usuarios;
             }
 
-            return View(lista);
+
+            return View(mascotas);
         }
 
-
         // GET: MascotaController/Details/5
+        [Authorize(Roles = "Admin,Veterinario")]
         public ActionResult Details(int id)
         {
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
             mascota.Razas = RazaHelper.GetRazas();
             mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
+            mascota.Citas = CitaHelper.GetAllCitas();
+
+            return View(mascota);
+        }
+
+
+        [Authorize(Roles = "User")]
+        public ActionResult DetailsCliente(int id)
+        {
+            var identidad = User.Identity as ClaimsIdentity;
+            string idUsuarioLoggeado = identidad.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+
+            var mascota = MascotaHelper.GetMascotas()
+                                       .Where(m => m.MascotaId == id && m.DueñoId == idUsuarioLoggeado)
+                                       .FirstOrDefault();
+
+            if (mascota == null)
+            {
+                return NotFound();
+            }
+
+            mascota.Razas = RazaHelper.GetRazas();
+            mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            mascota.Usuarios = UsuarioHelper.GetAllUsuarios();
+            mascota.Citas = CitaHelper.GetAllCitas();
+
             return View(mascota);
         }
 
         // GET: DistritoController/Create
+        [Authorize(Roles = "Admin , Veterinario")]
         public ActionResult Create()
         {
             MascotaViewModel mascota = new MascotaViewModel();
             mascota.Razas = RazaHelper.GetRazas();
             mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            var todosLosUsuarios = UsuarioHelper.GetAllUsuarios();
+
+            var usuarios = todosLosUsuarios
+            .Where(u => u.Roles != null && u.Roles.Contains("User"))
+            .ToList();
+
+            mascota.Usuarios = usuarios;
             return View(mascota);
         }
 
         // POST: DistritoController/Create
+        [Authorize(Roles = "Admin , Veterinario")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(MascotaViewModel mascota)
@@ -86,15 +147,25 @@ namespace FrontEnd.Controllers
         }
 
         // GET: DistritoController/Edit/5
+        [Authorize(Roles = "Admin , Veterinario")]
         public ActionResult Edit(int id)
         {
             MascotaViewModel mascota = MascotaHelper.GetMascota(id);
             mascota.Razas = RazaHelper.GetRazas();
             mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
+            var todosLosUsuarios = UsuarioHelper.GetAllUsuarios();
+
+            var usuarios = todosLosUsuarios
+            .Where(u => u.Roles != null && u.Roles.Contains("User"))
+            .ToList();
+
+            mascota.Usuarios = usuarios;
+
             return View(mascota);
         }
 
         // POST: DistritoController/Edit/5
+        [Authorize(Roles = "Admin , Veterinario")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MascotaViewModel mascota)
@@ -110,24 +181,18 @@ namespace FrontEnd.Controllers
             }
         }
 
-        // GET: DistritoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            MascotaViewModel mascota = MascotaHelper.GetMascota(id);
-            mascota.Razas = RazaHelper.GetRazas();
-            mascota.TiposMascotas = TipoMascotaHelper.GetTiposMascotas();
-            return View(mascota);
-        }
-
-        // POST: DistritoController/Delete/5
+        [Authorize(Roles = "Admin , Veterinario")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(MascotaViewModel mascota)
+        public ActionResult Delete(MascotaViewModel model, int idCita)
         {
             try
-            {
-                _ = MascotaHelper.Remove(mascota.MascotaId);
-
+            {              
+                if(idCita != 0)
+                {
+                    CitaHelper.DeleteCita(idCita);
+                }
+                MascotaHelper.Remove(model.MascotaId);
                 return RedirectToAction(nameof(Index));
             }
             catch

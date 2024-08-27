@@ -2,10 +2,9 @@
 
 @{
     ViewData["Title"] = "Registro de Citas";
-    <link rel="stylesheet" href="~/css/HomeSections/SectionCitas.css" asp-append-version="true" />
 }
 
-<section class="section-citas container mt-5">
+<section class="section-citas container mt-5 vh-100">
     <div class="section-header d-flex justify-content-between align-items-center mb-4">
         <h1 class="section-titulo text-primary">
             <i class="fa fa-calendar"></i> Registro de Citas
@@ -13,10 +12,11 @@
         <a href="@Url.Action("Create")" class="btn btn-primary btn-create">
             <i class="fa fa-plus"></i> Agregar Nueva Cita
         </a>
+        
     </div>
 
     <div class="section-tabla table-responsive">
-        <table class="table table-hover table-striped">
+        <table id="indexTable" class="table table-hover table-striped">
             <thead class="thead-dark">
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.CitaId)</th>
@@ -24,8 +24,6 @@
                     <th>@Html.DisplayNameFor(model => model.FechaHora)</th>
                     <th>@Html.DisplayNameFor(model => model.VeterinarioPrincipalId)</th>
                     <th>@Html.DisplayNameFor(model => model.VeterinarioSecundarioId)</th>
-                    <th>@Html.DisplayNameFor(model => model.DescripcionCita)</th>
-                    <th>@Html.DisplayNameFor(model => model.Diagnostico)</th>
                     <th>@Html.DisplayNameFor(model => model.Estado)</th>
                     <th>Acciones</th>
                 </tr>
@@ -35,24 +33,38 @@
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.CitaId)</td>
-                        <td>@Html.DisplayFor(modelItem => item.MascotaId)</td>
+                        <td>
+                            @{
+                                var nombreMascota = item.Mascotas.FirstOrDefault(m => m.MascotaId == item.MascotaId)?.NombreMascota;
+                            }@nombreMascota
+                        </td>
                         <td>@Html.DisplayFor(modelItem => item.FechaHora)</td>
-                        <td>@Html.DisplayFor(modelItem => item.VeterinarioPrincipalId)</td>
-                        <td>@Html.DisplayFor(modelItem => item.VeterinarioSecundarioId)</td>
-                        <td>@Html.DisplayFor(modelItem => item.DescripcionCita)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Diagnostico)</td>
+                        <td>
+                            @{
+                                var nombreVeterinario1 = item.Usuarios.FirstOrDefault(m => m.Username == item.VeterinarioPrincipalId)?.Username;
+                            }@nombreVeterinario1
+                        </td>
+                        <td>
+                            @{
+                                var nombreVeterinario2 = item.Usuarios.FirstOrDefault(m => m.Username == item.VeterinarioSecundarioId)?.Username;
+                            }@nombreVeterinario2
+                        </td>
                         <td>
                             @{
                                 var estadoClass = item.Estado.HasValue ? (item.Estado.Value ? "badge-success" : "badge-danger") : "badge-secondary";
                                 var estadoTexto = item.Estado.HasValue ? (item.Estado.Value ? "Activo" : "Inactivo") : "Sin Definir";
                             }
-                            <span class="badge @estadoClass">@estadoTexto</span>
+                            <span class="badge text-black @estadoClass">@estadoTexto</span>
                         </td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                @Html.ActionLink("Editar", "Edit", new { id = item.CitaId }, new { @class = "btn btn-warning btn-sm" })
-                                @Html.ActionLink("Detalles", "Details", new { id = item.CitaId }, new { @class = "btn btn-info btn-sm" })
-                                @Html.ActionLink("Eliminar", "Delete", new { id = item.CitaId }, new { @class = "btn btn-danger btn-sm" })
+                        <td class="text-center">
+                            <div class="align-middle">
+                                @Html.ActionLink("Editar", "Edit", new { id = item.CitaId }, new { @class = "btn btn-warning text-white" })
+                                @Html.ActionLink("Detalles", "Details", new { id = item.CitaId }, new { @class = "btn btn-primary" })
+                                <form action="@Url.Action("Delete", "Cita")" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="CitaId" value="@item.CitaId" />
+                                    <button type="submit" class="delete-button btn btn-danger">Eliminar</button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -62,3 +74,47 @@
     </div>
     <br />
 </section>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                var form = button.closest('form');
+                var url = form.action;
+
+                Swal.fire({
+                    title: 'Confirmación de Eliminación de Cita',
+                    text: "¿Está seguro de que desea eliminar esta citas?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $('#indexTable').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
+            },
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": false,
+            "autoWidth": false
+        });
+    });
+
+</script>

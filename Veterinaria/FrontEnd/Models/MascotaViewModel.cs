@@ -29,6 +29,8 @@ namespace FrontEnd.Models
         public byte[]? ImagenMascota { get; set; }
 
         public string? DueñoId { get; set; }
+        public IEnumerable<UsuarioViewModel> Usuarios { get; set; }
+        public UsuarioViewModel Usuario { get; set; }
 
         public string? CodigoUsuarioCreacion { get; set; }
 
@@ -39,5 +41,9 @@ namespace FrontEnd.Models
         public DateTime? FechaModificacion { get; set; }
 
         public bool? Estado { get; set; }
+
+        public IEnumerable<CitaViewModel> Citas { get; set; }
+
+        public CitaViewModel Cita { get; set; }
     }
 }
